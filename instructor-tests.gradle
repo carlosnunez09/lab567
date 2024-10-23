@@ -1,0 +1,18 @@
+task downloadFile(type: Download) {
+  quiet true
+  src 'https://www.dropbox.com/s/ynq048wbd2kyuk1/lab5-instructor-tests.zip?dl=1'
+  dest new File(buildDir, 'dist/instructor-tests.zip')
+}
+
+task downloadAndUnzip(dependsOn: downloadFile, type: Copy) {
+  from zipTree(downloadFile.dest)
+  into new File(buildDir, 'instructor')
+}
+
+task instTest(dependsOn: downloadAndUnzip, type: Test) {
+  description = "Running tests from Instructor"
+
+  testClassesDirs = files("$buildDir/instructor")
+  classpath = sourceSets.main.output + testClassesDirs + sourceSets.test.runtimeClasspath
+}
+
