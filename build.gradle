@@ -1,0 +1,21 @@
+plugins {
+  id 'java'
+  id 'eclipse'
+  id 'checkstyle'
+  id 'de.undercouch.download' version '4.1.2'
+}
+
+checkstyle {
+  toolVersion '8.11'
+}
+
+dependencies {
+  testImplementation 'junit:junit:4+'
+  implementation 'junit:junit:4+'
+}
+
+repositories {
+    jcenter()
+}
+
+apply from: 'instructor-tests.gradle'
