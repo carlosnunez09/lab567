@@ -1,6 +1,7 @@
 package environment;
 
 import lifeform.LifeForm;
+import weapon.Weapon;
 
 /**
  * A Cell that can hold a LifeForm.
