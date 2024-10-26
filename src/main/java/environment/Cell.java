@@ -60,7 +60,7 @@ public class Cell {
    * @return
    */
   public boolean addWeapon(Weapon weapon) {
-    return null; // will update this afternoon
+    return false; // will update this afternoon
   }
 
   /**
@@ -68,8 +68,8 @@ public class Cell {
    * @param weapon
    * @return
    */
-  public boolean removeWeapon(Weapon weapon) {
-    return null;
+  public Weapon removeWeapon(Weapon weapon) {
+    return null; // will update this afternoon
   }
 
 
