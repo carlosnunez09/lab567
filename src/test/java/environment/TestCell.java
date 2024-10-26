@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import lifeform.LifeForm;
 import lifeform.MockLifeForm;
 import org.junit.Test;
+import weapon.MockWeapon;
+
 /**
  * The test cases for the Cell class
  *
@@ -66,6 +68,48 @@ public class TestCell {
     assertNull(cell.getLifeForm());
   }
 
+  @Test
+  public void testAddWeapon() {
+    Cell cell = new Cell();
+    MockWeapon weapon = new MockWeapon();
+    cell.addWeapon(weapon);
+    assertEquals(weapon, cell.getWeapon1());
+  }
 
+  @Test
+  public void testRemoveWeapon() {
+    Cell cell = new Cell();
+    MockWeapon weapon1 = new MockWeapon();
+    MockWeapon weapon2 = new MockWeapon();
+
+    cell.addWeapon(weapon1);
+    cell.addWeapon(weapon2);
+
+    assertEquals(weapon1, cell.getWeapon1());
+    assertEquals(weapon2, cell.getWeapon2());
+
+    cell.removeWeapon(weapon1);
+    cell.removeWeapon(weapon2);
+
+    assertEquals(weapon1, cell.getWeapon1());
+    assertEquals(weapon2, cell.getWeapon2());
+  }
+
+  @Test
+  public void test3WeaponsCellError() {
+    Cell cell = new Cell();
+
+    MockWeapon weapon1 = new MockWeapon();
+    MockWeapon weapon2 = new MockWeapon();
+    MockWeapon weapon3 = new MockWeapon();
+
+    cell.addWeapon(weapon1);
+    cell.addWeapon(weapon2);
+    cell.addWeapon(weapon3);
+
+    assertEquals(weapon1, cell.getWeapon1());
+    assertEquals(weapon2, cell.getWeapon2());
+    assertEquals(2, cell.getWeaponsCount()); // Only supposed to have 2 weapons per cell.
+  }
 }
 

@@ -8,12 +8,24 @@ import weapon.Weapon;
  *
  */
 public class Cell {
+  private LifeForm entity;
+  private int weaponCount;
+  protected Weapon weaponOne;
+  protected Weapon weaponTwo;
+
+  /**
+   * Setting initial Cell Weapon values.
+   */
+  public Cell() {
+    weaponCount = 0;
+    weaponOne = null;
+    weaponTwo = null;
+  }
+
   /**
    * @return the LifeForm in this Cell.
    */
-
   private LifeForm lifeform = null;
-
 
   /**
    * @return the LifeForm in this Cell.
@@ -33,7 +45,6 @@ public class Cell {
    * @param entity the lifeform held in the cell
    * @return true if the LifeForm was added to the Cell, false otherwise.
    */
-
   public boolean addLifeForm(LifeForm entity) {
     if (lifeform == null) {
       lifeform = entity;
@@ -43,13 +54,27 @@ public class Cell {
     }
   }
 
+  /**
+   * Adds weapon if there are not two already in Cell
+   * @param weapon
+   * @return
+   */
+  public boolean addWeapon(Weapon weapon) {
+    return null; // will update this afternoon
+  }
+
+  /**
+   * Removes weapon from Cell
+   * @param weapon
+   * @return
+   */
+  public boolean removeWeapon(Weapon weapon) {
+    return null;
+  }
+
 
   public void removeLifeForm() {
     lifeform = null;
-  }
-
-  public boolean addWeapon(Weapon weapon){
-    return false;
   }
 
   public Weapon getWeapon1(){
@@ -63,10 +88,5 @@ public class Cell {
   public int getWeaponsCount(){
     return 0;
   }
-
-  public Weapon removeWeapon(Weapon weapon){
-    return null;
-  }
-
 
 }
