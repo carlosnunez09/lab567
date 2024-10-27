@@ -98,7 +98,7 @@ public class Environment {
   }
 
   public Weapon[] getWeapons(int row, int col){
-    Weapon[] weapons = new Weapon[];;
+    Weapon[] weapons = new Weapon[2];
     LifeForm m = getLifeForm(row, col);
     Weapon t = null;
     if (m.hasWeapon()){
