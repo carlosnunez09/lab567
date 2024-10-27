@@ -92,8 +92,12 @@ public class TestCell {
     cell.removeWeapon(weapon1);
     cell.removeWeapon(weapon2);
 
-    assertEquals(weapon1, cell.getWeapon1());
-    assertEquals(weapon2, cell.getWeapon2());
+    //assertEquals(weapon1, cell.getWeapon1());
+    //assertEquals(weapon2, cell.getWeapon2());
+
+    // we are checking if the weapons are removed from the cell
+    assertNull(cell.getWeapon1());
+    assertNull(cell.getWeapon2());
   }
 
   @Test
