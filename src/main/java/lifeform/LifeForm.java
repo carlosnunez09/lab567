@@ -12,8 +12,11 @@ public abstract class LifeForm {
   protected int currentLifePoints;
 
   protected int attackStrength;
+  protected int col;
+  protected int row;
 
   protected Weapon weapon;
+
 
   public LifeForm(String name, int life) {
     this(name, life, 0);
@@ -118,5 +121,21 @@ public abstract class LifeForm {
   public void takeHit(int damage) {
     currentLifePoints = Math.max(0, currentLifePoints - damage);
   }
+
+  public int getRow(){
+    return row;
+  }
+
+  public int getCol(){
+      return col;
+  }
+
+  public void setLocation(int row, int col){
+
+  }
+
+
+
+
 
 }
