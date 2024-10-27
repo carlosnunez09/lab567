@@ -8,7 +8,6 @@ import weapon.Weapon;
  *
  */
 public class Cell {
-  private LifeForm entity;
   private int weaponCount;
   protected Weapon weaponOne;
   protected Weapon weaponTwo;
@@ -20,6 +19,7 @@ public class Cell {
     weaponCount = 0;
     weaponOne = null;
     weaponTwo = null;
+    lifeform = null;
   }
 
   /**
@@ -60,7 +60,18 @@ public class Cell {
    * @return
    */
   public boolean addWeapon(Weapon weapon) {
-    return false; // will update this afternoon
+    if (weaponOne == null && weaponTwo != weapon) {       // If no Weapon in Cell -> add Weapon
+      weaponOne = weapon;
+      weaponCount++;
+      return true;                                        // If no second Weapon AND already one Weapon -> add Weapon
+    }
+
+    else if (weaponTwo == null && weaponOne != weapon) {
+      weaponTwo = weapon;
+      weaponCount++;
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -69,7 +80,22 @@ public class Cell {
    * @return
    */
   public Weapon removeWeapon(Weapon weapon) {
-    return null; // will update this afternoon
+    Weapon removedWeapon = null;
+    // Check if first weapon matches
+    if (weaponOne == weapon) {
+      removedWeapon = weaponOne;
+      weaponOne = null;
+      weaponCount--;
+      return removedWeapon;
+    }
+    // Check if second weapon matches
+    else if (weaponTwo == weapon) {
+      removedWeapon = weaponTwo;
+      weaponTwo = null;
+      weaponCount--;
+      return removedWeapon;
+    }
+    return removedWeapon;
   }
 
 
@@ -78,15 +104,15 @@ public class Cell {
   }
 
   public Weapon getWeapon1(){
-    return null;
+    return weaponOne;
   }
 
   public Weapon getWeapon2(){
-    return null;
+    return weaponTwo;
   }
 
   public int getWeaponsCount(){
-    return 0;
+    return weaponCount;
   }
 
 }
