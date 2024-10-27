@@ -2,7 +2,8 @@ package environment;
 
 import lifeform.LifeForm;
 import weapon.Weapon;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Environment {
@@ -97,7 +98,22 @@ public class Environment {
   }
 
   public Weapon[] getWeapons(int row, int col){
-    return null;
+    Weapon[] weapons = new Weapon[];;
+    LifeForm m = getLifeForm(row, col);
+    Weapon t = null;
+    if (m.hasWeapon()){
+      t = m.dropWeapon();
+      m.pickUpWeapon(t);
+      weapons[0] = t;
+    }
+
+    if (m.hasWeapon()){
+      t = m.dropWeapon();
+      m.pickUpWeapon(t);
+      weapons[1] = t;
+    }
+
+    return weapons;
   }
 
   public Weapon removeWeapon(Weapon weapon, int row, int col){
