@@ -10,12 +10,13 @@ import weapon.Weapon;
 public abstract class LifeForm {
   private String myName;
   protected int currentLifePoints;
-  protected int row;
-  protected int col;
 
   protected int attackStrength;
+  protected int col;
+  protected int row;
 
   protected Weapon weapon;
+
 
   public LifeForm(String name, int life) {
     this(name, life, 0);
@@ -126,6 +127,15 @@ public abstract class LifeForm {
   }
 
   public int getCol(){
-    return col;
+      return col;
   }
+
+  public void setLocation(int row, int col){
+
+  }
+
+
+
+
+
 }
