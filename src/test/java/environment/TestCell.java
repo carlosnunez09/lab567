@@ -88,6 +88,7 @@ public class TestCell {
     assertEquals(weapon1, cell.getWeapon1());
     assertEquals(weapon2, cell.getWeapon2());
 
+    // not working here once I try and remove weapon for some reason???
     cell.removeWeapon(weapon1);
     cell.removeWeapon(weapon2);
 
