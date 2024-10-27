@@ -8,6 +8,9 @@ import weapon.Weapon;
 public class Environment {
 
   public static Cell[][] cells;
+  private static Environment insta;
+  private int envRows;
+  private int envCols;
 
   /**
    * Creates a Enviroment with provided rows and cols of the Cell class
@@ -15,9 +18,19 @@ public class Environment {
 
   public Environment(int row, int col) {
     cells = new Cell[row][col];
+    envRows = row;
+    envCols = col;
     //LifeForm life = new LifeForm("Bob", 20);
     //cells[row-1][col-1].addLifeForm(life);
 
+  }
+
+
+  public static Environment getEnvironment(int row, int col) {
+    if (insta == null) {
+      insta = new Environment(row, col);
+    }
+    return insta;
   }
 
   /**
@@ -57,7 +70,8 @@ public class Environment {
       cells[row][col].removeLifeForm();
     }
   }
-  public void clearBoard(){     //put all cells in envir to null
+  public void clearBoard(){
+    //put all cells in envir to null
 
   }
 
@@ -66,15 +80,20 @@ public class Environment {
   }
 
   public double getDistance(LifeForm lifeform1, LifeForm lifeform2){
+    int Life1row = lifeform1.getRow();
+    int Life1col = lifeform1.getCol();
+    int Life2row = lifeform2.getRow();
+    int Life2col = lifeform2.getCol();
+
     return 0.0;
   }
 
   public int getNumCols(){
-    return 0;
+    return envCols;
   }
 
   public int getNumRows(){
-    return 0;
+    return envRows;
   }
 
   public Weapon[] getWeapons(int row, int col){

@@ -10,6 +10,8 @@ import weapon.Weapon;
 public abstract class LifeForm {
   private String myName;
   protected int currentLifePoints;
+  protected int row;
+  protected int col;
 
   protected int attackStrength;
 
@@ -119,4 +121,11 @@ public abstract class LifeForm {
     currentLifePoints = Math.max(0, currentLifePoints - damage);
   }
 
+  public int getRow(){
+    return row;
+  }
+
+  public int getCol(){
+    return col;
+  }
 }
