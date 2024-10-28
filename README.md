@@ -1,9 +1,6 @@
-# Lab 4 Description
+# Lab 5 Description
 
-Base System for Human Vs Zombies.
-LifeForms are able to pick up weapons and attack one another.
-Zombies are able to recover health on specific rounds.
-Humans are able to get armor to protect against attacks.
+Adding Weapons to a cell in a Environment
 
 # Team Contract
 
@@ -35,9 +32,9 @@ Using the following table
 
 | Task                                  | Assignee | Deadline | Progress (date) |
 |---------------------------------------|---|---|---|
-| LifeForm, Weapon, and Attachment Class | Terrence Steele | 10/20/24 | Finished LifeForm, Weapon, Attachment Class (10/09/24) |
-| Attachment Classes                    | Zach Kline | 10/20/24 | Finished Scope Classes (10/19/24)|
-| General Weapon Classes                | Adam Czorapinski | 10/20/24 | Finish General Weapon Classes (10/16/24)|
+| Environment Class | Terrence Steele | 10/23/24 | Finished Environment Class (10/27/24) |
+| LifeForm Class                 | Zach Kline | 10/23/24 | Finished LifeForm Class (10/27/24)|
+| Cells Class                | Adam Czorapinski | 10/23/24 | Finish Cells Class (10/27/24)|
 
 
 # Team Meeting Log
@@ -47,6 +44,6 @@ of class.
 
 | Meeting # | When | Where | Attendees            | Note |
 |-----------|---|---|----------------------|---|
-| 1         | 12:30-12:50pm, 10/09 | In-Class | Terrence, Adam, Zach | Assigning work |
-| 2         | 6-7pm, 10/10 | ZOOM | Terrence, Adam, Zach          | Checking in |
+| 1         | 12:00-12:30pm, 10/23 | In-Class | Terrence, Adam, Zach | Assigning work |
+| 2         | 12:50-1pm, 10/10 | Room 161 | Terrence, Adam, Zach          | Checking in |
 | 3         | 6-6:30pm, 10/11 | ZOOM | Terrence, Adam, Zach          | Checking in |
