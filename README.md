@@ -32,9 +32,9 @@ Using the following table
 
 | Task                                  | Assignee | Deadline | Progress (date) |
 |---------------------------------------|---|---|---|
-| Environment Class | Terrence Steele | 10/23/24 | Finished Environment Class (10/27/24) |
-| LifeForm Class                 | Zach Kline | 10/23/24 | Finished LifeForm Class (10/27/24)|
-| Cells Class                | Adam Czorapinski | 10/23/24 | Finish Cells Class (10/27/24)|
+| Environment Class | Terrence, Carlos| 10/23/24 | Finished Environment Class (10/27/24) |
+| LifeForm Class                 | John | 10/23/24 | Finished LifeForm Class (10/27/24)|
+| Cells Class                | Mason | 10/23/24 | Finish Cells Class (10/27/24)|
 
 
 # Team Meeting Log
@@ -44,6 +44,6 @@ of class.
 
 | Meeting # | When | Where | Attendees            | Note |
 |-----------|---|---|----------------------|---|
-| 1         | 12:00-12:30pm, 10/23 | In-Class | Terrence, Adam, Zach | Assigning work |
-| 2         | 12:50-1pm, 10/10 | Room 161 | Terrence, Adam, Zach          | Checking in |
-| 3         | 6-6:30pm, 10/11 | ZOOM | Terrence, Adam, Zach          | Checking in |
+| 1         | 12:00-12:30pm, 10/23 | In-Class | John, Terrence, Mason, Carlos | Assigning work |
+| 2         | 12:50-1pm, 10/10 | Room 161 | John, Terrence, Mason, Carlos          | Checking in |
+| 3         | 12:50-1pm, 10/28 | Room 161 | John, Mason, Carlos, Terrence          | Checking in on everyone |
