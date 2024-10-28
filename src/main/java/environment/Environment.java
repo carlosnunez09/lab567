@@ -5,6 +5,8 @@ import weapon.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 
 public class Environment {
 
@@ -86,7 +88,14 @@ public class Environment {
     int Life2row = lifeform2.getRow();
     int Life2col = lifeform2.getCol();
 
-    return 0.0;
+    if (Life1row != Life2row && Life1col != Life2col){
+      return Math.hypot((Life1row - Life2row) * 5,(Life1col - Life2col) * 5);
+    }
+    else{
+      double temp = (abs(Life1row - Life2row) * 5) + (abs(Life1col - Life2col) * 5);
+      return temp;
+    }
+
   }
 
   public int getNumCols(){
