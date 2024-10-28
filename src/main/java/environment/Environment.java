@@ -2,6 +2,8 @@ package environment;
 
 import lifeform.LifeForm;
 import weapon.Weapon;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,11 +77,23 @@ public class Environment {
   }
   public void clearBoard(){
     //put all cells in envir to null
+    for (int i =0; i < envRows; i++){
+      for (int j =0; j < envCols; j++){
+        cells[i][j] = null;
+      }
+    }
 
   }
 
   public double getDistance(int row1, int col1, int row2, int col2){
-    return 0.0;
+
+    if (row1 != row2 && col1 != col2){
+      return Math.hypot((row1 - row2) * 5,(col1 - col2) * 5);     // a^2 + b^2 = c^2
+    }
+    else{
+      double temp = (abs(row1 - row2) * 5) + (abs(col1 - col2) * 5);
+      return temp;
+    }
   }
 
   public double getDistance(LifeForm lifeform1, LifeForm lifeform2){
@@ -108,25 +122,32 @@ public class Environment {
 
   public Weapon[] getWeapons(int row, int col){
     Weapon[] weapons = new Weapon[2];
-    LifeForm m = getLifeForm(row, col);
-    Weapon t = null;
-    if (m.hasWeapon()){
-      t = m.dropWeapon();
-      m.pickUpWeapon(t);
-      weapons[0] = t;
-    }
-
-    if (m.hasWeapon()){
-      t = m.dropWeapon();
-      m.pickUpWeapon(t);
-      weapons[1] = t;
-    }
-
+    weapons[0] = cells[row][col].getWeapon1();
+    weapons[1] = cells[row][col].getWeapon2();
     return weapons;
   }
 
+
+  public Boolean addWeapon(Weapon weapon, int row, int col){
+    if (envCols > col || envRows > row){
+      return false;
+    }
+    else if (cells[row][col].addWeapon(weapon)){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+
   public Weapon removeWeapon(Weapon weapon, int row, int col){
-    return null;
+    if (envCols > col || envRows > row){
+      return null;
+    }
+    else{
+      return cells[row][col].removeWeapon(weapon);
+    }
   }
 
 }
