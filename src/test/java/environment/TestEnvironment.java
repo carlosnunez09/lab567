@@ -115,15 +115,15 @@ public class TestEnvironment {
     Environment env = new Environment(7,7);
     Assert.assertTrue(env.addLifeForm(m, 5, 6));
     Assert.assertTrue(env.addWeapon(p, 5, 6));
-    /*Assert.assertTrue(env.addWeapon(c, 5, 6));
+    Assert.assertTrue(env.addWeapon(c, 5, 6));
 
     Assert.assertEquals(m, env.getLifeForm(5, 6));
     Weapon[] list = new Weapon[2];
     list = env.getWeapons(5, 6);
     Assert.assertEquals(p, list[0]);
     Assert.assertEquals(c, list[1]);
-    Assert.assertEquals((long)this.NUMROWS, (long)env.getNumRows());
-    Assert.assertEquals((long)this.NUMCOLS, (long)env.getNumCols());*/
+    Assert.assertEquals(7, (long)env.getNumRows());
+    Assert.assertEquals(7, (long)env.getNumCols());
   }
 
 }

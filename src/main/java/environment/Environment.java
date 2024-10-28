@@ -128,25 +128,21 @@ public class Environment {
   }
 
 
-  public Boolean addWeapon(Weapon weapon, int row, int col){
-    if (envCols > col || envRows > row){
-      return false;
-    }
-    else if (cells[row][col].addWeapon(weapon)){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-
   public Weapon removeWeapon(Weapon weapon, int row, int col){
     if (envCols > col || envRows > row){
       return null;
     }
     else{
       return cells[row][col].removeWeapon(weapon);
+    }
+  }
+
+  public boolean addWeapon(Weapon weapon, int row, int col){
+    if (cells[row][col].addWeapon(weapon)){
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
