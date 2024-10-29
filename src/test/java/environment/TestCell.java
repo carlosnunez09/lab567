@@ -68,6 +68,7 @@ public class TestCell {
     assertNull(cell.getLifeForm());
   }
 
+
   @Test
   public void testAddWeapon() {
     Cell cell = new Cell();

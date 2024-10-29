@@ -5,7 +5,6 @@ import org.junit.Test;
 import weapon.MockWeapon;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the functionality provided by the LifeForm class
@@ -181,6 +180,32 @@ public class TestLifeForm {
     entity1.weapon.reload();
 
     assertEquals(entity1.weapon.getMaxAmmo(), entity1.weapon.getCurrentAmmo());
+  }
+
+  @Test
+  public void testSetLocation() {
+    LifeForm entity = new MockLifeForm("p1", 10, 5);
+    entity.setLocation(1, 1);
+    assertEquals(1, entity.getRow());
+    assertEquals(1, entity.getCol());
+  }
+
+  @Test
+  public void testGetLocation() {
+    LifeForm entity = new MockLifeForm("p1", 10, 5);
+    assertEquals(-1, entity.getRow());
+    assertEquals(-1, entity.getCol());
+  }
+
+  @Test
+  public void testSetLocationNegative() {
+    LifeForm entity = new MockLifeForm("p1", 10, 5);
+    entity.setLocation(-1, 1);
+    assertEquals(-1, entity.getRow());
+    assertEquals(-1, entity.getCol());
+    entity.setLocation(1, -1);
+    assertEquals(-1, entity.getRow());
+    assertEquals(-1, entity.getCol());
   }
 
 

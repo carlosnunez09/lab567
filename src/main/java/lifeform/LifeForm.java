@@ -10,7 +10,6 @@ import weapon.Weapon;
 public abstract class LifeForm {
   private String myName;
   protected int currentLifePoints;
-
   protected int attackStrength;
   protected int col;
   protected int row;
@@ -32,6 +31,8 @@ public abstract class LifeForm {
     myName = name;
     currentLifePoints = life;
     attackStrength = attackDmg;
+    col = -1;
+    row = -1;
   }
 
   /**
@@ -135,11 +136,17 @@ public abstract class LifeForm {
    * Set the location of a lifeform
    */
 
-  public void setLocation(int row, int col) {
-    this.row = row;
-    this.col = col;
 
+  public void setLocation(int row, int col) {
+    if (row < 0 || col < 0) {
+      this.row = -1;
+      this.col = -1;
+    } else {
+      this.row = row;
+      this.col = col;
+    }
   }
+
 
 
 
