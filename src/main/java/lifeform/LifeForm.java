@@ -122,15 +122,19 @@ public abstract class LifeForm {
     currentLifePoints = Math.max(0, currentLifePoints - damage);
   }
 
-  public int getRow(){
+  public int getRow() {
     return row;
   }
 
-  public int getCol(){
-      return col;
+  public int getCol() {
+    return col;
   }
 
-  public void setLocation(int row, int col){
+  /**
+   * Set the location of a lifeform
+   */
+
+  public void setLocation(int row, int col) {
     this.row = row;
     this.col = col;
 

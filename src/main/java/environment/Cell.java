@@ -63,10 +63,8 @@ public class Cell {
     if (weaponOne == null && weaponTwo != weapon) {       // If no Weapon in Cell -> add Weapon
       weaponOne = weapon;
       weaponCount++;
-      return true;                                        // If no second Weapon AND already one Weapon -> add Weapon
-    }
-
-    else if (weaponTwo == null && weaponOne != weapon) {
+      return true;       // If no second Weapon AND already one Weapon -> add Weapon
+    } else if (weaponTwo == null && weaponOne != weapon) {
       weaponTwo = weapon;
       weaponCount++;
       return true;
@@ -87,9 +85,7 @@ public class Cell {
       weaponOne = null;
       weaponCount--;
       return removedWeapon;
-    }
-    // Check if second weapon matches
-    else if (weaponTwo == weapon) {
+    } else if (weaponTwo == weapon) { // Check if second weapon matches
       removedWeapon = weaponTwo;
       weaponTwo = null;
       weaponCount--;
@@ -103,15 +99,15 @@ public class Cell {
     lifeform = null;
   }
 
-  public Weapon getWeapon1(){
+  public Weapon getWeapon1() {
     return weaponOne;
   }
 
-  public Weapon getWeapon2(){
+  public Weapon getWeapon2() {
     return weaponTwo;
   }
 
-  public int getWeaponsCount(){
+  public int getWeaponsCount() {
     return weaponCount;
   }
 

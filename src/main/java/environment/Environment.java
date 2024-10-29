@@ -3,10 +3,6 @@ package environment;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.lang.Math.abs;
 
 
@@ -30,6 +26,9 @@ public class Environment {
 
   }
 
+  /**
+   * Singleton for this class
+   */
 
   public static Environment getEnvironment(int row, int col) {
     if (insta == null) {
@@ -75,73 +74,108 @@ public class Environment {
       cells[row][col].removeLifeForm();
     }
   }
-  public void clearBoard(){
+
+  /**
+   * Clears the board with NULL
+   **/
+
+  public void clearBoard() {
     //put all cells in envir to null
-    for (int i =0; i < envRows; i++){
-      for (int j =0; j < envCols; j++){
+    for (int i = 0; i < envRows; i++) {
+      for (int j = 0; j < envCols; j++) {
         cells[i][j] = null;
       }
     }
 
   }
 
-  public double getDistance(int row1, int col1, int row2, int col2){
 
-    if (row1 != row2 && col1 != col2){
+  /**
+   * Get the distance between 2 cells
+   * @return A Double
+   * */
+
+  public double getDistance(int row1, int col1, int row2, int col2) {
+
+    if (row1 != row2 && col1 != col2) {
       return Math.hypot((row1 - row2) * 5,(col1 - col2) * 5);     // a^2 + b^2 = c^2
-    }
-    else{
+    } else {
       double temp = (abs(row1 - row2) * 5) + (abs(col1 - col2) * 5);
       return temp;
     }
   }
 
-  public double getDistance(LifeForm lifeform1, LifeForm lifeform2){
-    int Life1row = lifeform1.getRow();
-    int Life1col = lifeform1.getCol();
-    int Life2row = lifeform2.getRow();
-    int Life2col = lifeform2.getCol();
+  /**
+   * Gets the distance between 2 lifeforms
+   * @return the distance
+   */
 
-    if (Life1row != Life2row && Life1col != Life2col){
-      return Math.hypot((Life1row - Life2row) * 5,(Life1col - Life2col) * 5);
-    }
-    else{
-      double temp = (abs(Life1row - Life2row) * 5) + (abs(Life1col - Life2col) * 5);
+  public double getDistance(LifeForm lifeform1, LifeForm lifeform2) {
+    int life1Row = lifeform1.getRow();
+    int life1Col = lifeform1.getCol();
+    int life2Row = lifeform2.getRow();
+    int life2Col = lifeform2.getCol();
+
+    if (life1Row != life2Row && life1Col != life2Col) {
+      return Math.hypot((life1Row - life2Row) * 5,(life1Col - life2Col) * 5);
+    } else {
+      double temp = (abs(life1Row - life2Row) * 5) + (abs(life1Col - life2Col) * 5);
       return temp;
     }
 
   }
 
-  public int getNumCols(){
+  /**
+   * @return # of cols
+   */
+
+  public int getNumCols() {
     return envCols;
   }
 
-  public int getNumRows(){
+  /**
+   * @return # of rows
+   */
+
+  public int getNumRows() {
     return envRows;
   }
 
-  public Weapon[] getWeapons(int row, int col){
+  /**
+   * Get the weapons in the cell
+   * @return the list of weapons
+   */
+
+  public Weapon[] getWeapons(int row, int col) {
     Weapon[] weapons = new Weapon[2];
     weapons[0] = cells[row][col].getWeapon1();
     weapons[1] = cells[row][col].getWeapon2();
     return weapons;
   }
 
+  /**
+   * Removes a weapon from cell
+   * @return weapon that was removed
+   */
 
-  public Weapon removeWeapon(Weapon weapon, int row, int col){
-    if (envCols > col || envRows > row){
+  public Weapon removeWeapon(Weapon weapon, int row, int col) {
+    if (envCols > col || envRows > row) {
       return null;
-    }
-    else{
+    } else {
       return cells[row][col].removeWeapon(weapon);
     }
   }
 
-  public boolean addWeapon(Weapon weapon, int row, int col){
-    if (cells[row][col].addWeapon(weapon)){
+
+  /**
+   * Add a weapon to a cell
+   * @return Boolean if weapon is added
+   */
+
+  public boolean addWeapon(Weapon weapon, int row, int col) {
+    if (cells[row][col].addWeapon(weapon)) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
