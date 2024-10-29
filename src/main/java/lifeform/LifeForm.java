@@ -68,6 +68,7 @@ public abstract class LifeForm {
   }
 
 
+  
 
   /**
    * Get lifeForms current AttackStrength
