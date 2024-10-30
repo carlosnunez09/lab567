@@ -1,8 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 
 public class GUI2 {
@@ -22,6 +22,8 @@ class TV extends JFrame {
   JLabel label;
   boolean off = true;
   boolean up = true;
+  int col = 10;
+  int row = 10;
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
@@ -37,13 +39,25 @@ class TV extends JFrame {
     add(panel);
     //add(sideBar, BorderLayout.WEST);
 
-    label = new JLabel(offImage);
+    //label = new JLabel(offImage);
 
-    panel.add(label);
+    //panel.add(label);
 
     pack();
     setLocation(240, 250);
     setVisible(true);
+  }
+
+  public void paint(Graphics g) {
+    super.paint(g);
+    for (int i = 0; i < col; i++){
+      g.drawLine(50 * i, 0, 50 * i, 500);
+    }
+
+    for (int i = 0; i < row; i++){
+      g.drawLine(0,50 * i, 500, 50 * i);
+    }
+     // Draw a line from (50, 50) to (200, 200)
   }
 
   public void toggle() {
