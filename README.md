@@ -49,3 +49,4 @@ of class.
 | 1         | 10:50-12:50pm, 10/30 | In-Class | John, Terrence, Mason, Carlos | Assigning work |
 | 2         |      | Room 161 | John, Terrence, Mason, Carlos          |  |
 | 3         |    | Room 161 | John, Mason, Carlos, Terrence          | |
+https://docs.google.com/document/d/165ErRQPZ-IexXcD-g0_XsFDzo5uGs9L5jPVIIi6D25w/edit?tab=t.0
