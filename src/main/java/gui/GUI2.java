@@ -8,9 +8,7 @@ import java.awt.image.BufferedImage;
 public class GUI2 {
   public static void main(String[] args) {
     var tv = new TV();
-    var r = new SimpleRemote(() -> tv.toggle());
-
-    tv.setDisplay(r.getTextArea());
+    var r = new SimpleRemote(() -> tv.toggle());;
   }
 }
 
@@ -33,14 +31,21 @@ class TV extends JFrame {
   JTextArea remoteDisplay;
 
   public TV() {
-    setSize(400, 400);
+    setSize(500, 500);
     setLayout(null);
-    JPanel panel = new JPanel();
 
-    panel.setBounds(50, 100, 300, 300);
+
+    JPanel panel = new JPanel();
+    panel.setBounds(0, 0, 300, 300);
     panel.setLayout(new GridLayout(col, row));
     panel.setBackground(Color.GRAY);
     //panel.setBounds(0, 0, 250, 250);
+
+
+    JTextArea textArea = new JTextArea();
+    textArea.setBounds(300, 0, 200, 500);
+    textArea.setBackground(Color.GRAY);
+    textArea.setEditable(false);
 
     for (int i = 0; i < (col * row); i++){
       panel.add(new JButton());
@@ -49,6 +54,7 @@ class TV extends JFrame {
     var sideBar = new JPanel();
 
     add(panel);
+    add(textArea);
     //add(sideBar, BorderLayout.WEST);
 
 
@@ -57,7 +63,7 @@ class TV extends JFrame {
 
     //panel.add(label);
 
-    pack();
+    //pack();
     setLocation(100, 100);
     setVisible(true);
   }
