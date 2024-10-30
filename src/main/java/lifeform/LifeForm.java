@@ -12,8 +12,8 @@ public abstract class LifeForm {
   protected int currentLifePoints;
 
   protected int attackStrength;
-  protected int col;
-  protected int row;
+  protected int col = -1;
+  protected int row = -1;
 
   protected Weapon weapon;
 
