@@ -22,8 +22,8 @@ class TV extends JFrame {
   JLabel label;
   boolean off = true;
   boolean up = true;
-  int col = 15;
-  int row = 15;
+  int col = 7;
+  int row = 7;
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
@@ -33,13 +33,25 @@ class TV extends JFrame {
   JTextArea remoteDisplay;
 
   public TV() {
-    var panel = new JPanel();
-    setLayout(new BorderLayout());
+    setSize(400, 400);
+    setLayout(null);
+    JPanel panel = new JPanel();
+
+    panel.setBounds(50, 100, 300, 300);
+    panel.setLayout(new GridLayout(col, row));
+    panel.setBackground(Color.GRAY);
+    //panel.setBounds(0, 0, 250, 250);
+
+    for (int i = 0; i < (col * row); i++){
+      panel.add(new JButton());
+    }
 
     var sideBar = new JPanel();
 
-    add(panel, BorderLayout.CENTER);
-    add(sideBar, BorderLayout.WEST);
+    add(panel);
+    //add(sideBar, BorderLayout.WEST);
+
+
 
     //label = new JLabel(offImage);
 
@@ -47,10 +59,9 @@ class TV extends JFrame {
 
     pack();
     setLocation(100, 100);
-    setSize(700, 700);
     setVisible(true);
   }
-
+  /*
   public void paint(Graphics g) {
     super.paint(g);
     for (int i = 0; i < col; i++){
@@ -62,7 +73,7 @@ class TV extends JFrame {
     // Maybe Use Buttons Instead of Making a 3d Grid
 
      // Draw a line from (50, 50) to (200, 200)
-  }
+  }*/
 
   public void toggle() {
     if (!off) {
@@ -137,6 +148,7 @@ class SimpleRemote extends JFrame {
 
     setSize(500, 500);
     setVisible(true);
+    setLocation(400, 400);
   }
 
   public JTextArea getTextArea() {
