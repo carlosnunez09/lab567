@@ -1,6 +1,6 @@
-# Lab 5 Description
+# Lab 6 Description
 
-Adding Weapons to a cell in a Environment
+Adding GUI to the Game
 
 # Team Contract
 
@@ -32,9 +32,9 @@ Using the following table
 
 | Task                           | Assignee | Deadline | Progress (date)                       |
 |--------------------------------|--------|----------|---------------------------------------|
-| Game'UI'                       | Carlos | 10/23/24 |  |
+| Game'UI'                       | Terrence | 10/23/24 |  |
 | Commands                       | John   | 10/23/24 |    |
-| Invoker'Builder' & Invoker'UI' | Terrence | 10/30/24  |             |
+| Invoker'Builder' & Invoker'UI' | Carlos | 10/30/24  |             |
 | Turn'&'Movement'               | Mason  | 10/30/24  | Finish Turn & Movement ()     |
 
 
