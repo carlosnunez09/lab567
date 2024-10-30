@@ -68,7 +68,7 @@ public abstract class LifeForm {
   }
 
 
-
+  
 
   /**
    * Get lifeForms current AttackStrength
@@ -136,14 +136,9 @@ public abstract class LifeForm {
    */
 
   public void setLocation(int row, int col) {
-    if (row < 0 || col < 0){
-      this.row = -1;
-      this.col = -1;
+    this.row = row;
+    this.col = col;
 
-    } else {
-      this.row = row;
-      this.col = col;
-    }
   }
 
 
