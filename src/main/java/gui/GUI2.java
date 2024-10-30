@@ -22,8 +22,8 @@ class TV extends JFrame {
   JLabel label;
   boolean off = true;
   boolean up = true;
-  int col = 10;
-  int row = 10;
+  int col = 15;
+  int row = 15;
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
@@ -34,17 +34,20 @@ class TV extends JFrame {
 
   public TV() {
     var panel = new JPanel();
-    //var sideBar = new JPanel();
+    setLayout(new BorderLayout());
 
-    add(panel);
-    //add(sideBar, BorderLayout.WEST);
+    var sideBar = new JPanel();
+
+    add(panel, BorderLayout.CENTER);
+    add(sideBar, BorderLayout.WEST);
 
     //label = new JLabel(offImage);
 
     //panel.add(label);
 
     pack();
-    setLocation(240, 250);
+    setLocation(100, 100);
+    setSize(500, 500);
     setVisible(true);
   }
 
@@ -67,12 +70,6 @@ class TV extends JFrame {
       on();
     }
 
-    if (!up && !off){
-      Down();
-    } else if (up && !off){
-      Up();
-    }
-
   }
 
   public void off() {
@@ -85,18 +82,6 @@ class TV extends JFrame {
     label.setIcon(onImage);
     off = false;
     remoteDisplay.append("On\n");
-  }
-
-  public void Up() {
-    label.setIcon(upImage);
-    up = true;
-    remoteDisplay.append("Up\n");
-  }
-
-  public void Down() {
-    label.setIcon(onImage);
-    up = false;
-    remoteDisplay.append("Down\n");
   }
 
   public void setDisplay(JTextArea t) {
