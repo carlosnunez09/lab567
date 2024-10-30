@@ -59,6 +59,8 @@ class TV extends JFrame {
       }
     }
 
+    // Maybe Use Buttons Instead of Making a 3d Grid
+
      // Draw a line from (50, 50) to (200, 200)
   }
 
