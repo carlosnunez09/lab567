@@ -20,8 +20,9 @@ class TV extends JFrame {
   JLabel label;
   boolean off = true;
   boolean up = true;
-  int col = 7;
-  int row = 7;
+  int col = 15;
+  int row = 15;
+  JButton[][] numberOfButtons = new JButton[row][col];
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
@@ -29,32 +30,39 @@ class TV extends JFrame {
   ImageIcon upImage = new ImageIcon("gif.gif");
 
   JTextArea remoteDisplay;
+  JTextArea textArea;
 
   public TV() {
-    setSize(500, 500);
-    setLayout(null);
+    setSize(800, 1000);
+    setLayout(new BorderLayout());
 
 
     JPanel panel = new JPanel();
-    panel.setBounds(0, 0, 300, 300);
-    panel.setLayout(new GridLayout(col, row));
+    panel.setBounds(0, 0, 800, 800);
+    panel.setLayout(new GridLayout(row, col));
     panel.setBackground(Color.GRAY);
     //panel.setBounds(0, 0, 250, 250);
 
 
-    JTextArea textArea = new JTextArea();
-    textArea.setBounds(300, 0, 200, 500);
+    textArea = new JTextArea();
+    textArea.setBounds(800, 0, 200, 800);
     textArea.setBackground(Color.GRAY);
     textArea.setEditable(false);
 
-    for (int i = 0; i < (col * row); i++){
-      panel.add(new JButton());
+    for (int i = 0; i < row; i++){
+      for (int j = 0; j < col; j++){
+        numberOfButtons[i][j] = new JButton();
+        //numberOfButtons[i][j].setFocusable(false);
+        numberOfButtons[i][j].addActionListener(this::actionPerformed);
+        panel.add(numberOfButtons[i][j]);
+      }
     }
 
     var sideBar = new JPanel();
 
-    add(panel);
-    add(textArea);
+    add(textArea, BorderLayout.CENTER);
+    add(panel, BorderLayout.WEST);
+
     //add(sideBar, BorderLayout.WEST);
 
 
@@ -64,8 +72,20 @@ class TV extends JFrame {
     //panel.add(label);
 
     //pack();
-    setLocation(100, 100);
+    this.setLocation(100, 100);
     setVisible(true);
+  }
+
+
+  public void actionPerformed(ActionEvent e){
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        if (e.getSource() == numberOfButtons[i][j]) {
+          numberOfButtons[i][j].setBackground(Color.BLACK);
+          //textArea.setText("A button was pressed\n");
+        }
+      }
+    }
   }
   /*
   public void paint(Graphics g) {
