@@ -47,19 +47,18 @@ class TV extends JFrame {
 
     pack();
     setLocation(100, 100);
-    setSize(500, 500);
+    setSize(700, 700);
     setVisible(true);
   }
 
   public void paint(Graphics g) {
     super.paint(g);
     for (int i = 0; i < col; i++){
-      g.drawLine(50 * i, 0, 50 * i, 500);
+      for (int j = 0; j < row; j++){
+        g.drawRect(50 * i, 50 * j, 50, 50);
+      }
     }
 
-    for (int i = 0; i < row; i++){
-      g.drawLine(0,50 * i, 500, 50 * i);
-    }
      // Draw a line from (50, 50) to (200, 200)
   }
 
