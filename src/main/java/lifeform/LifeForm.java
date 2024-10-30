@@ -136,8 +136,13 @@ public abstract class LifeForm {
    */
 
   public void setLocation(int row, int col) {
-    this.row = row;
-    this.col = col;
+    if (row < 0 || col < 0){
+      this.row = -1;
+      this.col = -1;
+    } else {
+      this.row = row;
+      this.col = col;
+    }
 
   }
 
