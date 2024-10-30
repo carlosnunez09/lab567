@@ -1,5 +1,6 @@
 package lifeform;
 
+import environment.Environment;
 import exceptions.WeaponException;
 import org.junit.Test;
 import weapon.MockWeapon;
@@ -182,6 +183,27 @@ public class TestLifeForm {
 
     assertEquals(entity1.weapon.getMaxAmmo(), entity1.weapon.getCurrentAmmo());
   }
+
+
+  @Test
+  public void testRowAndCols(){
+    LifeForm entity1 = new MockLifeForm("p1", 10, 5);
+    Environment e = new Environment(5, 5);
+    entity1.setLocation(5, 5);
+    entity1.setLocation(10, 10);
+  }
+
+  @Test
+  public void testNegRowAndCols(){
+    LifeForm entity1 = new MockLifeForm("p1", 10, 5);
+    Environment e = new Environment(5, 5);
+    entity1.setLocation(-10, 5);
+    assertEquals(entity1.getCol(), -1);
+    assertEquals(entity1.getRow(), -1);
+
+  }
+
+
 
 
 }

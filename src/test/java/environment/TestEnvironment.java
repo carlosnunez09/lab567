@@ -66,7 +66,7 @@ public class TestEnvironment {
 
 
   @Test
-  public void testDistanceLifeForms() throws EnvironmentException {
+  public void testEnvDistance() throws EnvironmentException {
     MockLifeForm bob = new MockLifeForm("Bob", 10, 2);
     MockLifeForm sheryl = new MockLifeForm("Sheryl", 30, 5);
     Environment env = new Environment(2,3);
@@ -108,7 +108,7 @@ public class TestEnvironment {
   }
 
   @Test
-  public void testWeapon() {
+  public void testEnvWeapon() {
     MockLifeForm m = new MockLifeForm("bob", 40);
     Pistol p = new Pistol();
     ChainGun c = new ChainGun();
