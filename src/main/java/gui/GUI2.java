@@ -32,8 +32,10 @@ class TV extends JFrame {
 
   public TV() {
     var panel = new JPanel();
+    //var sideBar = new JPanel();
 
     add(panel);
+    //add(sideBar, BorderLayout.WEST);
 
     label = new JLabel(offImage);
 
@@ -97,23 +99,33 @@ class SimpleRemote extends JFrame {
     setLayout(new BorderLayout());
 
     JButton b = new JButton("Move");
-    b.setSize(5, 5);
+    //b.setSize(5, 5);
+    b.setBounds(250, 100, 50, 5);
     add(b, BorderLayout.CENTER);
 
+    JButton attack = new JButton("Attack");
+    //attack.setSize(5, 5);
+    attack.setBounds(350, 100, 50, 5);
+    add(attack, BorderLayout.CENTER);
+
     JButton up = new JButton("East");
-    up.setSize(5, 5);
+    //up.setSize(5, 5);
+    up.setBounds(400, 100, 100, 5);
     add(up, BorderLayout.EAST);
 
     JButton down = new JButton("West");
-    down.setSize(5, 5);
+    //down.setSize(5, 5);
+    down.setBounds(100, 200, 100, 5);
     add(down, BorderLayout.WEST);
 
     JButton North = new JButton("North");
-    North.setSize(5, 5);
+    //North.setSize(5, 5);
+    North.setBounds(100, 300, 100, 5);
     add(North, BorderLayout.NORTH);
 
     JButton South = new JButton("South");
-    South.setSize(10, 10);
+    //South.setSize(10, 10);
+    South.setBounds(100, 400, 100, 5);
     add(South, BorderLayout.SOUTH);
 
     b.addActionListener(a -> c.execute());
@@ -121,10 +133,7 @@ class SimpleRemote extends JFrame {
     down.addActionListener(a -> c.execute());
     North.addActionListener(a -> c.execute());
     South.addActionListener(a -> c.execute());
-
-    text = new JTextArea("Simple Remote\n");
-    text.setRows(4);
-    add(text, BorderLayout.SOUTH);
+    attack.addActionListener(a -> c.execute());
 
     setSize(500, 500);
     setVisible(true);
