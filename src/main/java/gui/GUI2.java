@@ -10,6 +10,7 @@ import weapon.Pistol;
 import weapon.PlasmaCannon;
 
 import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -19,7 +20,7 @@ import java.awt.image.BufferedImage;
 public class GUI2 {
 
   public static void main(String[] args) {
-    Environment e = new Environment(10, 10);
+    Environment e = new Environment(7, 7);
     Alien jeff = new Alien("Jeff", 15);
     Human bill = new Human("Bill", 15, 5);
     Human tim = new Human("Tim", 15, 5);
@@ -31,7 +32,7 @@ public class GUI2 {
 
     e.addLifeForm(jeff, 5, 5);
     e.addLifeForm(bill, 2, 2);
-    System.out.println(e.addWeapon(p, 1, 1));
+    e.addWeapon(p, 1, 1);
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
 
@@ -40,7 +41,25 @@ public class GUI2 {
 
     //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
     //System.out.println(e.getLifeForm(2, 2) instanceof Human);
+    /*
+    ImageIcon imageIcon = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Pistol.png");
 
+    int status = imageIcon.getImageLoadStatus();
+
+    switch (status) {
+      case MediaTracker.LOADING:
+        System.out.println("Image is still loading...");
+        break;
+      case MediaTracker.ABORTED:
+        System.out.println("Image loading aborted.");
+        break;
+      case MediaTracker.ERRORED:
+        System.out.println("Error loading image.");
+        break;
+      case MediaTracker.COMPLETE:
+        System.out.println("Image loaded successfully.");
+        break;
+    }*/
 
 
     var tv = new TV(e);
@@ -64,18 +83,23 @@ class TV extends JFrame {
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
          BufferedImage.TYPE_3BYTE_BGR));
   ImageIcon onImage = new ImageIcon("news.gif");
-  ImageIcon upImage = new ImageIcon("gif.gif");
+  ImageIcon pistol = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Pistol.png");
 
   JTextArea remoteDisplay;
   JTextArea textArea;
 
+  LifeForm lifeform;
+
   public TV(Environment env) {
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(800, 1000);
     setLayout(new BorderLayout());
     this.env = env;
     col = this.env.getNumCols();
     row = this.env.getNumRows();
     numberOfButtons = new JButton[row][col];
+
+
 
 
 
@@ -94,6 +118,7 @@ class TV extends JFrame {
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         numberOfButtons[i][j] = new JButton();
+        numberOfButtons[i][j].setPreferredSize(new Dimension(64, 64));
         //numberOfButtons[i][j].setFocusable(false);
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
         if (env.getLifeForm(i, j) == null) {
@@ -106,7 +131,7 @@ class TV extends JFrame {
         if (env.getWeapons(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else if (env.getWeapons(i, j)[0] instanceof Pistol) {
-          numberOfButtons[i][j].setBackground(Color.GREEN);
+          numberOfButtons[i][j].setIcon(pistol);
         } else if (env.getWeapons(i, j)[0] instanceof PlasmaCannon){
           numberOfButtons[i][j].setBackground(Color.RED);
         } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
@@ -138,7 +163,9 @@ class TV extends JFrame {
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         if (e.getSource() == numberOfButtons[i][j]) {
-          numberOfButtons[i][j].setBackground(Color.YELLOW);
+          //numberOfButtons[i][j].setBackground(Color.YELLOW);
+          lifeform = env.getLifeForm(i, j);
+          textArea.setText("The LifeForm Type is " + lifeform);
 
           //textArea.setText("A button was pressed\n");
         }
