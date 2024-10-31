@@ -18,12 +18,18 @@ public class GUI2 {
     Environment e = new Environment(10, 10);
     Alien jeff = new Alien("Jeff", 15);
     Human bill = new Human("Bill", 15, 5);
+    Human tim = new Human("Tim", 15, 5);
+    
 
     e.addLifeForm(jeff, 5, 5);
     e.addLifeForm(bill, 2, 2);
 
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
+
+    //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
+    System.out.println(e.getLifeForm(2, 2) instanceof Human);
+
 
 
     var tv = new TV(e);
@@ -79,7 +85,11 @@ class TV extends JFrame {
         numberOfButtons[i][j] = new JButton();
         //numberOfButtons[i][j].setFocusable(false);
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
-        if (this.env.getLifeForm(i, j) != null) {
+        if (env.getLifeForm(i, j) == null) {
+          numberOfButtons[i][j].setBackground(Color.WHITE);
+        } else if (env.getLifeForm(i, j) instanceof Human) {
+          numberOfButtons[i][j].setBackground(Color.BLUE);
+        } else if (env.getLifeForm(i, j) instanceof Alien) {
           numberOfButtons[i][j].setBackground(Color.BLACK);
         }
         panel.add(numberOfButtons[i][j]);
