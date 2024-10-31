@@ -39,9 +39,10 @@ class TV extends JFrame {
   JLabel label;
   boolean off = true;
   boolean up = true;
-  int col = 10;
-  int row = 10;
-  JButton[][] numberOfButtons = new JButton[row][col];
+  int col;
+  int row;
+  Environment env;
+  JButton[][] numberOfButtons;
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
          BufferedImage.TYPE_3BYTE_BGR));
@@ -54,6 +55,11 @@ class TV extends JFrame {
   public TV(Environment env) {
     setSize(800, 1000);
     setLayout(new BorderLayout());
+    this.env = env;
+    col = this.env.getNumCols();
+    row = this.env.getNumRows();
+    numberOfButtons = new JButton[row][col];
+
 
 
     JPanel panel = new JPanel();
@@ -73,7 +79,7 @@ class TV extends JFrame {
         numberOfButtons[i][j] = new JButton();
         //numberOfButtons[i][j].setFocusable(false);
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
-        if (env.getLifeForm(i, j) != null) {
+        if (this.env.getLifeForm(i, j) != null) {
           numberOfButtons[i][j].setBackground(Color.BLACK);
         }
         panel.add(numberOfButtons[i][j]);
