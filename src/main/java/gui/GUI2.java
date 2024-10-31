@@ -1,9 +1,13 @@
 package gui;
 
+import com.sun.net.httpserver.Filter;
 import environment.Environment;
 import lifeform.Alien;
 import lifeform.Human;
 import lifeform.LifeForm;
+import weapon.ChainGun;
+import weapon.Pistol;
+import weapon.PlasmaCannon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,16 +23,23 @@ public class GUI2 {
     Alien jeff = new Alien("Jeff", 15);
     Human bill = new Human("Bill", 15, 5);
     Human tim = new Human("Tim", 15, 5);
+
+    PlasmaCannon p = new PlasmaCannon();
+    Pistol pis = new Pistol();
+    ChainGun CG = new ChainGun();
     
 
     e.addLifeForm(jeff, 5, 5);
     e.addLifeForm(bill, 2, 2);
+    System.out.println(e.addWeapon(p, 1, 1));
+    e.addWeapon(pis, 3, 2);
+    e.addWeapon(CG, 1, 5);
 
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
 
     //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
-    System.out.println(e.getLifeForm(2, 2) instanceof Human);
+    //System.out.println(e.getLifeForm(2, 2) instanceof Human);
 
 
 
@@ -91,6 +102,15 @@ class TV extends JFrame {
           numberOfButtons[i][j].setBackground(Color.BLUE);
         } else if (env.getLifeForm(i, j) instanceof Alien) {
           numberOfButtons[i][j].setBackground(Color.BLACK);
+        }
+        if (env.getWeapons(i, j) == null) {
+          numberOfButtons[i][j].setBackground(Color.WHITE);
+        } else if (env.getWeapons(i, j)[0] instanceof Pistol) {
+          numberOfButtons[i][j].setBackground(Color.GREEN);
+        } else if (env.getWeapons(i, j)[0] instanceof PlasmaCannon){
+          numberOfButtons[i][j].setBackground(Color.RED);
+        } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
+          numberOfButtons[i][j].setBackground(Color.YELLOW);
         }
         panel.add(numberOfButtons[i][j]);
       }

@@ -147,10 +147,14 @@ public class Environment {
    */
 
   public Weapon[] getWeapons(int row, int col) {
-    Weapon[] weapons = new Weapon[2];
-    weapons[0] = cells[row][col].getWeapon1();
-    weapons[1] = cells[row][col].getWeapon2();
-    return weapons;
+    if (cells[row][col] == null) {
+      return null;
+    } else {
+      Weapon[] weapons = new Weapon[2];
+      weapons[0] = cells[row][col].getWeapon1();
+      weapons[1] = cells[row][col].getWeapon2();
+      return weapons;
+    }
   }
 
   /**
@@ -173,11 +177,15 @@ public class Environment {
    */
 
   public boolean addWeapon(Weapon weapon, int row, int col) {
-    if (cells[row][col].addWeapon(weapon)) {
+    if (cells[row][col] == null) {
+      cells[row][col] = new Cell();
+    }
+    if (cells[row][col].addWeapon(weapon)){
       return true;
     } else {
       return false;
     }
+
   }
 
 }
