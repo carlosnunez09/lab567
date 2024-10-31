@@ -81,7 +81,7 @@ class TV extends JFrame {
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         if (e.getSource() == numberOfButtons[i][j]) {
-          numberOfButtons[i][j].setBackground(Color.BLACK);
+          numberOfButtons[i][j].setBackground(Color.YELLOW);
           //textArea.setText("A button was pressed\n");
         }
       }
