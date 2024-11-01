@@ -185,7 +185,7 @@ class TV extends JFrame {
             weapon = env.getWeapons(i, j);
           }
 
-          textArea.setText("The Current Cell is \n" + "Row: " + row + "\tCol: " + col +  "\n\nLifeForm Type is " + lifeform + "\n\nFirst Weapon in Cell: is \n" + weapon[0] + "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] + "\n");
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\nLifeForm Type is " + lifeform + "\n\nFirst Weapon in Cell: is \n" + weapon[0] + "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] + "\n");
 
 
 
