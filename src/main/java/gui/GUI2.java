@@ -1,6 +1,5 @@
 package gui;
 
-import com.sun.net.httpserver.Filter;
 import environment.Environment;
 import lifeform.Alien;
 import lifeform.Human;
@@ -8,6 +7,7 @@ import lifeform.LifeForm;
 import weapon.ChainGun;
 import weapon.Pistol;
 import weapon.PlasmaCannon;
+import weapon.Weapon;
 
 import javax.swing.*;
 import javax.swing.ImageIcon;
@@ -84,11 +84,20 @@ class TV extends JFrame {
          BufferedImage.TYPE_3BYTE_BGR));
   ImageIcon onImage = new ImageIcon("news.gif");
   ImageIcon pistol = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Pistol.png");
+  ImageIcon human = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Human.jpg");
+  ImageIcon alien = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Alien.jpg");
+
+  ImageIcon plasma = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\PlasmaCannon.jpg");
+
+  ImageIcon chain = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\ChainGun.png");
+
+
 
   JTextArea remoteDisplay;
   JTextArea textArea;
 
   LifeForm lifeform;
+  Weapon[] weapon;
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,18 +133,18 @@ class TV extends JFrame {
         if (env.getLifeForm(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else if (env.getLifeForm(i, j) instanceof Human) {
-          numberOfButtons[i][j].setBackground(Color.BLUE);
+          numberOfButtons[i][j].setIcon(human);
         } else if (env.getLifeForm(i, j) instanceof Alien) {
-          numberOfButtons[i][j].setBackground(Color.BLACK);
+          numberOfButtons[i][j].setIcon(alien);
         }
         if (env.getWeapons(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else if (env.getWeapons(i, j)[0] instanceof Pistol) {
           numberOfButtons[i][j].setIcon(pistol);
         } else if (env.getWeapons(i, j)[0] instanceof PlasmaCannon){
-          numberOfButtons[i][j].setBackground(Color.RED);
+          numberOfButtons[i][j].setIcon(plasma);
         } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
-          numberOfButtons[i][j].setBackground(Color.YELLOW);
+          numberOfButtons[i][j].setIcon(chain);
         }
         panel.add(numberOfButtons[i][j]);
       }
@@ -164,8 +173,21 @@ class TV extends JFrame {
       for (int j = 0; j < col; j++) {
         if (e.getSource() == numberOfButtons[i][j]) {
           //numberOfButtons[i][j].setBackground(Color.YELLOW);
-          lifeform = env.getLifeForm(i, j);
-          textArea.setText("The LifeForm Type is " + lifeform);
+
+
+
+
+          if (env.getLifeForm(i, j) != null) {
+            lifeform = env.getLifeForm(i, j);
+          }
+
+          if (env.getWeapons(i, j) != null) {
+            weapon = env.getWeapons(i, j);
+          }
+
+          textArea.setText("The Current Cell is \n" + "Row: " + row + "\tCol: " + col +  "\n\nLifeForm Type is " + lifeform + "\n\nFirst Weapon in Cell: is \n" + weapon[0] + "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] + "\n");
+
+
 
           //textArea.setText("A button was pressed\n");
         }
