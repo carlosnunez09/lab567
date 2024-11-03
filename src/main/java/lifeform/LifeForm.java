@@ -1,5 +1,6 @@
 package lifeform;
 
+import environment.Environment;
 import exceptions.WeaponException;
 import weapon.Weapon;
 
@@ -10,11 +11,14 @@ import weapon.Weapon;
 public abstract class LifeForm {
   private String myName;
   protected int currentLifePoints;
+
   protected int attackStrength;
-  protected int col;
-  protected int row;
+  protected int col = -1;
+  protected int row = -1;
 
   protected Weapon weapon;
+
+  protected String currentDirection;
 
 
   public LifeForm(String name, int life) {
@@ -31,8 +35,6 @@ public abstract class LifeForm {
     myName = name;
     currentLifePoints = life;
     attackStrength = attackDmg;
-    col = -1;
-    row = -1;
   }
 
   /**
@@ -136,20 +138,33 @@ public abstract class LifeForm {
    * Set the location of a lifeform
    */
 
-
   public void setLocation(int row, int col) {
-    if (row < 0 || col < 0) {
+    if (row < 0 || col < 0){
       this.row = -1;
       this.col = -1;
     } else {
       this.row = row;
       this.col = col;
     }
+
   }
 
+  /**
+   * Sets direction of LifeForm
+   * @param newDirection
+   */
+  public void setDirection(String newDirection) {
+    if ((newDirection == "North") || (newDirection == "East") || (newDirection == "South") || (newDirection == "West")) {
+      currentDirection = newDirection;
+    } else {
+      currentDirection = "North";   // You can change the default direction wherever you'd like to, up to you guys. :)
+    }
+  }
 
-
-
-
-
+  /**
+   * Tells the Lifeforms which Cell to move to.
+   * @param environment
+   */
+  public void move(Environment environment) {
+  }
 }

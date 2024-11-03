@@ -1,6 +1,6 @@
-# Lab 5 Description
+# Lab 6 Description
 
-Adding Weapons to a cell in a Environment
+Adding GUI to the Game
 
 # Team Contract
 
@@ -30,11 +30,13 @@ We will ask them if they need help. If they are not doing work on purpose, we wi
 
 Using the following table
 
-| Task                                  | Assignee | Deadline | Progress (date) |
-|---------------------------------------|---|---|---|
-| Environment Class | Terrence, Carlos| 10/23/24 | Finished Environment Class (10/27/24) |
-| LifeForm Class                 | John | 10/23/24 | Finished LifeForm Class (10/27/24)|
-| Cells Class                | Mason | 10/23/24 | Finish Cells Class (10/27/24)|
+| Task                           | Assignee | Deadline | Progress (date)                       |
+|--------------------------------|--------|----------|---------------------------------------|
+| Game'UI'                       | Terrence | 10/23/24 |  |
+| Commands                       | John   | 10/23/24 |    |
+| Invoker'Builder' & Invoker'UI' | Carlos | 10/30/24  |             |
+| Turn'&'Movement'               | Mason  | 10/30/24  | Finish Turn & Movement ()     |
+
 
 
 # Team Meeting Log
@@ -42,8 +44,9 @@ Using the following table
 Please also include the in-class meetings. A team MUST meet at least twice out
 of class.
 
-| Meeting # | When | Where | Attendees            | Note |
-|-----------|---|---|----------------------|---|
-| 1         | 12:00-12:30pm, 10/23 | In-Class | John, Terrence, Mason, Carlos | Assigning work |
-| 2         | 12:50-1pm, 10/10 | Room 161 | John, Terrence, Mason, Carlos          | Checking in |
-| 3         | 12:50-1pm, 10/28 | Room 161 | John, Mason, Carlos, Terrence          | Checking in on everyone |
+| Meeting # | When                | Where | Attendees            | Note |
+|-----------|---------------------|---|----------------------|---|
+| 1         | 10:50-12:50pm, 10/30 | In-Class | John, Terrence, Mason, Carlos | Assigning work |
+| 2         |      | Room 161 | John, Terrence, Mason, Carlos          |  |
+| 3         |    | Room 161 | John, Mason, Carlos, Terrence          | |
+https://docs.google.com/document/d/165ErRQPZ-IexXcD-g0_XsFDzo5uGs9L5jPVIIi6D25w/edit?tab=t.0
