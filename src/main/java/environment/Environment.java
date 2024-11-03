@@ -1,5 +1,6 @@
 package environment;
 
+import gui.GUI2;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
@@ -7,14 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.abs;
-import gui.GUI2;
 
 
 public class Environment {
 
-  public List<EnvironmentObserver> gameboards = new ArrayList<>();
   public static Cell[][] cells;
   private static Environment insta;
+  public List<EnvironmentObserver> gameboards = new ArrayList<>();
   private int envRows;
   private int envCols;
 
@@ -49,6 +49,7 @@ public class Environment {
 
   /**
    * Adds a Lifeform to the cell
+   *
    * @return if the Lifeform has been successfully added to the cell
    */
 
@@ -102,13 +103,14 @@ public class Environment {
 
   /**
    * Get the distance between 2 cells
+   *
    * @return A Double
-   * */
+   */
 
   public double getDistance(int row1, int col1, int row2, int col2) {
 
     if (row1 != row2 && col1 != col2) {
-      return Math.hypot((row1 - row2) * 5,(col1 - col2) * 5);     // a^2 + b^2 = c^2
+      return Math.hypot((row1 - row2) * 5, (col1 - col2) * 5);     // a^2 + b^2 = c^2
     } else {
       double temp = (abs(row1 - row2) * 5) + (abs(col1 - col2) * 5);
       return temp;
@@ -117,6 +119,7 @@ public class Environment {
 
   /**
    * Gets the distance between 2 lifeforms
+   *
    * @return the distance
    */
 
@@ -127,7 +130,7 @@ public class Environment {
     int life2Col = lifeform2.getCol();
 
     if (life1Row != life2Row && life1Col != life2Col) {
-      return Math.hypot((life1Row - life2Row) * 5,(life1Col - life2Col) * 5);
+      return Math.hypot((life1Row - life2Row) * 5, (life1Col - life2Col) * 5);
     } else {
       double temp = (abs(life1Row - life2Row) * 5) + (abs(life1Col - life2Col) * 5);
       return temp;
@@ -153,6 +156,7 @@ public class Environment {
 
   /**
    * Get the weapons in the cell
+   *
    * @return the list of weapons
    */
 
@@ -169,6 +173,7 @@ public class Environment {
 
   /**
    * Removes a weapon from cell
+   *
    * @return weapon that was removed
    */
 
@@ -183,13 +188,14 @@ public class Environment {
 
   /**
    * Add a weapon to a cell
+   *
    * @return Boolean if weapon is added
    */
   public boolean addWeapon(Weapon weapon, int row, int col) {
     if (cells[row][col] == null) {
       cells[row][col] = new Cell();
     }
-    if (cells[row][col].addWeapon(weapon)){
+    if (cells[row][col].addWeapon(weapon)) {
       return true;
     } else {
       return false;
@@ -198,6 +204,7 @@ public class Environment {
 
   /**
    * Notifies observer
+   *
    * @param lifeForm
    */
   public void notifyObservers(LifeForm lifeForm) {
@@ -211,6 +218,7 @@ public class Environment {
 
   /**
    * If the cell is in the environment and is also open, return true.
+   *
    * @param row
    * @param col
    * @return
