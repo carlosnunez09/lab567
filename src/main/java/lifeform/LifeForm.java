@@ -146,8 +146,11 @@ public abstract class LifeForm {
       this.row = row;
       this.col = col;
     }
-
   }
+
+
+
+
 
   /**
    * Sets direction of LifeForm
