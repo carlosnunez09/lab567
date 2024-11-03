@@ -2,6 +2,8 @@ package environment;
 
 import lifeform.LifeForm;
 import weapon.Weapon;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.abs;
@@ -10,14 +12,14 @@ import gui.GUI2;
 
 public class Environment {
 
-  public List<EnvironmentObserver> gameboards;
+  public List<EnvironmentObserver> gameboards = new ArrayList<>();
   public static Cell[][] cells;
   private static Environment insta;
   private int envRows;
   private int envCols;
 
   /**
-   * Creates a Enviroment with provided rows and cols of the Cell class
+   * Creates an Enviroment with provided rows and cols of the Cell class
    */
 
   public Environment(int row, int col) {

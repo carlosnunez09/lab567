@@ -167,84 +167,37 @@ public abstract class LifeForm {
 
   /**
    * Tells the Lifeforms which Cell to move to.
-   * @param environment
+   * @param env
    */
-  public void move(Environment environment) {
-    final LifeForm current = environment.getLifeForm(row, col);
-    final Cell currentCell = environment.getCell(row, col);
+  public void move(Environment env) {
+    // Determine destination based on current direction
+    int desRow = row;
+    int desCol = col;
 
-    int desiredRow = 0;
-    int desiredCol = 0;
-
-    if (currentDirection == "East") {
-      desiredRow = row;
-      desiredCol = maxSpeed + col;
-    }
-    if (currentDirection == "South") {
-      desiredRow = row + maxSpeed;
-      desiredCol = col;
-    }
-    if (currentDirection == "West") {
-      desiredCol = col - maxSpeed;
-      desiredRow = row;
-    }
-    if (currentDirection == "North") {
-      desiredRow = row - maxSpeed;
-      desiredCol = col;
+    switch (currentDirection) {
+      case "North":
+        desRow -= maxSpeed;
+        break;
+      case "South":
+        desRow += maxSpeed;
+        break;
+      case "East":
+        desCol += maxSpeed;
+        break;
+      case "West":
+        desCol -= maxSpeed;
+        break;
     }
 
-    while (!environment.checkLegalPlay(desiredRow, desiredCol)) {
-      if (currentDirection == "North") {
-        if (desiredRow < row) {
-          desiredRow = desiredRow + 1;
-        }
-      }
-      if (currentDirection == "East") {
-        if (desiredCol > col) {
-          desiredCol = desiredCol - 1;
-        }
-      }
-      if (currentDirection == "South") {
-        if (desiredRow > row) {
-          desiredRow = desiredRow - 1;
-        }
-      }
-      if (currentDirection == "West") {
-        if (desiredCol < col) {
-          desiredCol = desiredCol + 1;
-        }
-      }
+    // Check if destination cell is legal
+    if (env.checkLegalPlay(desRow, desCol)) {
+      env.getCell(row, col).removeLifeForm(); // Remove from the current cell
+      row = desRow;
+      col = desCol; // Update to new cell
+      env.addLifeForm(this, row, col); // Add to the new cell
     }
-    while ((environment.getLifeForm(desiredRow, desiredCol) != null) && environment.getLifeForm(desiredRow, desiredCol) != current) {
-      if (currentDirection == "North") {
-        if (desiredRow < row) {
-          desiredRow = desiredRow + 1;
-        }
-      }
-      if (currentDirection == "East") {
-        if (desiredCol > col) {
-          desiredCol = desiredCol - 1;
-        }
-      }
-      if (currentDirection == "South") {
-        if (desiredRow > row) {
-          desiredRow = desiredRow - 1;
-        }
-      }
-      if (currentDirection == "West") {
-        if (desiredCol < col) {
-          desiredCol = desiredCol + 1;
-        }
-      }
-    }
-
-    currentCell.removeLifeForm();
-
-    row = desiredRow;
-    col = desiredCol;
-
-    environment.addLifeForm(current, row, col);
   }
+
   public int getMaxSpeed() {
     return maxSpeed;
   }
