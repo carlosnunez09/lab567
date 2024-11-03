@@ -65,6 +65,14 @@ public class GUI2 {
     var tv = new TV(e);
     //var r = new SimpleRemote(() -> tv.toggle());;
   }
+
+  public static int getscRow() {
+    return getscCol();
+  }
+
+  public static int getscCol() {
+    return getscCol();
+  }
 }
 
 interface Command {

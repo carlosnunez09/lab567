@@ -2,12 +2,15 @@ package environment;
 
 import lifeform.LifeForm;
 import weapon.Weapon;
+import java.util.List;
 
 import static java.lang.Math.abs;
+import gui.GUI2;
 
 
 public class Environment {
 
+  public List<EnvironmentObserver> gameboards;
   public static Cell[][] cells;
   private static Environment insta;
   private int envRows;
@@ -184,7 +187,6 @@ public class Environment {
     } else {
       return false;
     }
-
   }
 
   /**
@@ -192,6 +194,21 @@ public class Environment {
    * @param lifeForm
    */
   public void notifyObservers(LifeForm lifeForm) {
+    gameboards.forEach(gameboard -> gameboard.update(lifeForm.getRow(), lifeForm.getCol()));
+    gameboards.forEach(gameboard -> gameboard.update(GUI2.getscRow(), GUI2.getscCol()));
+  }
 
+  public Cell getCell(int row, int col) {
+    return cells[row][col];
+  }
+
+  /**
+   * If the cell is in the environment and is also open, return true.
+   * @param row
+   * @param col
+   * @return
+   */
+  public boolean checkLegalPlay(int row, int col) {
+    return this.getNumCols() > col && col >= 0 && this.getNumRows() > row && row >= 0;
   }
 }
