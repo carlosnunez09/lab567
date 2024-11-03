@@ -36,8 +36,16 @@ public class GUI2 {
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
 
+    bill.pickUpWeapon(p);
+
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
+
+
+
+
+    System.out.println(e.getLifeForm(2, 2).getClass().getName());
+
 
     //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
     //System.out.println(e.getLifeForm(2, 2) instanceof Human);
@@ -98,6 +106,8 @@ class TV extends JFrame {
 
   LifeForm lifeform;
   Weapon[] weapon;
+  String lifetype;
+  String lifeformWeapon;
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -178,14 +188,32 @@ class TV extends JFrame {
 
 
           if (env.getLifeForm(i, j) != null) {
-            lifeform = env.getLifeForm(i, j);
+            if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Alien"){
+              lifetype = "Alien";
+            } else if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Human"){
+              lifetype = "Human";
+            }
+
+            if (env.getLifeForm(i, j).hasWeapon()){
+              lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+            } else {
+              lifeformWeapon = "No Weapons Equipped";
+            }
+          } else {
+            lifetype = "Blank";
+            lifeformWeapon = "Not a Lifeform";
           }
 
           if (env.getWeapons(i, j) != null) {
             weapon = env.getWeapons(i, j);
           }
 
-          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\nLifeForm Type is " + lifeform + "\n\nFirst Weapon in Cell: is \n" + weapon[0] + "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] + "\n");
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Type is " + lifetype + " \n\n" +
+                  "LifeForm Weapon: " + lifeformWeapon +
+                  "\n\nFirst Weapon in Cell: is \n" + weapon[0] +
+                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                  "\n");
 
 
 
