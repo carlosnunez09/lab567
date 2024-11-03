@@ -158,7 +158,7 @@ public abstract class LifeForm {
    * @param newDirection
    */
   public void setDirection(String newDirection) {
-    if ((newDirection == "North") || (newDirection == "East") || (newDirection == "South") || (newDirection == "West")) {
+    if ("North".equals(newDirection) || "East".equals(newDirection) || "South".equals(newDirection) || "West".equals(newDirection)) {
       currentDirection = newDirection;
     } else {
       currentDirection = "North";   // You can change the default direction wherever you'd like to, up to you guys. :)

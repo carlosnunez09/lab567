@@ -12,7 +12,6 @@ public class Alien extends LifeForm implements TimerObserver {
    * @param points the current starting life points of the life form
    */
 
-
   protected int maxHitP = 10;
   private int recoverRate;
   private RecoveryBehavior rb;
@@ -53,6 +52,7 @@ public class Alien extends LifeForm implements TimerObserver {
     recoverRate = recoveryRate;
     rb = behavior;
     count = 1;
+    maxSpeed = 2;
 
     if (recoverRate < 0) {
       throw new RecoveryRateException("Recovery Rate cannot be less than zero");
@@ -70,8 +70,6 @@ public class Alien extends LifeForm implements TimerObserver {
   protected void recover() {
     int newlife = rb.calculateRecovery(currentLifePoints, maxHitP);
     currentLifePoints = newlife;
-
-
   }
 
   /**

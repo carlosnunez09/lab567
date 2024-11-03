@@ -19,12 +19,11 @@ public class Human extends LifeForm {
 
   public Human(String name, int lifepoints, int armor) {
     super(name, lifepoints);
-
     humanName = name;
     lifePoints = getCurrentLifePoints();
     attackStrength = 5;
     setArmorPoints(armor);
-
+    maxSpeed = 3;
   }
 
   public int getArmorPoints() {
