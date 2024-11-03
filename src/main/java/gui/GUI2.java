@@ -133,6 +133,10 @@ class TV extends JFrame {
     textArea.setBounds(800, 0, 200, 800);
     textArea.setBackground(Color.GRAY);
     textArea.setEditable(false);
+    Font newTextFieldFont=new Font(textArea.getFont().getName(),textArea.getFont().getStyle(),16);
+    textArea.setFont(newTextFieldFont);
+
+    //textArea.setPreferredSize(new Dimension(200, 800));
 
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
