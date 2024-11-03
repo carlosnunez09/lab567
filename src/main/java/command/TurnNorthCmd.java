@@ -10,7 +10,7 @@ public class TurnNorthCmd implements Command {
   @Override
   public void execute(int row, int col) {
     if (environment.getLifeForm(row, col) != null){
-      environment.getLifeForm(row, col).setDirection("East");
+      environment.getLifeForm(row, col).setDirection("North");
       environment.notifyObservers(environment.getLifeForm(row, col));
     }
   }
