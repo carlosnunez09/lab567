@@ -71,7 +71,7 @@ public class GUI2 {
 
 
     var tv = new TV(e);
-    //var r = new SimpleRemote(() -> tv.toggle());;
+    var r = new SimpleRemote(() -> tv.toggle());;
   }
 }
 
@@ -177,7 +177,7 @@ class TV extends JFrame {
     //panel.add(label);
 
     //pack();
-    this.setLocation(100, 100);
+    this.setLocation(50, 50);
     setVisible(true);
   }
 
@@ -268,20 +268,25 @@ class TV extends JFrame {
   class SimpleRemote extends JFrame {
     Command c;
     JTextArea text;
+    JPanel moveAttack;
 
     public SimpleRemote(Command cc) {
       c = cc;
       setLayout(new BorderLayout());
+      moveAttack = new JPanel();
+      moveAttack.setLayout(new GridLayout(1, 2));
 
       JButton b = new JButton("Move");
-      //b.setSize(5, 5);
-      b.setBounds(250, 100, 50, 5);
-      add(b, BorderLayout.CENTER);
+      //b.setSize(500, 500);
+      //b.setBounds(250, 100, 500, 50);
+      moveAttack.add(b, BorderLayout.WEST);
 
       JButton attack = new JButton("Attack");
-      //attack.setSize(5, 5);
-      attack.setBounds(350, 100, 50, 5);
-      add(attack, BorderLayout.CENTER);
+      //attack.setSize(50, 50);
+      //attack.setBounds(350, 100, 500, 50);
+      moveAttack.add(attack, BorderLayout.EAST);
+
+      add(moveAttack, BorderLayout.CENTER);
 
       JButton up = new JButton("East");
       //up.setSize(5, 5);
