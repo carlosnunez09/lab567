@@ -175,7 +175,6 @@ public class Environment {
    * Add a weapon to a cell
    * @return Boolean if weapon is added
    */
-
   public boolean addWeapon(Weapon weapon, int row, int col) {
     if (cells[row][col] == null) {
       cells[row][col] = new Cell();
@@ -188,4 +187,11 @@ public class Environment {
 
   }
 
+  /**
+   * Notifies observer
+   * @param lifeForm
+   */
+  public void notifyObservers(LifeForm lifeForm) {
+
+  }
 }
