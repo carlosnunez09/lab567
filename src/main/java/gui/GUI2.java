@@ -36,8 +36,16 @@ public class GUI2 {
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
 
+    bill.pickUpWeapon(p);
+
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
+
+
+
+
+    System.out.println(e.getLifeForm(2, 2).getClass().getName());
+
 
     //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
     //System.out.println(e.getLifeForm(2, 2) instanceof Human);
@@ -63,7 +71,7 @@ public class GUI2 {
 
 
     var tv = new TV(e);
-    //var r = new SimpleRemote(() -> tv.toggle());;
+    var r = new SimpleRemote(() -> tv.toggle());;
   }
 
   public static int getscRow() {
@@ -106,6 +114,8 @@ class TV extends JFrame {
 
   LifeForm lifeform;
   Weapon[] weapon;
+  String lifetype;
+  String lifeformWeapon;
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,6 +141,10 @@ class TV extends JFrame {
     textArea.setBounds(800, 0, 200, 800);
     textArea.setBackground(Color.GRAY);
     textArea.setEditable(false);
+    Font newTextFieldFont=new Font(textArea.getFont().getName(),textArea.getFont().getStyle(),16);
+    textArea.setFont(newTextFieldFont);
+
+    //textArea.setPreferredSize(new Dimension(200, 800));
 
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
@@ -171,7 +185,7 @@ class TV extends JFrame {
     //panel.add(label);
 
     //pack();
-    this.setLocation(100, 100);
+    this.setLocation(50, 50);
     setVisible(true);
   }
 
@@ -186,14 +200,32 @@ class TV extends JFrame {
 
 
           if (env.getLifeForm(i, j) != null) {
-            lifeform = env.getLifeForm(i, j);
+            if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Alien"){
+              lifetype = "Alien";
+            } else if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Human"){
+              lifetype = "Human";
+            }
+
+            if (env.getLifeForm(i, j).hasWeapon()){
+              lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+            } else {
+              lifeformWeapon = "No Weapons Equipped";
+            }
+          } else {
+            lifetype = "Blank";
+            lifeformWeapon = "Not a Lifeform";
           }
 
           if (env.getWeapons(i, j) != null) {
             weapon = env.getWeapons(i, j);
           }
 
-          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\nLifeForm Type is " + lifeform + "\n\nFirst Weapon in Cell: is \n" + weapon[0] + "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] + "\n");
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Type is " + lifetype + " \n\n" +
+                  "LifeForm Weapon: " + lifeformWeapon +
+                  "\n\nFirst Weapon in Cell: is \n" + weapon[0] +
+                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                  "\n");
 
 
 
@@ -244,20 +276,25 @@ class TV extends JFrame {
   class SimpleRemote extends JFrame {
     Command c;
     JTextArea text;
+    JPanel moveAttack;
 
     public SimpleRemote(Command cc) {
       c = cc;
       setLayout(new BorderLayout());
+      moveAttack = new JPanel();
+      moveAttack.setLayout(new GridLayout(1, 2));
 
       JButton b = new JButton("Move");
-      //b.setSize(5, 5);
-      b.setBounds(250, 100, 50, 5);
-      add(b, BorderLayout.CENTER);
+      //b.setSize(500, 500);
+      //b.setBounds(250, 100, 500, 50);
+      moveAttack.add(b, BorderLayout.WEST);
 
       JButton attack = new JButton("Attack");
-      //attack.setSize(5, 5);
-      attack.setBounds(350, 100, 50, 5);
-      add(attack, BorderLayout.CENTER);
+      //attack.setSize(50, 50);
+      //attack.setBounds(350, 100, 500, 50);
+      moveAttack.add(attack, BorderLayout.EAST);
+
+      add(moveAttack, BorderLayout.CENTER);
 
       JButton up = new JButton("East");
       //up.setSize(5, 5);

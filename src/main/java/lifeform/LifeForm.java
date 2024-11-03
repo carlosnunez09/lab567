@@ -118,6 +118,11 @@ public abstract class LifeForm {
     return true;
   }
 
+  // Remove if needed
+  public Weapon getWeapon(){
+    return weapon;
+  }
+
   /**
    * Decrease LifeForms with incoming damage
    * @param damage
