@@ -45,12 +45,13 @@ public class CommandUI {
 
     env.addLifeForm(tyrranid,0,0);
 
+    tyrranid.setLocation(0,0);
     tyrranid.setDirection("East");
     MoveCmd move = new MoveCmd(env);
     move.execute(0,0);
 
-    assertEquals(2,tyrranid.getRow());
-    assertEquals(0,tyrranid.getCol());
+    assertEquals(0,tyrranid.getRow());
+    assertEquals(2,tyrranid.getCol());
     assertNull(env.getLifeForm(0,0));
   }
 }
