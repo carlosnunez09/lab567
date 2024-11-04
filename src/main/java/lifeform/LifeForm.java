@@ -19,7 +19,7 @@ public abstract class LifeForm {
   protected Weapon weapon;
 
   protected String currentDirection;
-  protected int maxSpeed;              // maxSpeed = movement per round
+  protected int maxSpeed = 0;              // maxSpeed = movement per round
 
   public LifeForm(String name, int life) {
     this(name, life, 0);

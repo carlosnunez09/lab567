@@ -21,6 +21,8 @@ public class Alien extends LifeForm implements TimerObserver {
   public Alien(String name, int maxHitPoints) {
     super(name, maxHitPoints, 10);
     maxHitP = maxHitPoints;
+    maxSpeed = 2;
+
   }
 
   /**
@@ -35,6 +37,8 @@ public class Alien extends LifeForm implements TimerObserver {
     super(name, maxHitPoints, 10);
     maxHitP = maxHitPoints;
     rb = behavior;
+    maxSpeed = 2;
+
   }
 
   /**
