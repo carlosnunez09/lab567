@@ -46,7 +46,7 @@ public class GUI2 {
 
 
 
-    //System.out.println(e.getLifeForm(1, 2).getClass().getName());
+    System.out.println(e.getLifeForm(1, 2).getClass().getName());
 
 
     //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));

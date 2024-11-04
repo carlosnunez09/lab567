@@ -26,12 +26,13 @@ public class Environment {
     cells = new Cell[row][col];
     envRows = row;
     envCols = col;
+    /*
     cells = new Cell[row][col];
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         cells[i][j] = new Cell();
       }
-    }
+    }*/
     //LifeForm life = new LifeForm("Bob", 20);
     //cells[row-1][col-1].addLifeForm(life);
   }
