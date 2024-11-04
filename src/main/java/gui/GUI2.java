@@ -32,10 +32,12 @@ public class GUI2 {
 
     e.addLifeForm(jeff, 5, 5);
     e.addLifeForm(bill, 2, 2);
+    e.addLifeForm(tim, 1, 2);
     e.addWeapon(p, 1, 1);
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
 
+    
     bill.pickUpWeapon(p);
 
     jeff.setLocation(5, 5);
@@ -44,7 +46,7 @@ public class GUI2 {
 
 
 
-    System.out.println(e.getLifeForm(2, 2).getClass().getName());
+    //System.out.println(e.getLifeForm(1, 2).getClass().getName());
 
 
     //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
@@ -75,7 +77,7 @@ public class GUI2 {
   }
 
   public static int getscRow() {
-    return getscCol();
+    return getscRow();
   }
 
   public static int getscCol() {

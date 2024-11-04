@@ -69,7 +69,6 @@ public class Environment {
 
   public LifeForm getLifeForm(int row, int col) {
     if (cells[row][col] == null) {
-      cells[row][col] = null;
       return null;
     } else {
       return cells[row][col].getLifeForm();
