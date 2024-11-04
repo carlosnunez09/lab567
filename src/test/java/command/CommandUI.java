@@ -34,19 +34,21 @@ public class CommandUI {
     assertEquals(3,timmyJr.getRow());
     assertEquals(0,timmyJr.getCol());
     assertNull(env.getLifeForm(0,0));
-    env.clearBoard();
   }
 
   @Test
+  // testing whether tyrranid (Alien) can move to go and eat little timmy
   public void testMove2() {
     Alien tyrranid = new Alien("Tyrranid", 10);
     Environment env = Environment.getEnvironment(6,6);
     env.clearBoard();
 
+    // Place tyrranid at (0,0)
     env.addLifeForm(tyrranid,0,0);
 
-    tyrranid.setLocation(0,0);
+    // Command to move tyrranid East
     tyrranid.setDirection("East");
+    tyrranid.setLocation(0,0);
     MoveCmd move = new MoveCmd(env);
     move.execute(0,0);
 
