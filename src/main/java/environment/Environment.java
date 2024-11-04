@@ -33,8 +33,6 @@ public class Environment {
         cells[i][j] = new Cell();
       }
     }*/
-    //LifeForm life = new LifeForm("Bob", 20);
-    //cells[row-1][col-1].addLifeForm(life);
   }
 
   /**

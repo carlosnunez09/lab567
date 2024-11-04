@@ -70,6 +70,10 @@ public abstract class LifeForm {
     return current;
   }
 
+  public String getCurrentDirection(){
+    return currentDirection;
+  }
+
 
   
 
