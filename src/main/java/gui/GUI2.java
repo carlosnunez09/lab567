@@ -25,6 +25,8 @@ public class GUI2 {
     Human bill = new Human("Bill", 15, 5);
     Human tim = new Human("Tim", 15, 5);
 
+    bill.setDirection("North");
+
     PlasmaCannon p = new PlasmaCannon();
     Pistol pis = new Pistol();
     ChainGun CG = new ChainGun();
