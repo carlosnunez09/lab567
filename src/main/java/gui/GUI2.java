@@ -118,6 +118,7 @@ class TV extends JFrame {
   Weapon[] weapon;
   String lifetype;
   String lifeformWeapon;
+  String lifeformDirection;
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -213,9 +214,12 @@ class TV extends JFrame {
             } else {
               lifeformWeapon = "No Weapons Equipped";
             }
+
+            lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
           } else {
             lifetype = "Blank";
             lifeformWeapon = "Not a Lifeform";
+            lifeformDirection = "Lifeform is NOT currently selected";
           }
 
           if (env.getWeapons(i, j) != null) {
@@ -227,7 +231,7 @@ class TV extends JFrame {
                   "LifeForm Weapon: " + lifeformWeapon +
                   "\n\nFirst Weapon in Cell: is \n" + weapon[0] +
                   "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
-                  "\n");
+                  "\n" + "\nLifeForm is facing: " + lifeformDirection);
 
 
 
@@ -325,9 +329,9 @@ class TV extends JFrame {
       South.addActionListener(a -> c.execute());
       attack.addActionListener(a -> c.execute());
 
-      setSize(500, 500);
+      setSize(300, 300);
       setVisible(true);
-      setLocation(400, 400);
+      setLocation(700, 200);
     }
 
     public JTextArea getTextArea() {
