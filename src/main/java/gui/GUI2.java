@@ -109,6 +109,8 @@ class TV extends JFrame {
   boolean up = true;
   int col;
   int row;
+  final int width = 800;
+  final int height = 600;
   Environment env;
   ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
   ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
@@ -136,7 +138,7 @@ class TV extends JFrame {
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(800, 1000);
+    setSize(width, height);
     setLayout(new BorderLayout());
     this.env = env;
     col = this.env.getNumCols();
@@ -148,14 +150,14 @@ class TV extends JFrame {
 
 
     JPanel panel = new JPanel();
-    panel.setBounds(0, 0, 800, 800);
+    panel.setBounds(0, 0, (int) (width * 0.7), height);
     panel.setLayout(new GridLayout(row, col));
     panel.setBackground(Color.GRAY);
     //panel.setBounds(0, 0, 250, 250);
 
 
     textArea = new JTextArea();
-    textArea.setBounds(800, 0, 200, 800);
+    textArea.setBounds((int) (width * 0.7), 0, (int) (width * 0.3), height);
     textArea.setBackground(Color.GRAY);
     textArea.setEditable(false);
     Font newTextFieldFont=new Font(textArea.getFont().getName(),textArea.getFont().getStyle(),16);
@@ -166,7 +168,7 @@ class TV extends JFrame {
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         numberOfButtons[i][j] = new JButton();
-        numberOfButtons[i][j].setPreferredSize(new Dimension(600/row, 800/col));
+        numberOfButtons[i][j].setPreferredSize(new Dimension((int) (width * 0.7)/row, height/col));
         //numberOfButtons[i][j].setFocusable(false);
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
         if (env.getLifeForm(i, j) == null) {
@@ -366,7 +368,7 @@ class TV extends JFrame {
       South.addActionListener(a -> c.execute());
       attack.addActionListener(a -> c.execute());
 
-      setSize(300, 300);
+      setSize(500, 200);
       setVisible(true);
       setLocation(700, 200);
     }
