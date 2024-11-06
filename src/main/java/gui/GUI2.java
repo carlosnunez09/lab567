@@ -1,5 +1,6 @@
 package gui;
 
+import command.MoveCmd;
 import environment.Environment;
 import lifeform.Alien;
 import lifeform.Human;
@@ -20,12 +21,14 @@ import java.awt.image.BufferedImage;
 public class GUI2 {
 
   public static void main(String[] args) {
-    Environment e = new Environment(7, 7);
+    Environment e = Environment.getEnvironment(15, 15);
+    e.clearBoard();
+
     Alien jeff = new Alien("Jeff", 15);
     Human bill = new Human("Bill", 15, 5);
     Human tim = new Human("Tim", 15, 5);
 
-    bill.setDirection("North");
+    bill.setDirection("East");
 
     PlasmaCannon p = new PlasmaCannon();
     Pistol pis = new Pistol();
@@ -44,6 +47,10 @@ public class GUI2 {
 
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
+
+    MoveCmd move = new MoveCmd(e);
+    move.execute(2,2);
+    System.out.println(bill.getCol());
 
 
 
@@ -78,6 +85,8 @@ public class GUI2 {
     */
 
     var tv = new TV(e);
+    move.execute(2,5);
+    System.out.println(bill.getCol());
     var r = new SimpleRemote(() -> tv.toggle());;
   }
 
