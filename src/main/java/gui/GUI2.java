@@ -294,60 +294,70 @@ class TV extends JFrame {
     JTextArea text;
     JPanel moveAttack;
     JPanel top;
+    JPanel bottom;
 
 
     public SimpleRemote(Command cc) {
       c = cc;
       setLayout(new BorderLayout());
       moveAttack = new JPanel();
-      moveAttack.setLayout(new GridLayout(1, 2));
+      moveAttack.setLayout(new GridLayout(1, 3));
 
       top = new JPanel();
       top.setLayout(new GridLayout(1, 3));
 
-      JButton b = new JButton("Move");
-      //b.setSize(500, 500);
-      //b.setBounds(250, 100, 500, 50);
-      moveAttack.add(b, BorderLayout.WEST);
-
-      JButton attack = new JButton("Attack");
-      //attack.setSize(50, 50);
-      //attack.setBounds(350, 100, 500, 50);
-      moveAttack.add(attack, BorderLayout.EAST);
-
-      add(moveAttack, BorderLayout.CENTER);
-
-      JButton up = new JButton("East");
-      //up.setSize(5, 5);
-      up.setBounds(400, 100, 100, 5);
-      add(up, BorderLayout.EAST);
+      bottom = new JPanel();
+      bottom.setLayout(new GridLayout(1, 3));
 
       JButton down = new JButton("West");
       //down.setSize(5, 5);
       down.setBounds(100, 200, 100, 5);
-      add(down, BorderLayout.WEST);
+      moveAttack.add(down, BorderLayout.WEST);
 
-      JButton North = new JButton("North");
-      //North.setSize(5, 5);
-      //North.setBounds(100, 300, 100, 5);
-      top.add(North, BorderLayout.CENTER);
+      JButton b = new JButton("Move");
+      //b.setSize(500, 500);
+      //b.setBounds(250, 100, 500, 50);
+      moveAttack.add(b, BorderLayout.CENTER);
+
+      JButton up = new JButton("East");
+      //up.setSize(5, 5);
+      up.setBounds(400, 100, 100, 5);
+      moveAttack.add(up, BorderLayout.EAST);
 
       JButton getWeap1 = new JButton("Get Weapon 1");
       //North.setSize(5, 5);
       //getWeap1.setBounds(100, 300, 100, 5);
       top.add(getWeap1, BorderLayout.WEST);
 
+
+      JButton North = new JButton("North");
+      //North.setSize(5, 5);
+      //North.setBounds(100, 300, 100, 5);
+      top.add(North, BorderLayout.CENTER);
+
       JButton getWeap2 = new JButton("Get Weapon 2");
       //North.setSize(5, 5);
       //getWeap2.setBounds(100, 300, 100, 5);
       top.add(getWeap2, BorderLayout.EAST);
 
-      add(top, BorderLayout.NORTH);
+      JButton Drop = new JButton("Drop Weapon");
+      //South.setSize(10, 10);
+      //South.setBounds(100, 400, 100, 5);
+      bottom.add(Drop, BorderLayout.WEST);
 
       JButton South = new JButton("South");
       //South.setSize(10, 10);
       South.setBounds(100, 400, 100, 5);
-      add(South, BorderLayout.SOUTH);
+      bottom.add(South, BorderLayout.CENTER);
+
+      JButton attack = new JButton("Attack");
+      //attack.setSize(50, 50);
+      //attack.setBounds(350, 100, 500, 50);
+      bottom.add(attack, BorderLayout.EAST);
+
+      add(top, BorderLayout.NORTH);
+      add(moveAttack, BorderLayout.CENTER);
+      add(bottom, BorderLayout.SOUTH);
 
       b.addActionListener(a -> c.execute());
       up.addActionListener(a -> c.execute());
@@ -356,7 +366,7 @@ class TV extends JFrame {
       South.addActionListener(a -> c.execute());
       attack.addActionListener(a -> c.execute());
 
-      setSize(500, 500);
+      setSize(300, 300);
       setVisible(true);
       setLocation(700, 200);
     }
