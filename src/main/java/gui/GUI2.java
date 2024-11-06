@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 public class GUI2 {
 
   public static void main(String[] args) {
-    Environment e = new Environment(7, 7);
+    Environment e = new Environment(10, 10);
     Alien jeff = new Alien("Jeff", 15);
     Human bill = new Human("Bill", 15, 5);
     Human tim = new Human("Tim", 15, 5);
@@ -157,7 +157,7 @@ class TV extends JFrame {
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         numberOfButtons[i][j] = new JButton();
-        numberOfButtons[i][j].setPreferredSize(new Dimension(64, 64));
+        numberOfButtons[i][j].setPreferredSize(new Dimension(400/row, 800/col));
         //numberOfButtons[i][j].setFocusable(false);
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
         if (env.getLifeForm(i, j) == null) {
