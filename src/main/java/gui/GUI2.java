@@ -268,11 +268,7 @@ class TV extends JFrame {
      // Draw a line from (50, 50) to (200, 200)
   }*/
   public void toggle() {
-    if (!off) {
-      off();
-    } else {
-      on();
-    }
+    System.out.println("Button Clicked");
 
   }
 
@@ -297,12 +293,17 @@ class TV extends JFrame {
     Command c;
     JTextArea text;
     JPanel moveAttack;
+    JPanel top;
+
 
     public SimpleRemote(Command cc) {
       c = cc;
       setLayout(new BorderLayout());
       moveAttack = new JPanel();
       moveAttack.setLayout(new GridLayout(1, 2));
+
+      top = new JPanel();
+      top.setLayout(new GridLayout(1, 3));
 
       JButton b = new JButton("Move");
       //b.setSize(500, 500);
@@ -328,8 +329,20 @@ class TV extends JFrame {
 
       JButton North = new JButton("North");
       //North.setSize(5, 5);
-      North.setBounds(100, 300, 100, 5);
-      add(North, BorderLayout.NORTH);
+      //North.setBounds(100, 300, 100, 5);
+      top.add(North, BorderLayout.CENTER);
+
+      JButton getWeap1 = new JButton("Get Weapon 1");
+      //North.setSize(5, 5);
+      //getWeap1.setBounds(100, 300, 100, 5);
+      top.add(getWeap1, BorderLayout.WEST);
+
+      JButton getWeap2 = new JButton("Get Weapon 2");
+      //North.setSize(5, 5);
+      //getWeap2.setBounds(100, 300, 100, 5);
+      top.add(getWeap2, BorderLayout.EAST);
+
+      add(top, BorderLayout.NORTH);
 
       JButton South = new JButton("South");
       //South.setSize(10, 10);
@@ -343,7 +356,7 @@ class TV extends JFrame {
       South.addActionListener(a -> c.execute());
       attack.addActionListener(a -> c.execute());
 
-      setSize(300, 300);
+      setSize(500, 500);
       setVisible(true);
       setLocation(700, 200);
     }
