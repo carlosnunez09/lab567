@@ -48,14 +48,17 @@ public class GUI2 {
 
 
 
-    System.out.println(e.getLifeForm(1, 2).getClass().getName());
+    //System.out.println(e.getLifeForm(1, 2).getClass().getName());
 
 
-    //System.out.println(e.getLifeForm(2, 2).getClass().getName().equals("lifeform.Alien"));
+    //System.out.println();
     //System.out.println(e.getLifeForm(2, 2) instanceof Human);
-    /*
-    ImageIcon imageIcon = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Pistol.png");
 
+    //ImageIcon imageIcon = new ImageIcon("src/main/java/gui/Pic/Pistol.png");
+
+    /*String currentPath = System.getProperty("user.dir");
+    System.out.println("Current working directory: " + currentPath);*/
+    /*
     int status = imageIcon.getImageLoadStatus();
 
     switch (status) {
@@ -71,8 +74,8 @@ public class GUI2 {
       case MediaTracker.COMPLETE:
         System.out.println("Image loaded successfully.");
         break;
-    }*/
-
+    }
+    */
 
     var tv = new TV(e);
     var r = new SimpleRemote(() -> tv.toggle());;
@@ -98,18 +101,18 @@ class TV extends JFrame {
   int col;
   int row;
   Environment env;
+  ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
+  ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
   JButton[][] numberOfButtons;
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
-         BufferedImage.TYPE_3BYTE_BGR));
+          BufferedImage.TYPE_3BYTE_BGR));
   ImageIcon onImage = new ImageIcon("news.gif");
-  ImageIcon pistol = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Pistol.png");
-  ImageIcon human = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Human.jpg");
-  ImageIcon alien = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\Alien.jpg");
+  ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.png");
 
-  ImageIcon plasma = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\PlasmaCannon.jpg");
+  ImageIcon plasma = new ImageIcon("src/main/java/gui/PlasmaCannon.jpg");
 
-  ImageIcon chain = new ImageIcon("C:\\Users\\21ste\\Downloads\\DesignPatterns\\newLab5\\src\\main\\java\\gui\\ChainGun.png");
+  ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.png");
 
 
 
