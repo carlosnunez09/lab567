@@ -48,10 +48,6 @@ public class GUI2 {
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
 
-    MoveCmd move = new MoveCmd(e);
-    move.execute(2,2);
-    System.out.println(bill.getCol());
-
 
 
 
@@ -85,8 +81,6 @@ public class GUI2 {
     */
 
     var tv = new TV(e);
-    move.execute(2,5);
-    System.out.println(bill.getCol());
     var r = new SimpleRemote(() -> tv.toggle());;
   }
 
@@ -144,6 +138,9 @@ class TV extends JFrame {
     col = this.env.getNumCols();
     row = this.env.getNumRows();
     numberOfButtons = new JButton[row][col];
+
+    MoveCmd move = new MoveCmd(this.env);
+    move.execute(2,2);
 
 
 
