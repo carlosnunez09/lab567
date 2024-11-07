@@ -74,8 +74,19 @@ public abstract class LifeForm {
     return currentDirection;
   }
 
+  public String getLifetype(LifeForm L) {
+    if (L != null) {
+      if (L.getClass().getName() == "lifeform.Human") {
+        return "Human";
+      } else if (L.getClass().getName() == "lifeform.Alien") {
+        return "Alien";
+      }
+    }
 
-  
+    return "LifeForm is NOT found";
+  }
+
+
 
   /**
    * Get lifeForms current AttackStrength
