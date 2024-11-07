@@ -295,7 +295,7 @@ class TV extends JFrame implements ActionListener {
     int r = f.getRow();
     int c = f.getCol();
     if (r != lifeformRow || c != lifeformCol) {
-      JButton button = numberOfButtons[lifeformCol][lifeformCol];
+      JButton button = numberOfButtons[lifeformRow][lifeformCol];
       JButton button2 = numberOfButtons[r][c];
       button2.setIcon(human);
       button.setIcon(null);
