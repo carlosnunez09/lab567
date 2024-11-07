@@ -19,8 +19,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-
-
 public class GUI2 {
   public static int scRow, scCol;
 
@@ -137,9 +135,10 @@ class TV extends JFrame{
   String lifeformWeapon;
   String lifeformDirection;
   MoveCmd move;
+  JPanel panel;
+
   int lifeformRow;
   int lifeformCol;
-  JPanel panel;
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -249,11 +248,7 @@ class TV extends JFrame{
 
 
           if (env.getLifeForm(i, j) != null) {
-            if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Alien"){
-              lifetype = "Alien";
-            } else if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Human"){
-              lifetype = "Human";
-            }
+            lifetype = getLifetype(env, i, j);
 
             lifeformRow = i;
             lifeformCol = j;
@@ -293,6 +288,20 @@ class TV extends JFrame{
   }
 
 
+public String getLifetype(Environment env, int row, int col) {
+  if (env.getLifeForm(row, col) != null) {
+    LifeForm L = env.getLifeForm(row, col);
+    if (L.getClass().getName() == "lifeform.Human") {
+      return "Human";
+    } else if (L.getClass().getName() == "lifeform.Alien") {
+      return "Alien";
+    }
+  }
+
+  return "LifeForm is NOT found";
+}
+
+
   // Method to update a button at a specific row and column
   /*
   public void paint(Graphics g) {
@@ -328,21 +337,6 @@ class TV extends JFrame{
 
   }
 
-  public void off() {
-    label.setIcon(offImage);
-    off = true;
-    remoteDisplay.append("Off\n");
-  }
-
-  public void on() {
-    label.setIcon(onImage);
-    off = false;
-    remoteDisplay.append("On\n");
-  }
-
-  public void setDisplay(JTextArea t) {
-    remoteDisplay = t;
-  }
 }
 
   class SimpleRemote extends JFrame {
@@ -475,6 +469,14 @@ class TV extends JFrame{
             break;
           case "move":
             invoker.getMoveCmd().execute(row, col);
+            /*
+            if (row != lifeRow || col != lifeCol) {
+              JButton button = b[lifeRow][lifeCol];
+              JButton button2 = b[row][col];
+              button2.setIcon(human);
+              button.setIcon(null);
+              button.setBackground(Color.white);
+              }*/
             break;
           case "reload":
             invoker.getReloadCmd().execute(row, col);
