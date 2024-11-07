@@ -1,7 +1,11 @@
 package gui;
 
+import command.Invoker;
+import command.InvokerBuilder;
 import command.MoveCmd;
 import environment.Environment;
+import exceptions.EnvironmentException;
+import exceptions.WeaponException;
 import lifeform.Alien;
 import lifeform.Human;
 import lifeform.LifeForm;
@@ -11,14 +15,14 @@ import weapon.PlasmaCannon;
 import weapon.Weapon;
 
 import javax.swing.*;
-import javax.swing.ImageIcon;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
 
 
 public class GUI2 {
+  public static int scRow, scCol;
 
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment(15, 15);
@@ -47,7 +51,7 @@ public class GUI2 {
 
     jeff.setLocation(5, 5);
     bill.setLocation(2,2);
-
+    tim.setLocation(1, 2);
 
 
 
@@ -79,9 +83,12 @@ public class GUI2 {
         break;
     }
     */
+    //invoker prams
+    InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
+    Invoker invoker = builder.loadCommands();
 
     var tv = new TV(e);
-    var r = new SimpleRemote(() -> tv.toggle());;
+    var r = new SimpleRemote(invoker);
   }
 
   public static int getscRow() {
@@ -131,6 +138,8 @@ class TV extends JFrame {
   String lifeformDirection;
 
   public TV(Environment env) {
+
+
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(width, height);
     setLayout(new BorderLayout());
@@ -203,6 +212,7 @@ class TV extends JFrame {
     //pack();
     this.setLocation(50, 50);
     setVisible(true);
+
   }
 
 
@@ -211,7 +221,6 @@ class TV extends JFrame {
       for (int j = 0; j < col; j++) {
         if (e.getSource() == numberOfButtons[i][j]) {
           //numberOfButtons[i][j].setBackground(Color.YELLOW);
-
 
 
 
@@ -247,8 +256,10 @@ class TV extends JFrame {
                   "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
 
 
-
           //textArea.setText("A button was pressed\n");
+          //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
+          GUI2.scRow = i;
+          GUI2.scCol = j;
         }
       }
     }
@@ -267,7 +278,7 @@ class TV extends JFrame {
      // Draw a line from (50, 50) to (200, 200)
   }*/
   public void toggle() {
-    System.out.println("Button Clicked");
+    //System.out.println("Button Clicked" + GUI2.scCol + " " + GUI2.scRow);
 
   }
 
@@ -289,15 +300,16 @@ class TV extends JFrame {
 }
 
   class SimpleRemote extends JFrame {
-    Command c;
+    //Command c;
     JTextArea text;
     JPanel moveAttack;
     JPanel top;
     JPanel bottom;
+    private final Invoker invoker;  // Make it a private field
 
 
-    public SimpleRemote(Command cc) {
-      c = cc;
+    public SimpleRemote(Invoker invoker) {
+      this.invoker = invoker;
       setLayout(new BorderLayout());
       moveAttack = new JPanel();
       moveAttack.setLayout(new GridLayout(1, 3));
@@ -358,12 +370,26 @@ class TV extends JFrame {
       add(moveAttack, BorderLayout.CENTER);
       add(bottom, BorderLayout.SOUTH);
 
-      b.addActionListener(a -> c.execute());
-      up.addActionListener(a -> c.execute());
-      down.addActionListener(a -> c.execute());
-      North.addActionListener(a -> c.execute());
-      South.addActionListener(a -> c.execute());
-      attack.addActionListener(a -> c.execute());
+      /// deprecated
+//      b.addActionListener(a -> c.execute());
+//      up.addActionListener(a -> c.execute());
+//      down.addActionListener(a -> c.execute());
+//      North.addActionListener(a -> c.execute());
+//      South.addActionListener(a -> c.execute());
+//      attack.addActionListener(a -> c.execute());
+      ///
+
+
+      down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
+      b.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
+      up.addActionListener(a -> pressButton("east", GUI2.scRow, GUI2.scCol));
+      North.addActionListener(a -> pressButton("north", GUI2.scRow, GUI2.scCol));
+      //getWeap1.addActionListener(a -> pressButton("get1", 0, 0));
+      //getWeap2.addActionListener(a -> pressButton("get2", 0, 0));
+      //Drop.addActionListener(a -> pressButton("drop", 0, 0));
+      South.addActionListener(a -> pressButton("south", GUI2.scRow, GUI2.scCol));
+      attack.addActionListener(a -> pressButton("attack", GUI2.scRow, GUI2.scCol));
+
 
       setSize(500, 200);
       setVisible(true);
@@ -373,4 +399,50 @@ class TV extends JFrame {
     public JTextArea getTextArea() {
       return text;
     }
+
+    public void pressButton(String s, int row, int col) {
+      System.out.println("from GUI " + s + row + " " + col);
+
+      try {
+        switch (s) {
+          case "north":
+            invoker.getNorthCmd().execute(row, col);
+            break;
+          case "south":
+            invoker.getSouthCmd().execute(row, col);
+            break;
+          case "east":
+            invoker.getEastCmd().execute(row, col);
+            break;
+          case "west":
+            invoker.getWestCmd().execute(row, col);
+            break;
+          case "attack":
+            invoker.getAttackCmd().execute(row, col);
+            break;
+          case "drop":
+            invoker.getDropCmd().execute(row, col);
+            break;
+          case "get1":
+            invoker.getGet1Cmd().execute(row, col);
+            break;
+          case "get2":
+            invoker.getGet2Cmd().execute(row, col);
+            break;
+          case "move":
+            invoker.getMoveCmd().execute(row, col);
+            break;
+          case "reload":
+            invoker.getReloadCmd().execute(row, col);
+            break;
+          default:
+            System.out.println("Unknown command");
+        }
+      } catch (WeaponException | EnvironmentException e) {
+        e.printStackTrace();
+      }
+
+
+    }
+
   }

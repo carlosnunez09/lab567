@@ -15,6 +15,7 @@ public class TurnEastCmd implements Command {
     if (environment.getLifeForm(row, col) != null) {
       environment.getLifeForm(row, col).setDirection("East");
       environment.notifyObservers(environment.getLifeForm(row, col));
+      System.out.println("from command: Turned East" +" at row: "+ row + " col: "+ col); // testing to be removed
     }
   }
 }

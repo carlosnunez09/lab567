@@ -20,6 +20,7 @@ public class MoveCmd implements Command {
       LifeForm life = environment.getLifeForm(row, col);
       environment.getLifeForm(row, col).move(environment);
       environment.notifyObservers(life);
+      System.out.println("from command: Moved" + " at row: " + row + " col: " + col); // testing to be removed
     }
   }
 }
