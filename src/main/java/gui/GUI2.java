@@ -111,18 +111,18 @@ class TV extends JFrame{
   final int width = 800;
   final int height = 600;
   Environment env;
-  ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
-  ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
+  //ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
+  //ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
   JButton[][] numberOfButtons;
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
   ImageIcon onImage = new ImageIcon("news.gif");
-  ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.png");
+  ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.jpg");
 
   ImageIcon plasma = new ImageIcon("src/main/java/gui/PlasmaCannon.jpg");
 
-  ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.png");
+  ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.jpg");
 
 
 
@@ -199,10 +199,8 @@ class TV extends JFrame{
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
         if (env.getLifeForm(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
-        } else if (env.getLifeForm(i, j) instanceof Human) {
-          numberOfButtons[i][j].setIcon(human);
-        } else if (env.getLifeForm(i, j) instanceof Alien) {
-          numberOfButtons[i][j].setIcon(alien);
+        } else {
+          numberOfButtons[i][j].setIcon(getIcon(env, i, j));
         }
         if (env.getWeapons(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
@@ -301,21 +299,12 @@ public String getLifetype(Environment env, int row, int col) {
   return "LifeForm is NOT found";
 }
 
+public ImageIcon getIcon(Environment env, int row, int col) {
+  ImageIcon icon = new ImageIcon("src/main/java/gui/" + getLifetype(env, row, col) + ".jpg");
+  return icon;
 
-  // Method to update a button at a specific row and column
-  /*
-  public void paint(Graphics g) {
-    super.paint(g);
-    for (int i = 0; i < col; i++){
-      for (int j = 0; j < row; j++){
-        g.drawRect(50 * i, 50 * j, 50, 50);
-      }
-    }
+}
 
-    // Maybe Use Buttons Instead of Making a 3d Grid
-
-     // Draw a line from (50, 50) to (200, 200)
-  }*/
   public void toggle() {
     //System.out.println("Button Clicked" + GUI2.scCol + " " + GUI2.scRow);
     LifeForm f = this.env.getLifeForm(lifeformRow, lifeformCol);
@@ -327,7 +316,7 @@ public String getLifetype(Environment env, int row, int col) {
     if (r != lifeformRow || c != lifeformCol) {
       JButton button = numberOfButtons[lifeformRow][lifeformCol];
       JButton button2 = numberOfButtons[r][c];
-      button2.setIcon(human);
+      //button2.setIcon(human);
       button.setIcon(null);
       button.setBackground(Color.white);
 
