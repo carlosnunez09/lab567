@@ -299,6 +299,7 @@ class TV extends JFrame implements ActionListener {
       JButton button2 = numberOfButtons[r][c];
       button2.setIcon(human);
       button.setIcon(null);
+      button.setBackground(Color.white);
 
 
     }
