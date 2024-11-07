@@ -213,7 +213,10 @@ class TV extends JFrame implements ActionListener {
   }
 
   public void updateGrid(int r, int c){
-    numberOfButtons[r][c].setIcon(null);
+    //numberOfButtons[r][c].setIcon(null);
+    JButton button = numberOfButtons[r][c];
+    //button.setIcon(alien);
+
   }
 
 
@@ -223,7 +226,7 @@ class TV extends JFrame implements ActionListener {
         if (e.getSource() == numberOfButtons[i][j]) {
           //numberOfButtons[i][j].setBackground(Color.YELLOW);
           //createGrid();
-          updateGrid(i, j);
+          //updateGrid(i, j);
 
 
 
@@ -286,14 +289,18 @@ class TV extends JFrame implements ActionListener {
   }*/
   public void toggle() {
     LifeForm f = this.env.getLifeForm(lifeformRow, lifeformCol);
-    int r = this.env.getLifeForm(lifeformRow, lifeformCol).getRow();
-    int c = this.env.getLifeForm(lifeformRow, lifeformCol).getCol();
     move = new MoveCmd(this.env);
     move.execute(lifeformRow, lifeformCol);
+
+    int r = f.getRow();
+    int c = f.getCol();
     if (r != lifeformRow || c != lifeformCol) {
       JButton button = numberOfButtons[lifeformCol][lifeformCol];
-      numberOfButtons[r][c].setIcon(human);
-      numberOfButtons[lifeformRow][lifeformRow].setIcon(null);
+      JButton button2 = numberOfButtons[r][c];
+      button2.setIcon(human);
+      button.setIcon(null);
+
+
     }
     System.out.println("Button Clicked");
 
