@@ -22,18 +22,18 @@ public class CommandUI {
     Pistol pistol = new Pistol();
 
     // Place little timmy and weapon in (0,0)
-    env.addLifeForm(timmyJr, 0, 0);
+    env.addLifeForm(timmyJr, 1, 1);
     env.addWeapon(pistol, 0, 0);
 
     // Command to move little timmy South
     timmyJr.setDirection("South");
-    timmyJr.setLocation(0,0);
+    timmyJr.setLocation(1,1);
     MoveCmd move = new MoveCmd(env);
-    move.execute(0, 0);
+    move.execute(1, 1);
 
-    assertEquals(3,timmyJr.getRow());
-    assertEquals(0,timmyJr.getCol());
-    assertNull(env.getLifeForm(0,0));
+    assertEquals(4,timmyJr.getRow());
+    assertEquals(1,timmyJr.getCol());
+    assertNull(env.getLifeForm(1,1));
   }
 
   @Test
