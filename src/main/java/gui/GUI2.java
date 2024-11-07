@@ -97,7 +97,7 @@ interface Command {
   public void execute();
 }
 
-class TV extends JFrame {
+class TV extends JFrame implements ActionListener {
   JLabel label;
   boolean off = true;
   boolean up = true;
@@ -129,6 +129,10 @@ class TV extends JFrame {
   String lifetype;
   String lifeformWeapon;
   String lifeformDirection;
+  MoveCmd move;
+  int lifeformRow;
+  int lifeformCol;
+  JPanel panel;
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,14 +143,11 @@ class TV extends JFrame {
     row = this.env.getNumRows();
     numberOfButtons = new JButton[row][col];
 
-    MoveCmd move = new MoveCmd(this.env);
-    move.execute(2,2);
 
 
 
 
-
-    JPanel panel = new JPanel();
+    panel = new JPanel();
     panel.setBounds(0, 0, (int) (width * 0.7), height);
     panel.setLayout(new GridLayout(row, col));
     panel.setBackground(Color.GRAY);
@@ -162,6 +163,28 @@ class TV extends JFrame {
 
     //textArea.setPreferredSize(new Dimension(200, 800));
 
+    var sideBar = new JPanel();
+
+    createGrid();
+
+    add(textArea, BorderLayout.CENTER);
+    add(panel, BorderLayout.WEST);
+
+    //add(sideBar, BorderLayout.WEST);
+
+
+    //label = new JLabel(offImage);
+
+    //panel.add(label);
+
+    //pack();
+    this.setLocation(50, 50);
+    setVisible(true);
+  }
+
+
+  public void createGrid() {
+    //numberOfButtons = new JButton[row][col];
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         numberOfButtons[i][j] = new JButton();
@@ -187,22 +210,10 @@ class TV extends JFrame {
         panel.add(numberOfButtons[i][j]);
       }
     }
+  }
 
-    var sideBar = new JPanel();
-
-    add(textArea, BorderLayout.CENTER);
-    add(panel, BorderLayout.WEST);
-
-    //add(sideBar, BorderLayout.WEST);
-
-
-    //label = new JLabel(offImage);
-
-    //panel.add(label);
-
-    //pack();
-    this.setLocation(50, 50);
-    setVisible(true);
+  public void updateGrid(int r, int c){
+    numberOfButtons[r][c].setIcon(null);
   }
 
 
@@ -211,7 +222,8 @@ class TV extends JFrame {
       for (int j = 0; j < col; j++) {
         if (e.getSource() == numberOfButtons[i][j]) {
           //numberOfButtons[i][j].setBackground(Color.YELLOW);
-
+          //createGrid();
+          updateGrid(i, j);
 
 
 
@@ -221,6 +233,9 @@ class TV extends JFrame {
             } else if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Human"){
               lifetype = "Human";
             }
+
+            lifeformRow = i;
+            lifeformCol = j;
 
             if (env.getLifeForm(i, j).hasWeapon()){
               lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
@@ -253,6 +268,9 @@ class TV extends JFrame {
       }
     }
   }
+
+
+  // Method to update a button at a specific row and column
   /*
   public void paint(Graphics g) {
     super.paint(g);
@@ -267,6 +285,16 @@ class TV extends JFrame {
      // Draw a line from (50, 50) to (200, 200)
   }*/
   public void toggle() {
+    LifeForm f = this.env.getLifeForm(lifeformRow, lifeformCol);
+    int r = this.env.getLifeForm(lifeformRow, lifeformCol).getRow();
+    int c = this.env.getLifeForm(lifeformRow, lifeformCol).getCol();
+    move = new MoveCmd(this.env);
+    move.execute(lifeformRow, lifeformCol);
+    if (r != lifeformRow || c != lifeformCol) {
+      JButton button = numberOfButtons[lifeformCol][lifeformCol];
+      numberOfButtons[r][c].setIcon(human);
+      numberOfButtons[lifeformRow][lifeformRow].setIcon(null);
+    }
     System.out.println("Button Clicked");
 
   }
