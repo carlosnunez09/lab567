@@ -370,14 +370,12 @@ class TV extends JFrame {
       add(moveAttack, BorderLayout.CENTER);
       add(bottom, BorderLayout.SOUTH);
 
-      /// deprecated
 //      b.addActionListener(a -> c.execute());
 //      up.addActionListener(a -> c.execute());
 //      down.addActionListener(a -> c.execute());
 //      North.addActionListener(a -> c.execute());
 //      South.addActionListener(a -> c.execute());
 //      attack.addActionListener(a -> c.execute());
-      ///
 
 
       down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
