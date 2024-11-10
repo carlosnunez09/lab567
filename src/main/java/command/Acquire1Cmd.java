@@ -28,7 +28,6 @@ public class Acquire1Cmd implements Command {
 
 
     Cell cell = environment.getCell(row, col);
-
     LifeForm lifeForm = cell.getLifeForm();
 
     if (lifeForm != null) {
@@ -45,8 +44,7 @@ public class Acquire1Cmd implements Command {
       }
     }
 
-
-    }
+  }
 
 
 
