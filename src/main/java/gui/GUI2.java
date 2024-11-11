@@ -20,9 +20,11 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
 
-
 public class GUI2 {
   public static int scRow, scCol;
+  public static boolean update = false;
+
+
 
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment(15, 15);
@@ -98,6 +100,7 @@ public class GUI2 {
   public static int getscCol() {
     return getscCol();
   }
+
 }
 
 interface Command {
@@ -113,18 +116,17 @@ class TV extends JFrame{
   final int width = 800;
   final int height = 600;
   Environment env;
-  ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
-  ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
-  JButton[][] numberOfButtons;
+  //ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
+  //ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
+  JButton numberOfButtons[][];
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
-  ImageIcon onImage = new ImageIcon("news.gif");
-  ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.png");
+  ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.jpg");
 
   ImageIcon plasma = new ImageIcon("src/main/java/gui/PlasmaCannon.jpg");
 
-  ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.png");
+  ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.jpg");
 
 
 
@@ -137,9 +139,11 @@ class TV extends JFrame{
   String lifeformWeapon;
   String lifeformDirection;
   MoveCmd move;
+  JPanel panel;
+
   int lifeformRow;
   int lifeformCol;
-  JPanel panel;
+
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -200,10 +204,8 @@ class TV extends JFrame{
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
         if (env.getLifeForm(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
-        } else if (env.getLifeForm(i, j) instanceof Human) {
-          numberOfButtons[i][j].setIcon(human);
-        } else if (env.getLifeForm(i, j) instanceof Alien) {
-          numberOfButtons[i][j].setIcon(alien);
+        } else {
+          numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
         }
         if (env.getWeapons(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
@@ -219,23 +221,38 @@ class TV extends JFrame{
     }
   }
 
-  public void updateGrid(int r, int c){
-    //numberOfButtons[r][c].setIcon(null);
-    JButton button = numberOfButtons[r][c];
-    //button.setIcon(alien);
+  public void removePanel(){
+    remove(panel);
+    panel = new JPanel();
+    panel.setBounds(0, 0, (int) (width * 0.7), height);
+    panel.setLayout(new GridLayout(row, col));
+    panel.setBackground(Color.GRAY);
+    add(panel, BorderLayout.WEST);
+  }
 
-    //add(sideBar, BorderLayout.WEST);
 
+  public void updateGUI(){
+    removePanel();
+    createGrid();
+  }
 
-    //label = new JLabel(offImage);
-
-    //panel.add(label);
-
-    //pack();
-    this.setLocation(50, 50);
-    setVisible(true);
+  public ImageIcon getIcon(LifeForm l) {
+    ImageIcon icon = new ImageIcon("src/main/java/gui/" + l.getLifetype(l) + ".jpg");
+    return icon;
 
   }
+
+  public void updateIcon(Environment e, int r, int c){
+    if (r != lifeformRow || c != lifeformCol) {
+      System.out.println("Icon been changed");
+      JButton button = numberOfButtons[lifeformRow][lifeformCol];
+      JButton button2 = numberOfButtons[r][c];
+      button2.setIcon(getIcon(e.getLifeForm(r, c)));
+      button.setIcon(null);
+      button.setBackground(Color.white);
+    }
+  }
+
 
 
   public void actionPerformed(ActionEvent e) {
@@ -249,11 +266,7 @@ class TV extends JFrame{
 
 
           if (env.getLifeForm(i, j) != null) {
-            if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Alien"){
-              lifetype = "Alien";
-            } else if (env.getLifeForm(i, j).getClass().getName() == "lifeform.Human"){
-              lifetype = "Human";
-            }
+            lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
 
             lifeformRow = i;
             lifeformCol = j;
@@ -287,206 +300,149 @@ class TV extends JFrame{
           //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
           GUI2.scRow = i;
           GUI2.scCol = j;
+          updateGUI();
         }
       }
     }
   }
 
 
-  // Method to update a button at a specific row and column
-  /*
-  public void paint(Graphics g) {
-    super.paint(g);
-    for (int i = 0; i < col; i++){
-      for (int j = 0; j < row; j++){
-        g.drawRect(50 * i, 50 * j, 50, 50);
-      }
-    }
-
-    // Maybe Use Buttons Instead of Making a 3d Grid
-
-     // Draw a line from (50, 50) to (200, 200)
-  }*/
-  public void toggle() {
-    //System.out.println("Button Clicked" + GUI2.scCol + " " + GUI2.scRow);
-    LifeForm f = this.env.getLifeForm(lifeformRow, lifeformCol);
-    move = new MoveCmd(this.env);
-    move.execute(lifeformRow, lifeformCol);
-
-    int r = f.getRow();
-    int c = f.getCol();
-    if (r != lifeformRow || c != lifeformCol) {
-      JButton button = numberOfButtons[lifeformRow][lifeformCol];
-      JButton button2 = numberOfButtons[r][c];
-      button2.setIcon(human);
-      button.setIcon(null);
-      button.setBackground(Color.white);
 
 
-    }
-    System.out.println("Button Clicked");
-
-  }
-
-  public void off() {
-    label.setIcon(offImage);
-    off = true;
-    remoteDisplay.append("Off\n");
-  }
-
-  public void on() {
-    label.setIcon(onImage);
-    off = false;
-    remoteDisplay.append("On\n");
-  }
-
-  public void setDisplay(JTextArea t) {
-    remoteDisplay = t;
-  }
 }
 
-  class SimpleRemote extends JFrame {
-    //Command c;
-    JTextArea text;
-    JPanel moveAttack;
-    JPanel top;
-    JPanel bottom;
-    private final Invoker invoker;  // Make it a private field
+class SimpleRemote extends JFrame {
+  //Command c;
+  JTextArea text;
+  JPanel moveAttack;
+  JPanel top;
+  JPanel bottom;
+  private final Invoker invoker;  // Make it a private field
 
 
-    public SimpleRemote(Invoker invoker) {
-      this.invoker = invoker;
-      setLayout(new BorderLayout());
-      moveAttack = new JPanel();
-      moveAttack.setLayout(new GridLayout(1, 3));
+  public SimpleRemote(Invoker invoker) {
+    this.invoker = invoker;
+    setLayout(new BorderLayout());
+    moveAttack = new JPanel();
+    moveAttack.setLayout(new GridLayout(1, 3));
 
-      top = new JPanel();
-      top.setLayout(new GridLayout(1, 3));
+    top = new JPanel();
+    top.setLayout(new GridLayout(1, 3));
 
-      bottom = new JPanel();
-      bottom.setLayout(new GridLayout(1, 3));
+    bottom = new JPanel();
+    bottom.setLayout(new GridLayout(1, 3));
 
-      JButton down = new JButton("West");
-      //down.setSize(5, 5);
-      down.setBounds(100, 200, 100, 5);
-      moveAttack.add(down, BorderLayout.WEST);
+    JButton down = new JButton("West");
+    //down.setSize(5, 5);
+    down.setBounds(100, 200, 100, 5);
+    moveAttack.add(down, BorderLayout.WEST);
 
-      JButton b = new JButton("Move");
-      //b.setSize(500, 500);
-      //b.setBounds(250, 100, 500, 50);
-      moveAttack.add(b, BorderLayout.CENTER);
+    JButton move = new JButton("Move");
+    //b.setSize(500, 500);
+    //b.setBounds(250, 100, 500, 50);
+    moveAttack.add(move, BorderLayout.CENTER);
 
-      JButton up = new JButton("East");
-      //up.setSize(5, 5);
-      up.setBounds(400, 100, 100, 5);
-      moveAttack.add(up, BorderLayout.EAST);
+    JButton up = new JButton("East");
+    //up.setSize(5, 5);
+    up.setBounds(400, 100, 100, 5);
+    moveAttack.add(up, BorderLayout.EAST);
 
-      JButton getWeap1 = new JButton("Get Weapon 1");
-      //North.setSize(5, 5);
-      //getWeap1.setBounds(100, 300, 100, 5);
-      top.add(getWeap1, BorderLayout.WEST);
-
-
-      JButton North = new JButton("North");
-      //North.setSize(5, 5);
-      //North.setBounds(100, 300, 100, 5);
-      top.add(North, BorderLayout.CENTER);
-
-      JButton getWeap2 = new JButton("Get Weapon 2");
-      //North.setSize(5, 5);
-      //getWeap2.setBounds(100, 300, 100, 5);
-      top.add(getWeap2, BorderLayout.EAST);
-
-      JButton Drop = new JButton("Drop Weapon");
-      //South.setSize(10, 10);
-      //South.setBounds(100, 400, 100, 5);
-      bottom.add(Drop, BorderLayout.WEST);
-
-      JButton South = new JButton("South");
-      //South.setSize(10, 10);
-      South.setBounds(100, 400, 100, 5);
-      bottom.add(South, BorderLayout.CENTER);
-
-      JButton attack = new JButton("Attack");
-      //attack.setSize(50, 50);
-      //attack.setBounds(350, 100, 500, 50);
-      bottom.add(attack, BorderLayout.EAST);
-
-      add(top, BorderLayout.NORTH);
-      add(moveAttack, BorderLayout.CENTER);
-      add(bottom, BorderLayout.SOUTH);
-
-//      b.addActionListener(a -> c.execute());
-//      up.addActionListener(a -> c.execute());
-//      down.addActionListener(a -> c.execute());
-//      North.addActionListener(a -> c.execute());
-//      South.addActionListener(a -> c.execute());
-//      attack.addActionListener(a -> c.execute());
+    JButton getWeap1 = new JButton("Get Weapon 1");
+    //North.setSize(5, 5);
+    //getWeap1.setBounds(100, 300, 100, 5);
+    top.add(getWeap1, BorderLayout.WEST);
 
 
-      down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
-      b.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
-      up.addActionListener(a -> pressButton("east", GUI2.scRow, GUI2.scCol));
-      North.addActionListener(a -> pressButton("north", GUI2.scRow, GUI2.scCol));
-      //getWeap1.addActionListener(a -> pressButton("get1", 0, 0));
-      //getWeap2.addActionListener(a -> pressButton("get2", 0, 0));
-      //Drop.addActionListener(a -> pressButton("drop", 0, 0));
-      South.addActionListener(a -> pressButton("south", GUI2.scRow, GUI2.scCol));
-      attack.addActionListener(a -> pressButton("attack", GUI2.scRow, GUI2.scCol));
+    JButton North = new JButton("North");
+    //North.setSize(5, 5);
+    //North.setBounds(100, 300, 100, 5);
+    top.add(North, BorderLayout.CENTER);
+
+    JButton getWeap2 = new JButton("Get Weapon 2");
+    //North.setSize(5, 5);
+    //getWeap2.setBounds(100, 300, 100, 5);
+    top.add(getWeap2, BorderLayout.EAST);
+
+    JButton Drop = new JButton("Drop Weapon");
+    //South.setSize(10, 10);
+    //South.setBounds(100, 400, 100, 5);
+    bottom.add(Drop, BorderLayout.WEST);
+
+    JButton South = new JButton("South");
+    //South.setSize(10, 10);
+    South.setBounds(100, 400, 100, 5);
+    bottom.add(South, BorderLayout.CENTER);
+
+    JButton attack = new JButton("Attack");
+    //attack.setSize(50, 50);
+    //attack.setBounds(350, 100, 500, 50);
+    bottom.add(attack, BorderLayout.EAST);
+
+    add(top, BorderLayout.NORTH);
+    add(moveAttack, BorderLayout.CENTER);
+    add(bottom, BorderLayout.SOUTH);
 
 
-      setSize(500, 200);
-      setVisible(true);
-      setLocation(700, 200);
-    }
+    down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
+    move.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
+    up.addActionListener(a -> pressButton("east", GUI2.scRow, GUI2.scCol));
+    North.addActionListener(a -> pressButton("north", GUI2.scRow, GUI2.scCol));
+    South.addActionListener(a -> pressButton("south", GUI2.scRow, GUI2.scCol));
+    attack.addActionListener(a -> pressButton("attack", GUI2.scRow, GUI2.scCol));
 
-    public JTextArea getTextArea() {
-      return text;
-    }
 
-    public void pressButton(String s, int row, int col) {
-      System.out.println("from GUI " + s + row + " " + col);
+    setSize(500, 200);
+    setVisible(true);
+    setLocation(700, 200);
+  }
 
-      try {
-        switch (s) {
-          case "north":
-            invoker.getNorthCmd().execute(row, col);
-            break;
-          case "south":
-            invoker.getSouthCmd().execute(row, col);
-            break;
-          case "east":
-            invoker.getEastCmd().execute(row, col);
-            break;
-          case "west":
-            invoker.getWestCmd().execute(row, col);
-            break;
-          case "attack":
-            invoker.getAttackCmd().execute(row, col);
-            break;
-          case "drop":
-            invoker.getDropCmd().execute(row, col);
-            break;
-          case "get1":
-            invoker.getGet1Cmd().execute(row, col);
-            break;
-          case "get2":
-            invoker.getGet2Cmd().execute(row, col);
-            break;
-          case "move":
-            invoker.getMoveCmd().execute(row, col);
-            break;
-          case "reload":
-            invoker.getReloadCmd().execute(row, col);
-            break;
-          default:
-            System.out.println("Unknown command");
-        }
-      } catch (WeaponException | EnvironmentException e) {
-        e.printStackTrace();
+  public JTextArea getTextArea() {
+    return text;
+  }
+
+  public void pressButton(String s, int row, int col) {
+    System.out.println("from GUI " + s + row + " " + col);
+
+    try {
+      switch (s) {
+        case "north":
+          invoker.getNorthCmd().execute(row, col);
+          break;
+        case "south":
+          invoker.getSouthCmd().execute(row, col);
+          break;
+        case "east":
+          invoker.getEastCmd().execute(row, col);
+          break;
+        case "west":
+          invoker.getWestCmd().execute(row, col);
+          break;
+        case "attack":
+          invoker.getAttackCmd().execute(row, col);
+          break;
+        case "drop":
+          invoker.getDropCmd().execute(row, col);
+          break;
+        case "get1":
+          invoker.getGet1Cmd().execute(row, col);
+          break;
+        case "get2":
+          invoker.getGet2Cmd().execute(row, col);
+          break;
+        case "move":
+          invoker.getMoveCmd().execute(row, col);
+          break;
+        case "reload":
+          invoker.getReloadCmd().execute(row, col);
+          break;
+        default:
+          System.out.println("Unknown command");
       }
-
-
+    } catch (WeaponException | EnvironmentException e) {
+      e.printStackTrace();
     }
+
 
   }
+
+}
