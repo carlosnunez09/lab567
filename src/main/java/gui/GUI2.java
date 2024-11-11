@@ -202,11 +202,6 @@ class TV extends JFrame{
         numberOfButtons[i][j].setPreferredSize(new Dimension((int) (width * 0.7)/row, height/col));
         //numberOfButtons[i][j].setFocusable(false);
         numberOfButtons[i][j].addActionListener(this::actionPerformed);
-        if (env.getLifeForm(i, j) == null) {
-          numberOfButtons[i][j].setBackground(Color.WHITE);
-        } else {
-          numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
-        }
         if (env.getWeapons(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else if (env.getWeapons(i, j)[0] instanceof Pistol) {
@@ -215,6 +210,12 @@ class TV extends JFrame{
           numberOfButtons[i][j].setIcon(plasma);
         } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
           numberOfButtons[i][j].setIcon(chain);
+        }
+
+        if (env.getLifeForm(i, j) == null) {
+          numberOfButtons[i][j].setBackground(Color.WHITE);
+        } else {
+          numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
         }
         panel.add(numberOfButtons[i][j]);
       }
