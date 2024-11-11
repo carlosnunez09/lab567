@@ -80,5 +80,6 @@ public class CommandUI {
     assertEquals(3,tyrranid.getRow());
     assertEquals(5,tyrranid.getCol());
     assertNull(env.getLifeForm(3,3));
+    assertEquals(tyrranid, env.getLifeForm(3,5));
   }
 }
