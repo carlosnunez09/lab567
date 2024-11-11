@@ -19,32 +19,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
+
 public class GUI2 {
   public static int scRow, scCol;
-  public static int lifeformRow, lifeformCol;
-  public static JButton[][] numberOfButtons;
-  public static Environment environment;
+  public static boolean update = false;
 
 
-  public static void updateIcon(Environment e, int r, int c){
-    if (r != GUI2.lifeformRow || c != GUI2.lifeformCol) {
-      System.out.println("Icon been changed");
-      JButton button = numberOfButtons[GUI2.lifeformRow][GUI2.lifeformCol];
-      JButton button2 = numberOfButtons[r][c];
-      button2.setIcon(getIcon(e.getLifeForm(r, c)));
-      button.setIcon(null);
-      button.setBackground(Color.white);
-    }
-  }
-  public static ImageIcon getIcon(LifeForm l) {
-    ImageIcon icon = new ImageIcon("src/main/java/gui/" + l.getLifetype(l) + ".jpg");
-    return icon;
-
-  }
-
-  public static void updateEnv(Environment e){
-    environment = e;
-  }
 
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment(15, 15);
@@ -120,6 +100,7 @@ public class GUI2 {
   public static int getscCol() {
     return getscCol();
   }
+
 }
 
 interface Command {
@@ -137,11 +118,10 @@ class TV extends JFrame{
   Environment env;
   //ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
   //ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
-  JButton[][] numberOfButtons;
+  JButton numberOfButtons[][];
 
   ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
           BufferedImage.TYPE_3BYTE_BGR));
-  ImageIcon onImage = new ImageIcon("news.gif");
   ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.jpg");
 
   ImageIcon plasma = new ImageIcon("src/main/java/gui/PlasmaCannon.jpg");
@@ -161,13 +141,15 @@ class TV extends JFrame{
   MoveCmd move;
   JPanel panel;
 
+  int lifeformRow;
+  int lifeformCol;
+
 
   public TV(Environment env) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(width, height);
     setLayout(new BorderLayout());
     this.env = env;
-    GUI2.updateEnv(this.env);
     col = this.env.getNumCols();
     row = this.env.getNumRows();
     numberOfButtons = new JButton[row][col];
@@ -223,7 +205,7 @@ class TV extends JFrame{
         if (env.getLifeForm(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else {
-          numberOfButtons[i][j].setIcon(GUI2.getIcon(env.getLifeForm(i, j)));
+          numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
         }
         if (env.getWeapons(i, j) == null) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
@@ -239,23 +221,38 @@ class TV extends JFrame{
     }
   }
 
-  public void updateGrid(int r, int c){
-    //numberOfButtons[r][c].setIcon(null);
-    JButton button = numberOfButtons[r][c];
-    //button.setIcon(alien);
+  public void removePanel(){
+    remove(panel);
+    panel = new JPanel();
+    panel.setBounds(0, 0, (int) (width * 0.7), height);
+    panel.setLayout(new GridLayout(row, col));
+    panel.setBackground(Color.GRAY);
+    add(panel, BorderLayout.WEST);
+  }
 
-    //add(sideBar, BorderLayout.WEST);
 
+  public void updateGUI(){
+    removePanel();
+    createGrid();
+  }
 
-    //label = new JLabel(offImage);
-
-    //panel.add(label);
-
-    //pack();
-    this.setLocation(50, 50);
-    setVisible(true);
+  public ImageIcon getIcon(LifeForm l) {
+    ImageIcon icon = new ImageIcon("src/main/java/gui/" + l.getLifetype(l) + ".jpg");
+    return icon;
 
   }
+
+  public void updateIcon(Environment e, int r, int c){
+    if (r != lifeformRow || c != lifeformCol) {
+      System.out.println("Icon been changed");
+      JButton button = numberOfButtons[lifeformRow][lifeformCol];
+      JButton button2 = numberOfButtons[r][c];
+      button2.setIcon(getIcon(e.getLifeForm(r, c)));
+      button.setIcon(null);
+      button.setBackground(Color.white);
+    }
+  }
+
 
 
   public void actionPerformed(ActionEvent e) {
@@ -271,8 +268,8 @@ class TV extends JFrame{
           if (env.getLifeForm(i, j) != null) {
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
 
-            GUI2.lifeformRow = i;
-            GUI2.lifeformCol = j;
+            lifeformRow = i;
+            lifeformCol = j;
 
             if (env.getLifeForm(i, j).hasWeapon()){
               lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
@@ -303,6 +300,7 @@ class TV extends JFrame{
           //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
           GUI2.scRow = i;
           GUI2.scCol = j;
+          updateGUI();
         }
       }
     }
@@ -339,10 +337,10 @@ class SimpleRemote extends JFrame {
     down.setBounds(100, 200, 100, 5);
     moveAttack.add(down, BorderLayout.WEST);
 
-    JButton b = new JButton("Move");
+    JButton move = new JButton("Move");
     //b.setSize(500, 500);
     //b.setBounds(250, 100, 500, 50);
-    moveAttack.add(b, BorderLayout.CENTER);
+    moveAttack.add(move, BorderLayout.CENTER);
 
     JButton up = new JButton("East");
     //up.setSize(5, 5);
@@ -384,21 +382,11 @@ class SimpleRemote extends JFrame {
     add(moveAttack, BorderLayout.CENTER);
     add(bottom, BorderLayout.SOUTH);
 
-//      b.addActionListener(a -> c.execute());
-//      up.addActionListener(a -> c.execute());
-//      down.addActionListener(a -> c.execute());
-//      North.addActionListener(a -> c.execute());
-//      South.addActionListener(a -> c.execute());
-//      attack.addActionListener(a -> c.execute());
-
 
     down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
-    b.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
+    move.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
     up.addActionListener(a -> pressButton("east", GUI2.scRow, GUI2.scCol));
     North.addActionListener(a -> pressButton("north", GUI2.scRow, GUI2.scCol));
-    //getWeap1.addActionListener(a -> pressButton("get1", 0, 0));
-    //getWeap2.addActionListener(a -> pressButton("get2", 0, 0));
-    //Drop.addActionListener(a -> pressButton("drop", 0, 0));
     South.addActionListener(a -> pressButton("south", GUI2.scRow, GUI2.scCol));
     attack.addActionListener(a -> pressButton("attack", GUI2.scRow, GUI2.scCol));
 
@@ -442,7 +430,6 @@ class SimpleRemote extends JFrame {
           invoker.getGet2Cmd().execute(row, col);
           break;
         case "move":
-          GUI2.updateIcon(GUI2.environment, row, col);
           invoker.getMoveCmd().execute(row, col);
           break;
         case "reload":
