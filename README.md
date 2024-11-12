@@ -34,7 +34,7 @@ Using the following table
 |--------------------------------|--------|----------|---------------------------------------|
 | Game'UI'                       | Terrence | 10/23/24 |  |
 | Commands                       | John   | 10/23/24 |    |
-| Invoker'Builder' & Invoker'UI' | Carlos | 10/30/24  |             |
+| Invoker'Builder' & Invoker'UI' | Carlos | 10/30/24  | Finished invoker and implemented it with invoker UI |
 | Turn'&'Movement'               | Mason  | 10/30/24  | Finish Turn & Movement ()     |
 
 
