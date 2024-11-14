@@ -88,9 +88,7 @@ public class GUI2 {
     //invoker prams
     InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
     Invoker invoker = builder.loadCommands();
-
-    var tv = new TV(e);
-    var r = new SimpleRemote(invoker);
+    var r = new SimpleRemote(invoker, e);
   }
 
   public static int getscRow() {
@@ -229,6 +227,7 @@ class TV extends JFrame{
     panel.setLayout(new GridLayout(row, col));
     panel.setBackground(Color.GRAY);
     add(panel, BorderLayout.WEST);
+
   }
 
 
@@ -318,10 +317,15 @@ class SimpleRemote extends JFrame {
   JPanel moveAttack;
   JPanel top;
   JPanel bottom;
+  JPanel panel;
   private final Invoker invoker;  // Make it a private field
+  TV tv;
+  Environment env;
 
 
-  public SimpleRemote(Invoker invoker) {
+  public SimpleRemote(Invoker invoker, Environment e) {
+    tv = new TV(e);
+    env = tv.env;
     this.invoker = invoker;
     setLayout(new BorderLayout());
     moveAttack = new JPanel();
@@ -401,6 +405,28 @@ class SimpleRemote extends JFrame {
     return text;
   }
 
+  public void updateFrame() throws WeaponException, EnvironmentException {
+    LifeForm l = tv.env.getLifeForm(GUI2.scRow, GUI2.scCol);
+
+    int r = GUI2.scRow;
+    int c = GUI2.scCol;
+    invoker.getMoveCmd().execute(r, c);
+
+    int lifeformCol = l.getCol();
+    int lifeformRow = l.getRow();
+
+    if (r != lifeformRow || c != lifeformCol) {
+      System.out.println("Icon been changed");
+      JButton button2 = tv.numberOfButtons[lifeformRow][lifeformCol];
+      JButton button = tv.numberOfButtons[r][c];
+      button2.setIcon(tv.getIcon(env.getLifeForm(lifeformRow, lifeformCol)));
+      button.setIcon(null);
+      button.setBackground(Color.white);
+    }
+  }
+
+
+
   public void pressButton(String s, int row, int col) {
     System.out.println("from GUI " + s + row + " " + col);
 
@@ -431,7 +457,9 @@ class SimpleRemote extends JFrame {
           invoker.getGet2Cmd().execute(row, col);
           break;
         case "move":
-          invoker.getMoveCmd().execute(row, col);
+          //invoker.getMoveCmd().execute(row, col);
+          //tv.updateGUI();
+          updateFrame();
           break;
         case "reload":
           invoker.getReloadCmd().execute(row, col);
