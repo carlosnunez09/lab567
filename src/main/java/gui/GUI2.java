@@ -21,11 +21,6 @@ import java.awt.image.BufferedImage;
 
 
 public class GUI2 {
-  public static int scRow, scCol;
-  public static boolean update = false;
-
-
-
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment(15, 15);
     e.clearBoard();
@@ -89,14 +84,6 @@ public class GUI2 {
     InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
     Invoker invoker = builder.loadCommands();
     var r = new SimpleRemote(invoker, e);
-  }
-
-  public static int getscRow() {
-    return getscRow();
-  }
-
-  public static int getscCol() {
-    return getscCol();
   }
 
 }
@@ -298,8 +285,6 @@ class TV extends JFrame{
 
           //textArea.setText("A button was pressed\n");
           //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
-          GUI2.scRow = i;
-          GUI2.scCol = j;
           updateGUI();
         }
       }
@@ -388,12 +373,12 @@ class SimpleRemote extends JFrame {
     add(bottom, BorderLayout.SOUTH);
 
 
-    down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
-    move.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
-    up.addActionListener(a -> pressButton("east", GUI2.scRow, GUI2.scCol));
-    North.addActionListener(a -> pressButton("north", GUI2.scRow, GUI2.scCol));
-    South.addActionListener(a -> pressButton("south", GUI2.scRow, GUI2.scCol));
-    attack.addActionListener(a -> pressButton("attack", GUI2.scRow, GUI2.scCol));
+    down.addActionListener(a -> pressButton("west", tv.lifeformRow, tv.lifeformCol));
+    move.addActionListener(a -> pressButton("move", tv.lifeformRow, tv.lifeformCol));
+    up.addActionListener(a -> pressButton("east", tv.lifeformRow, tv.lifeformCol));
+    North.addActionListener(a -> pressButton("north", tv.lifeformRow, tv.lifeformCol));
+    South.addActionListener(a -> pressButton("south", tv.lifeformRow, tv.lifeformCol));
+    attack.addActionListener(a -> pressButton("attack", tv.lifeformRow, tv.lifeformCol));
 
 
     setSize(500, 200);
@@ -406,10 +391,10 @@ class SimpleRemote extends JFrame {
   }
 
   public void updateFrame() throws WeaponException, EnvironmentException {
-    LifeForm l = tv.env.getLifeForm(GUI2.scRow, GUI2.scCol);
+    LifeForm l = tv.env.getLifeForm(tv.lifeformRow, tv.lifeformCol);
 
-    int r = GUI2.scRow;
-    int c = GUI2.scCol;
+    int r = tv.lifeformRow;
+    int c = tv.lifeformCol;
     invoker.getMoveCmd().execute(r, c);
 
     int lifeformCol = l.getCol();
