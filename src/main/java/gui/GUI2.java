@@ -240,6 +240,40 @@ class TV extends JFrame{
     }
   }
 
+  public void updateText(){
+    for (int i = 0; i < lifeformRow + 1; i++) {
+      for (int j = 0; j < lifeformCol + 1; j++) {
+          if (env.getLifeForm(i, j) != null) {
+            lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
+
+            if (env.getLifeForm(i, j).hasWeapon()){
+              lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+            } else {
+              lifeformWeapon = "No Weapons Equipped";
+            }
+
+            lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
+          } else {
+            lifetype = "Blank";
+            lifeformWeapon = "Not a Lifeform";
+            lifeformDirection = "Lifeform is NOT currently selected";
+          }
+
+          if (env.getWeapons(i, j) != null) {
+            weapon = env.getWeapons(i, j);
+          }
+
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Type is:\n" + lifetype + " \n\n" +
+                  "LifeForm Weapon:\n" + lifeformWeapon +
+                  "\n\nFirst Weapon in Cell is \n" + weapon[0] +
+                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                  "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+      }
+    }
+
+  }
+
 
 
   public void actionPerformed(ActionEvent e) {
@@ -455,8 +489,7 @@ class SimpleRemote extends JFrame {
     } catch (WeaponException | EnvironmentException e) {
       e.printStackTrace();
     }
-
-
+    tv.updateText();
   }
 
 }
