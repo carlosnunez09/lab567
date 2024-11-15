@@ -55,6 +55,9 @@ public class Environment {
   public boolean addLifeForm(LifeForm entity, int row, int col) {
     if (cells[row][col] == null) {
       cells[row][col] = new Cell();
+    }
+
+    if (cells[row][col].getLifeForm() == null) {
       cells[row][col].addLifeForm(entity);
       return true;
     } else {
