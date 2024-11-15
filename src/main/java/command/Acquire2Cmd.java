@@ -5,11 +5,11 @@ import environment.Environment;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
-public class Acquire2Cmd {
+public class Acquire2Cmd implements Command {
 
 
     private Environment environment;
-    public Acquire2Cmd(Environment environemnt){ this.environment = environment; }
+    public Acquire2Cmd(Environment environment){ this.environment = environment; }
 
 
     public void execute(int row, int col){

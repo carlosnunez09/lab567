@@ -24,12 +24,12 @@ public class InvokerBuilder {
     invoker.setWest(new TurnWestCmd(environment));
 
     // Action commands
-    // invoker.setAttack(new AttackCmd(environment));
-    // invoker.setDrop(new DropCmd(environment));
-    //invoker.setGet1(new Acquire1Cmd(environment));
-    // invoker.setGet2(new Acquire2Cmd(environment));
-      invoker.setMove(new MoveCmd(environment));
-    //  invoker.setReload(new ReloadCmd(environment));
+    //invoker.setAttack(new AttackCmd(environment));
+    //invoker.setDrop(new DropCmd(environment));
+    invoker.setGet1(new Acquire1Cmd(environment));
+    invoker.setGet2(new Acquire2Cmd(environment));
+    invoker.setMove(new MoveCmd(environment));
+    //invoker.setReload(new ReloadCmd(environment));
 
     return invoker;
   }

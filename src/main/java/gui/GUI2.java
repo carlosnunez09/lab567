@@ -413,6 +413,8 @@ class SimpleRemote extends JFrame {
     North.addActionListener(a -> pressButton("north", tv.lifeformRow, tv.lifeformCol));
     South.addActionListener(a -> pressButton("south", tv.lifeformRow, tv.lifeformCol));
     attack.addActionListener(a -> pressButton("attack", tv.lifeformRow, tv.lifeformCol));
+    getWeap1.addActionListener(a -> pressButton("get1", tv.lifeformRow, tv.lifeformCol));
+    getWeap2.addActionListener(a -> pressButton("get2", tv.lifeformRow, tv.lifeformCol));
 
 
     setSize(500, 200);
