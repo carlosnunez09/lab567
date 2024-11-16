@@ -482,8 +482,8 @@ class SimpleRemote extends JFrame {
           break;
         case "move":
           //invoker.getMoveCmd().execute(row, col);
-          //tv.updateGUI();
           updateFrame();
+          tv.updateGUI();
           break;
         case "reload":
           invoker.getReloadCmd().execute(row, col);
