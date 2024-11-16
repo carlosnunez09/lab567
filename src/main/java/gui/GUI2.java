@@ -34,19 +34,21 @@ public class GUI2 {
     PlasmaCannon p = new PlasmaCannon();
     Pistol pis = new Pistol();
     ChainGun CG = new ChainGun();
+    Pistol pistol = new Pistol();
     
 
-    e.addLifeForm(jeff, 5, 5);
+    e.addLifeForm(jeff, 1, 1);
     e.addLifeForm(bill, 2, 2);
     e.addLifeForm(tim, 1, 2);
     e.addWeapon(p, 1, 1);
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
+    e.addWeapon(pistol, 1, 1);
 
     
     bill.pickUpWeapon(p);
 
-    jeff.setLocation(5, 5);
+    jeff.setLocation(1, 1);
     bill.setLocation(2,2);
     tim.setLocation(1, 2);
 
@@ -194,6 +196,12 @@ class TV extends JFrame{
         } else if (env.getWeapons(i, j)[0] instanceof PlasmaCannon){
           numberOfButtons[i][j].setIcon(plasma);
         } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
+          numberOfButtons[i][j].setIcon(chain);
+        } else if (env.getWeapons(i, j)[1] instanceof Pistol) {
+          numberOfButtons[i][j].setIcon(pistol);
+        } else if (env.getWeapons(i, j)[1] instanceof PlasmaCannon){
+          numberOfButtons[i][j].setIcon(plasma);
+        } else if (env.getWeapons(i, j)[1] instanceof ChainGun) {
           numberOfButtons[i][j].setIcon(chain);
         }
 
