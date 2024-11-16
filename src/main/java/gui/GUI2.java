@@ -118,7 +118,7 @@ class TV extends JFrame{
   JTextArea remoteDisplay;
   JTextArea textArea;
 
-  LifeForm lifeform;
+  LifeForm tempLifeform;
   Weapon[] weapon;
   String lifetype;
   String lifeformWeapon;
@@ -241,10 +241,12 @@ class TV extends JFrame{
   }
 
   public void updateText(){
-    for (int i = 0; i < lifeformRow + 1; i++) {
-      for (int j = 0; j < lifeformCol + 1; j++) {
+    for (int i = 0; i < tempLifeform.getRow() + 1; i++) {
+      for (int j = 0; j < tempLifeform.getCol() + 1; j++) {
           if (env.getLifeForm(i, j) != null) {
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
+            lifeformRow = i;
+            lifeformCol = j;
 
             if (env.getLifeForm(i, j).hasWeapon()){
               lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
@@ -287,6 +289,7 @@ class TV extends JFrame{
 
 
           if (env.getLifeForm(i, j) != null) {
+            tempLifeform = env.getLifeForm(i, j);
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
 
             lifeformRow = i;
