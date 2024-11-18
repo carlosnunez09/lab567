@@ -1,15 +1,14 @@
 package command;
 
+import environment.Cell;
 import environment.Environment;
 import lifeform.Alien;
 import lifeform.Human;
+import lifeform.LifeForm;
 import org.junit.Test;
 import weapon.Pistol;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class CommandUI {
@@ -113,4 +112,24 @@ public class CommandUI {
     assertEquals(tyrranid, env.getLifeForm(3,3));
     assertEquals(T, env.getLifeForm(3,5));
   }
+
+
+
+  @Test
+  public void testdropweaponspaceavaible(){
+
+    Environment environment = new Environment(7,7 );
+    DropCmd dropcmd = new DropCmd(environment);
+    dropcmd.execute(2,2);
+    LifeForm human = environment.getCell(2,2).getLifeForm();
+    assertNull("the human should not have weapon after dropping", human.getWeapon());
+    Cell targetCell = environment.getCell(2, 3);
+    assertNotNull("The weapon should be in the target cell (2, 3)", targetCell.getWeapon1());
+
+    // Verify that the weapon in the target cell is indeed the Pistol
+    Pistol pistol = new Pistol();
+    assertEquals("The weapon in the target cell should be a Pistol", pistol, targetCell.getWeapon1());
+  }
+
+
 }
