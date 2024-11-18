@@ -37,7 +37,7 @@ public class GUI2 {
     Pistol pistol = new Pistol();
     
 
-    e.addLifeForm(jeff, 1, 1);
+    e.addLifeForm(jeff, 1, 2);
     e.addLifeForm(bill, 2, 2);
     e.addLifeForm(tim, 4, 5);
     e.addWeapon(p, 1, 1);
@@ -48,7 +48,7 @@ public class GUI2 {
     
     bill.pickUpWeapon(p);
 
-    jeff.setLocation(1, 1);
+    jeff.setLocation(1, 2);
     bill.setLocation(2,2);
     tim.setLocation(4, 5);
 
@@ -128,6 +128,8 @@ class TV extends JFrame{
   String lifeName;
   String lifeHealth;
   String maxHealth;
+  String ammo;
+  String maxAmmo;
   MoveCmd move;
   JPanel panel;
 
@@ -262,6 +264,8 @@ class TV extends JFrame{
 
             if (env.getLifeForm(i, j).hasWeapon()){
               lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+              ammo = String.valueOf(env.getLifeForm(i, j).getWeapon().getCurrentAmmo());
+              maxAmmo = String.valueOf(env.getLifeForm(i, j).getWeapon().getMaxAmmo());
             } else {
               lifeformWeapon = "No Weapons Equipped";
             }
@@ -282,6 +286,7 @@ class TV extends JFrame{
                 "LifeForm Name is:\n" + lifeName + " \n\n" +
                 "LifeForm Type is:\n" + lifetype + " \n\n" +
                 "LifeForm Weapon:\n" + lifeformWeapon +
+                "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
                 "\n\nFirst Weapon in Cell is \n" + weapon[0] +
                 "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
                 "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
@@ -336,6 +341,7 @@ class TV extends JFrame{
                   "LifeForm Name is:\n" + lifeName + " \n\n" +
                   "LifeForm Type is:\n" + lifetype + " \n\n" +
                   "LifeForm Weapon:\n" + lifeformWeapon +
+                  "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
                   "\n\nFirst Weapon in Cell is \n" + weapon[0] +
                   "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
                   "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
