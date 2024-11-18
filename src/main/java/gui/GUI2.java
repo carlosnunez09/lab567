@@ -39,7 +39,7 @@ public class GUI2 {
 
     e.addLifeForm(jeff, 1, 1);
     e.addLifeForm(bill, 2, 2);
-    e.addLifeForm(tim, 1, 2);
+    e.addLifeForm(tim, 4, 5);
     e.addWeapon(p, 1, 1);
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
@@ -50,7 +50,7 @@ public class GUI2 {
 
     jeff.setLocation(1, 1);
     bill.setLocation(2,2);
-    tim.setLocation(1, 2);
+    tim.setLocation(4, 5);
 
 
 

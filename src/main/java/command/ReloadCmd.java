@@ -5,7 +5,7 @@ import environment.Environment;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
-public class ReloadCmd {
+public class ReloadCmd implements Command {
 
   private Environment environment;
 
