@@ -125,6 +125,8 @@ class TV extends JFrame{
   String lifetype;
   String lifeformWeapon;
   String lifeformDirection;
+  String lifeName;
+  String lifeHealth;
   MoveCmd move;
   JPanel panel;
 
@@ -209,6 +211,7 @@ class TV extends JFrame{
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else {
           numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
+
         }
         panel.add(numberOfButtons[i][j]);
       }
@@ -232,7 +235,7 @@ class TV extends JFrame{
   }
 
   public ImageIcon getIcon(LifeForm l) {
-    ImageIcon icon = new ImageIcon("src/main/java/gui/" + l.getLifetype(l) + ".jpg");
+    ImageIcon icon = new ImageIcon("src/main/java/gui/Pic/" + l.getLifetype(l) + l.getCurrentDirection() + ".jpg");
     return icon;
 
   }
@@ -273,12 +276,14 @@ class TV extends JFrame{
             weapon = env.getWeapons(i, j);
           }
 
-          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
-                  "LifeForm Type is:\n" + lifetype + " \n\n" +
-                  "LifeForm Weapon:\n" + lifeformWeapon +
-                  "\n\nFirst Weapon in Cell is \n" + weapon[0] +
-                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
-                  "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+        textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                "LifeForm Health is at:\n" + lifeHealth + " \n\n" +
+                "LifeForm Name is:\n" + lifeName + " \n\n" +
+                "LifeForm Type is:\n" + lifetype + " \n\n" +
+                "LifeForm Weapon:\n" + lifeformWeapon +
+                "\n\nFirst Weapon in Cell is \n" + weapon[0] +
+                "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
       }
     }
 
@@ -299,6 +304,8 @@ class TV extends JFrame{
           if (env.getLifeForm(i, j) != null) {
             tempLifeform = env.getLifeForm(i, j);
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
+            lifeHealth = String.valueOf(env.getLifeForm(i, j).getCurrentLifePoints());
+            lifeName = env.getLifeForm(i, j).getName();
 
             lifeformRow = i;
             lifeformCol = j;
@@ -314,6 +321,8 @@ class TV extends JFrame{
             lifetype = "Blank";
             lifeformWeapon = "Not a Lifeform";
             lifeformDirection = "Lifeform is NOT currently selected";
+            lifeHealth = "Lifeform is NOT currently selected";
+            lifeName = "Lifeform is NOT currently selected";
           }
 
           if (env.getWeapons(i, j) != null) {
@@ -321,6 +330,8 @@ class TV extends JFrame{
           }
 
           textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Health is at:\n" + lifeHealth + " \n\n" +
+                  "LifeForm Name is:\n" + lifeName + " \n\n" +
                   "LifeForm Type is:\n" + lifetype + " \n\n" +
                   "LifeForm Weapon:\n" + lifeformWeapon +
                   "\n\nFirst Weapon in Cell is \n" + weapon[0] +
@@ -491,7 +502,7 @@ class SimpleRemote extends JFrame {
         case "move":
           //invoker.getMoveCmd().execute(row, col);
           updateFrame();
-          tv.updateGUI();
+          //tv.updateGUI();
           break;
         case "reload":
           invoker.getReloadCmd().execute(row, col);
@@ -503,6 +514,7 @@ class SimpleRemote extends JFrame {
       e.printStackTrace();
     }
     tv.updateText();
+    tv.updateGUI();
   }
 
 }
