@@ -211,6 +211,7 @@ class TV extends JFrame{
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else {
           numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
+
         }
         panel.add(numberOfButtons[i][j]);
       }
@@ -234,7 +235,7 @@ class TV extends JFrame{
   }
 
   public ImageIcon getIcon(LifeForm l) {
-    ImageIcon icon = new ImageIcon("src/main/java/gui/" + l.getLifetype(l) + ".jpg");
+    ImageIcon icon = new ImageIcon("src/main/java/gui/Pic/" + l.getLifetype(l) + l.getCurrentDirection() + ".jpg");
     return icon;
 
   }
@@ -501,7 +502,7 @@ class SimpleRemote extends JFrame {
         case "move":
           //invoker.getMoveCmd().execute(row, col);
           updateFrame();
-          tv.updateGUI();
+          //tv.updateGUI();
           break;
         case "reload":
           invoker.getReloadCmd().execute(row, col);
@@ -513,6 +514,7 @@ class SimpleRemote extends JFrame {
       e.printStackTrace();
     }
     tv.updateText();
+    tv.updateGUI();
   }
 
 }
