@@ -5,7 +5,7 @@ import environment.Environment;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
-public class DropCmd {
+public class DropCmd implements Command {
 
   private Environment environment;
 
