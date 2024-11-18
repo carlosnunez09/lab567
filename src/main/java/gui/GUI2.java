@@ -380,6 +380,9 @@ class SimpleRemote extends JFrame {
     bottom = new JPanel();
     bottom.setLayout(new GridLayout(1, 3));
 
+    panel = new JPanel();
+    panel.setLayout(new GridLayout(1, 2));
+
     JButton down = new JButton("West");
     //down.setSize(5, 5);
     down.setBounds(100, 200, 100, 5);
@@ -411,10 +414,17 @@ class SimpleRemote extends JFrame {
     //getWeap2.setBounds(100, 300, 100, 5);
     top.add(getWeap2, BorderLayout.EAST);
 
-    JButton Drop = new JButton("Drop Weapon");
+    JButton Drop = new JButton("Drop");
     //South.setSize(10, 10);
     //South.setBounds(100, 400, 100, 5);
-    bottom.add(Drop, BorderLayout.WEST);
+    panel.add(Drop, BorderLayout.WEST);
+
+    JButton reload = new JButton("Reload");
+    //South.setSize(10, 10);
+    //South.setBounds(100, 400, 100, 5);
+    panel.add(reload, BorderLayout.EAST);
+
+    bottom.add(panel, BorderLayout.WEST);
 
     JButton South = new JButton("South");
     //South.setSize(10, 10);
@@ -439,6 +449,8 @@ class SimpleRemote extends JFrame {
     attack.addActionListener(a -> pressButton("attack", tv.lifeformRow, tv.lifeformCol));
     getWeap1.addActionListener(a -> pressButton("get1", tv.lifeformRow, tv.lifeformCol));
     getWeap2.addActionListener(a -> pressButton("get2", tv.lifeformRow, tv.lifeformCol));
+    reload.addActionListener(a -> pressButton("reload", tv.lifeformRow, tv.lifeformCol));
+    Drop.addActionListener(a -> pressButton("drop", tv.lifeformRow, tv.lifeformCol));
 
 
     setSize(500, 200);

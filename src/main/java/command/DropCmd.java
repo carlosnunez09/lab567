@@ -9,26 +9,22 @@ public class DropCmd implements Command {
 
   private Environment environment;
 
-  public DropCmd(Environment environment){ this.environment = environment; }
+  public DropCmd(Environment environment) {
+    this.environment = environment;
+  }
 
 
-  public void execute(int row, int col){
-
+  public void execute(int row, int col) {
+    LifeForm lifeForm = environment.getLifeForm(row, col);
     Cell cell = environment.getCell(row, col);
-    LifeForm lifeForm = cell.getLifeForm();
 
-    if(lifeForm != null && lifeForm.hasWeapon()){
+    if (lifeForm != null && lifeForm.hasWeapon()) {
       Weapon weapon = lifeForm.getWeapon();
-
-
-      if (cell.getWeaponsCount() < 2){
-        if (cell.addWeapon(weapon)) {
-          lifeForm.dropWeapon();
-        }
+      if (cell.addWeapon(weapon)) {
+        lifeForm.dropWeapon();
       }
-
-
     }
+
 
   }
 
