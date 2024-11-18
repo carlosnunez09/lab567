@@ -63,7 +63,8 @@ public class CommandUI {
   // testing whether tyrranid (Alien) can move to go and eat little timmy
   public void testMove3() {
     Alien tyrranid = new Alien("T-Dog", 10);
-    Environment env = Environment.getEnvironment(6,6);
+    //Human T = new Alien("T", 10);
+    Environment env = Environment.getEnvironment(7,7);
     Pistol p = new Pistol();
     env.clearBoard();
 
@@ -77,9 +78,12 @@ public class CommandUI {
     MoveCmd move = new MoveCmd(env);
     move.execute(3,3);
 
+
+
     assertEquals(3,tyrranid.getRow());
     assertEquals(5,tyrranid.getCol());
     assertNull(env.getLifeForm(3,3));
     assertEquals(tyrranid, env.getLifeForm(3,5));
+    assertEquals(p, env.getWeapons(3, 5)[0]);
   }
 }

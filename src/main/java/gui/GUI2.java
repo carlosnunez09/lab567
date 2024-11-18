@@ -21,11 +21,6 @@ import java.awt.image.BufferedImage;
 
 
 public class GUI2 {
-  public static int scRow, scCol;
-  public static boolean update = false;
-
-
-
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment(15, 15);
     e.clearBoard();
@@ -39,19 +34,21 @@ public class GUI2 {
     PlasmaCannon p = new PlasmaCannon();
     Pistol pis = new Pistol();
     ChainGun CG = new ChainGun();
+    Pistol pistol = new Pistol();
     
 
-    e.addLifeForm(jeff, 5, 5);
+    e.addLifeForm(jeff, 1, 1);
     e.addLifeForm(bill, 2, 2);
     e.addLifeForm(tim, 1, 2);
     e.addWeapon(p, 1, 1);
     e.addWeapon(pis, 3, 2);
     e.addWeapon(CG, 1, 5);
+    e.addWeapon(pistol, 1, 1);
 
     
     bill.pickUpWeapon(p);
 
-    jeff.setLocation(5, 5);
+    jeff.setLocation(1, 1);
     bill.setLocation(2,2);
     tim.setLocation(1, 2);
 
@@ -88,17 +85,7 @@ public class GUI2 {
     //invoker prams
     InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
     Invoker invoker = builder.loadCommands();
-
-    var tv = new TV(e);
-    var r = new SimpleRemote(invoker);
-  }
-
-  public static int getscRow() {
-    return getscRow();
-  }
-
-  public static int getscCol() {
-    return getscCol();
+    var r = new SimpleRemote(invoker, e);
   }
 
 }
@@ -133,7 +120,7 @@ class TV extends JFrame{
   JTextArea remoteDisplay;
   JTextArea textArea;
 
-  LifeForm lifeform;
+  LifeForm tempLifeform;
   Weapon[] weapon;
   String lifetype;
   String lifeformWeapon;
@@ -210,6 +197,12 @@ class TV extends JFrame{
           numberOfButtons[i][j].setIcon(plasma);
         } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
           numberOfButtons[i][j].setIcon(chain);
+        } else if (env.getWeapons(i, j)[1] instanceof Pistol) {
+          numberOfButtons[i][j].setIcon(pistol);
+        } else if (env.getWeapons(i, j)[1] instanceof PlasmaCannon){
+          numberOfButtons[i][j].setIcon(plasma);
+        } else if (env.getWeapons(i, j)[1] instanceof ChainGun) {
+          numberOfButtons[i][j].setIcon(chain);
         }
 
         if (env.getLifeForm(i, j) == null) {
@@ -229,6 +222,7 @@ class TV extends JFrame{
     panel.setLayout(new GridLayout(row, col));
     panel.setBackground(Color.GRAY);
     add(panel, BorderLayout.WEST);
+
   }
 
 
@@ -254,6 +248,42 @@ class TV extends JFrame{
     }
   }
 
+  public void updateText(){
+    for (int i = 0; i < tempLifeform.getRow() + 1; i++) {
+      for (int j = 0; j < tempLifeform.getCol() + 1; j++) {
+          if (env.getLifeForm(i, j) != null) {
+            lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
+            lifeformRow = i;
+            lifeformCol = j;
+
+            if (env.getLifeForm(i, j).hasWeapon()){
+              lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+            } else {
+              lifeformWeapon = "No Weapons Equipped";
+            }
+
+            lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
+          } else {
+            lifetype = "Blank";
+            lifeformWeapon = "Not a Lifeform";
+            lifeformDirection = "Lifeform is NOT currently selected";
+          }
+
+          if (env.getWeapons(i, j) != null) {
+            weapon = env.getWeapons(i, j);
+          }
+
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Type is:\n" + lifetype + " \n\n" +
+                  "LifeForm Weapon:\n" + lifeformWeapon +
+                  "\n\nFirst Weapon in Cell is \n" + weapon[0] +
+                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                  "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+      }
+    }
+
+  }
+
 
 
   public void actionPerformed(ActionEvent e) {
@@ -267,6 +297,7 @@ class TV extends JFrame{
 
 
           if (env.getLifeForm(i, j) != null) {
+            tempLifeform = env.getLifeForm(i, j);
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
 
             lifeformRow = i;
@@ -299,8 +330,6 @@ class TV extends JFrame{
 
           //textArea.setText("A button was pressed\n");
           //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
-          GUI2.scRow = i;
-          GUI2.scCol = j;
           updateGUI();
         }
       }
@@ -318,10 +347,15 @@ class SimpleRemote extends JFrame {
   JPanel moveAttack;
   JPanel top;
   JPanel bottom;
+  JPanel panel;
   private final Invoker invoker;  // Make it a private field
+  TV tv;
+  Environment env;
 
 
-  public SimpleRemote(Invoker invoker) {
+  public SimpleRemote(Invoker invoker, Environment e) {
+    tv = new TV(e);
+    env = tv.env;
     this.invoker = invoker;
     setLayout(new BorderLayout());
     moveAttack = new JPanel();
@@ -384,12 +418,14 @@ class SimpleRemote extends JFrame {
     add(bottom, BorderLayout.SOUTH);
 
 
-    down.addActionListener(a -> pressButton("west", GUI2.scRow, GUI2.scCol));
-    move.addActionListener(a -> pressButton("move", GUI2.scRow, GUI2.scCol));
-    up.addActionListener(a -> pressButton("east", GUI2.scRow, GUI2.scCol));
-    North.addActionListener(a -> pressButton("north", GUI2.scRow, GUI2.scCol));
-    South.addActionListener(a -> pressButton("south", GUI2.scRow, GUI2.scCol));
-    attack.addActionListener(a -> pressButton("attack", GUI2.scRow, GUI2.scCol));
+    down.addActionListener(a -> pressButton("west", tv.lifeformRow, tv.lifeformCol));
+    move.addActionListener(a -> pressButton("move", tv.lifeformRow, tv.lifeformCol));
+    up.addActionListener(a -> pressButton("east", tv.lifeformRow, tv.lifeformCol));
+    North.addActionListener(a -> pressButton("north", tv.lifeformRow, tv.lifeformCol));
+    South.addActionListener(a -> pressButton("south", tv.lifeformRow, tv.lifeformCol));
+    attack.addActionListener(a -> pressButton("attack", tv.lifeformRow, tv.lifeformCol));
+    getWeap1.addActionListener(a -> pressButton("get1", tv.lifeformRow, tv.lifeformCol));
+    getWeap2.addActionListener(a -> pressButton("get2", tv.lifeformRow, tv.lifeformCol));
 
 
     setSize(500, 200);
@@ -400,6 +436,28 @@ class SimpleRemote extends JFrame {
   public JTextArea getTextArea() {
     return text;
   }
+
+  public void updateFrame() throws WeaponException, EnvironmentException {
+    LifeForm l = tv.env.getLifeForm(tv.lifeformRow, tv.lifeformCol);
+
+    int r = tv.lifeformRow;
+    int c = tv.lifeformCol;
+    invoker.getMoveCmd().execute(r, c);
+
+    int lifeformCol = l.getCol();
+    int lifeformRow = l.getRow();
+
+    if (r != lifeformRow || c != lifeformCol) {
+      System.out.println("Icon been changed");
+      JButton button2 = tv.numberOfButtons[lifeformRow][lifeformCol];
+      JButton button = tv.numberOfButtons[r][c];
+      button2.setIcon(tv.getIcon(env.getLifeForm(lifeformRow, lifeformCol)));
+      button.setIcon(null);
+      button.setBackground(Color.white);
+    }
+  }
+
+
 
   public void pressButton(String s, int row, int col) {
     System.out.println("from GUI " + s + row + " " + col);
@@ -431,7 +489,9 @@ class SimpleRemote extends JFrame {
           invoker.getGet2Cmd().execute(row, col);
           break;
         case "move":
-          invoker.getMoveCmd().execute(row, col);
+          //invoker.getMoveCmd().execute(row, col);
+          updateFrame();
+          tv.updateGUI();
           break;
         case "reload":
           invoker.getReloadCmd().execute(row, col);
@@ -442,8 +502,7 @@ class SimpleRemote extends JFrame {
     } catch (WeaponException | EnvironmentException e) {
       e.printStackTrace();
     }
-
-
+    tv.updateText();
   }
 
 }

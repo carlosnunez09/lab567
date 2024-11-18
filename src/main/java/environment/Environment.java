@@ -55,6 +55,9 @@ public class Environment {
   public boolean addLifeForm(LifeForm entity, int row, int col) {
     if (cells[row][col] == null) {
       cells[row][col] = new Cell();
+    }
+
+    if (cells[row][col].getLifeForm() == null) {
       cells[row][col].addLifeForm(entity);
       return true;
     } else {
@@ -207,7 +210,7 @@ public class Environment {
    */
   public void notifyObservers(LifeForm lifeForm) {
     gameboards.forEach(gameboard -> gameboard.update(lifeForm.getRow(), lifeForm.getCol()));
-    gameboards.forEach(gameboard -> gameboard.update(GUI2.getscRow(), GUI2.getscCol()));
+    //gameboards.forEach(gameboard -> gameboard.update(, GUI2.getscCol()));
   }
 
   public Cell getCell(int row, int col) {

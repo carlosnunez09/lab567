@@ -188,6 +188,7 @@ public abstract class LifeForm {
     // Determine destination based on current direction
     int desRow = row;
     int desCol = col;
+    LifeForm l = env.getLifeForm(row, col);
 
     switch (currentDirection) {
       case "North":
@@ -209,7 +210,7 @@ public abstract class LifeForm {
       env.getCell(row, col).removeLifeForm(); // Remove from the current cell
       row = desRow;
       col = desCol; // Update to new cell
-      env.addLifeForm(this, row, col); // Add to the new cell
+      env.addLifeForm(l, row, col); // Add to the new cell
     }
   }
 

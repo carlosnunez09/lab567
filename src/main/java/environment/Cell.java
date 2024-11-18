@@ -25,7 +25,7 @@ public class Cell {
   /**
    * @return the LifeForm in this Cell.
    */
-  private LifeForm lifeform = null;
+  protected LifeForm lifeform = null;
 
   /**
    * @return the LifeForm in this Cell.
