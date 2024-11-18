@@ -12,6 +12,7 @@ import weapon.Weapon;
 public abstract class LifeForm {
   private String myName;
   protected int currentLifePoints;
+  protected int maxLifePoints;
 
   protected int attackStrength;
   protected int col = -1;
@@ -35,6 +36,7 @@ public abstract class LifeForm {
     myName = name;
     currentLifePoints = life;
     attackStrength = attackDmg;
+    maxLifePoints = life;
   }
 
   /**
@@ -102,6 +104,9 @@ public abstract class LifeForm {
   public int getCurrentLifePoints() {
     return currentLifePoints;
   }
+
+
+  public int getMaxLife() { return maxLifePoints; }
 
   /**
    * @return the name of the life form.

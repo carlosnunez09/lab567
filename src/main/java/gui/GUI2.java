@@ -127,6 +127,7 @@ class TV extends JFrame{
   String lifeformDirection;
   String lifeName;
   String lifeHealth;
+  String maxHealth;
   MoveCmd move;
   JPanel panel;
 
@@ -277,7 +278,7 @@ class TV extends JFrame{
           }
 
         textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
-                "LifeForm Health is at:\n" + lifeHealth + " \n\n" +
+                "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
                 "LifeForm Name is:\n" + lifeName + " \n\n" +
                 "LifeForm Type is:\n" + lifetype + " \n\n" +
                 "LifeForm Weapon:\n" + lifeformWeapon +
@@ -305,6 +306,7 @@ class TV extends JFrame{
             tempLifeform = env.getLifeForm(i, j);
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
             lifeHealth = String.valueOf(env.getLifeForm(i, j).getCurrentLifePoints());
+            maxHealth = String.valueOf(env.getLifeForm(i, j).getMaxLife());
             lifeName = env.getLifeForm(i, j).getName();
 
             lifeformRow = i;
@@ -330,7 +332,7 @@ class TV extends JFrame{
           }
 
           textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
-                  "LifeForm Health is at:\n" + lifeHealth + " \n\n" +
+                  "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
                   "LifeForm Name is:\n" + lifeName + " \n\n" +
                   "LifeForm Type is:\n" + lifetype + " \n\n" +
                   "LifeForm Weapon:\n" + lifeformWeapon +
