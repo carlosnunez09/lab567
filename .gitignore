@@ -8,3 +8,5 @@ doc/
 bin/
 .DS_Store
 /.idea/
+config
+gradlew.bat
