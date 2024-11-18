@@ -206,7 +206,7 @@ public abstract class LifeForm {
     }
 
     // Check if destination cell is legal
-    if (env.checkLegalPlay(desRow, desCol)) {
+    if (env.checkLegalPlay(desRow, desCol) && env.getLifeForm(desRow, desCol) == null) {
       env.getCell(row, col).removeLifeForm(); // Remove from the current cell
       row = desRow;
       col = desCol; // Update to new cell

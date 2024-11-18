@@ -86,4 +86,31 @@ public class CommandUI {
     assertEquals(tyrranid, env.getLifeForm(3,5));
     assertEquals(p, env.getWeapons(3, 5)[0]);
   }
+
+  @Test
+  // testing whether tyrranid (Alien) can move to go and eat little timmy
+  public void testMove4() {
+    Alien tyrranid = new Alien("T-Dog", 10);
+    Human T = new Human("T", 10, 5);
+    Environment env = Environment.getEnvironment(7,7);
+    Pistol p = new Pistol();
+    env.clearBoard();
+
+    // Place tyrranid at (0,0)
+    env.addLifeForm(tyrranid,3,3);
+    env.addLifeForm(T,3,5);
+
+    // Command to move tyrranid East
+    tyrranid.setDirection("East");
+    tyrranid.setLocation(3,3);
+    MoveCmd move = new MoveCmd(env);
+    move.execute(3,3);
+
+
+
+    assertEquals(3,tyrranid.getRow());
+    assertEquals(3,tyrranid.getCol());
+    assertEquals(tyrranid, env.getLifeForm(3,3));
+    assertEquals(T, env.getLifeForm(3,5));
+  }
 }
