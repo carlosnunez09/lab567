@@ -25,8 +25,8 @@ public class GUI2 {
     Environment e = Environment.getEnvironment(15, 15);
     e.clearBoard();
 
-    Alien jeff = new Alien("Jeff", 15);
-    Human bill = new Human("Bill", 15, 5);
+    Alien jeff = new Alien("Jeff", 7);
+    Human bill = new Human("Bill", 10, 5);
     Human tim = new Human("Tim", 15, 5);
 
     bill.setDirection("East");
@@ -219,7 +219,10 @@ class TV extends JFrame{
           numberOfButtons[i][j].setIcon(chain);
         }
 
-        if (env.getLifeForm(i, j) == null || env.getLifeForm(i, j).getCurrentLifePoints() == 0) {
+        if (env.getLifeForm(i, j) == null) {
+          numberOfButtons[i][j].setBackground(Color.WHITE);
+        } else if (env.getLifeForm(i, j).getCurrentLifePoints() == 0){
+          env.removeLifeForm(i, j);
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else {
           numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
@@ -266,40 +269,56 @@ class TV extends JFrame{
   public void updateText(){
     for (int i = 0; i < tempLifeform.getRow() + 1; i++) {
       for (int j = 0; j < tempLifeform.getCol() + 1; j++) {
-          if (env.getLifeForm(i, j) != null) {
-            lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
-            lifeformRow = i;
-            lifeformCol = j;
+        if (env.getLifeForm(i, j) != null) {
+          lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
+          lifeHealth = String.valueOf(env.getLifeForm(i, j).getCurrentLifePoints());
+          maxHealth = String.valueOf(env.getLifeForm(i, j).getMaxLife());
+          lifeName = env.getLifeForm(i, j).getName();
 
-            if (env.getLifeForm(i, j).hasWeapon()){
-              lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
-              ammo = String.valueOf(env.getLifeForm(i, j).getWeapon().getCurrentAmmo());
-              maxAmmo = String.valueOf(env.getLifeForm(i, j).getWeapon().getMaxAmmo());
-            } else {
-              lifeformWeapon = "No Weapons Equipped";
-            }
+          lifeformRow = i;
+          lifeformCol = j;
 
-            lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
+          if (env.getLifeForm(i, j).hasWeapon()){
+            lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+            ammo = String.valueOf(env.getLifeForm(i, j).getWeapon().getCurrentAmmo());
+            maxAmmo = String.valueOf(env.getLifeForm(i, j).getWeapon().getMaxAmmo());
           } else {
-            lifetype = "Blank";
-            lifeformWeapon = "Not a Lifeform";
-            ammo = "LifeForm doesn't have a Weapon";
-            lifeformDirection = "Lifeform is NOT currently selected";
+            lifeformWeapon = "No Weapons Equipped";
+            ammo = "LifeForm DON'T currently has a weapon";
           }
 
-          if (env.getWeapons(i, j) != null) {
-            weapon = env.getWeapons(i, j);
-          }
+          lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
+        } else {
+          lifetype = "Blank";
+          lifeformWeapon = "Not a Lifeform";
+          ammo = "LifeForm doesn't have a Weapon";
+          lifeformDirection = "Lifeform is NOT currently selected";
+          lifeHealth = "Lifeform is NOT currently selected";
+          lifeName = "Lifeform is NOT currently selected";
+        }
 
-        textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
-                "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
-                "LifeForm Name is:\n" + lifeName + " \n\n" +
-                "LifeForm Type is:\n" + lifetype + " \n\n" +
-                "LifeForm Weapon:\n" + lifeformWeapon +
-                "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
-                "\n\nFirst Weapon in Cell is \n" + weapon[0] +
-                "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
-                "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+        if (env.getWeapons(i, j) != null) {
+          weapon = env.getWeapons(i, j);
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
+                  "LifeForm Name is:\n" + lifeName + " \n\n" +
+                  "LifeForm Type is:\n" + lifetype + " \n\n" +
+                  "LifeForm Weapon:\n" + lifeformWeapon +
+                  "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
+                  "\n\nFirst Weapon in Cell is \n" + weapon[0] +
+                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                  "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+        } else {
+          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                  "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
+                  "LifeForm Name is:\n" + lifeName + " \n\n" +
+                  "LifeForm Type is:\n" + lifetype + " \n\n" +
+                  "LifeForm Weapon:\n" + lifeformWeapon +
+                  "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
+                  "\n\nFirst Weapon in Cell is \n" + "None" +
+                  "\n" + "\nSecond Weapon in Cell is \n" + "None" +
+                  "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+        }
       }
     }
 
@@ -329,15 +348,18 @@ class TV extends JFrame{
 
             if (env.getLifeForm(i, j).hasWeapon()){
               lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+              ammo = String.valueOf(env.getLifeForm(i, j).getWeapon().getCurrentAmmo());
+              maxAmmo = String.valueOf(env.getLifeForm(i, j).getWeapon().getMaxAmmo());
             } else {
               lifeformWeapon = "No Weapons Equipped";
+              ammo = "LifeForm DON'T currently has a weapon";
             }
 
             lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
           } else {
             lifetype = "Blank";
             lifeformWeapon = "Not a Lifeform";
-            ammo = "LifeForm doesn't have a Weapon";
+            ammo = "LifeForm is NOT currently selected";
             lifeformDirection = "Lifeform is NOT currently selected";
             lifeHealth = "Lifeform is NOT currently selected";
             lifeName = "Lifeform is NOT currently selected";
@@ -345,23 +367,27 @@ class TV extends JFrame{
 
           if (env.getWeapons(i, j) != null) {
             weapon = env.getWeapons(i, j);
+            textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                    "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
+                    "LifeForm Name is:\n" + lifeName + " \n\n" +
+                    "LifeForm Type is:\n" + lifetype + " \n\n" +
+                    "LifeForm Weapon:\n" + lifeformWeapon +
+                    "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
+                    "\n\nFirst Weapon in Cell is \n" + weapon[0] +
+                    "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
+                    "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+          } else {
+              textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
+                      "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
+                      "LifeForm Name is:\n" + lifeName + " \n\n" +
+                      "LifeForm Type is:\n" + lifetype + " \n\n" +
+                      "LifeForm Weapon:\n" + lifeformWeapon +
+                      "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
+                      "\n\nFirst Weapon in Cell is \n" + "None" +
+                      "\n" + "\nSecond Weapon in Cell is \n" + "None" +
+                      "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
           }
-
-          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j +  "\n\n" +
-                  "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth +  "\n\n" +
-                  "LifeForm Name is:\n" + lifeName + " \n\n" +
-                  "LifeForm Type is:\n" + lifetype + " \n\n" +
-                  "LifeForm Weapon:\n" + lifeformWeapon +
-                  "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
-                  "\n\nFirst Weapon in Cell is \n" + weapon[0] +
-                  "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
-                  "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
-
-
-          //textArea.setText("A button was pressed\n");
-          //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
           updateGUI();
-          updateText();
         }
       }
     }
