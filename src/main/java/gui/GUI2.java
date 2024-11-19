@@ -219,7 +219,7 @@ class TV extends JFrame{
           numberOfButtons[i][j].setIcon(chain);
         }
 
-        if (env.getLifeForm(i, j) == null) {
+        if (env.getLifeForm(i, j) == null || env.getLifeForm(i, j).getCurrentLifePoints() == 0) {
           numberOfButtons[i][j].setBackground(Color.WHITE);
         } else {
           numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
