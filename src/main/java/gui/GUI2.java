@@ -274,6 +274,7 @@ class TV extends JFrame{
           } else {
             lifetype = "Blank";
             lifeformWeapon = "Not a Lifeform";
+            ammo = "LifeForm doesn't have a Weapon";
             lifeformDirection = "Lifeform is NOT currently selected";
           }
 
@@ -327,6 +328,7 @@ class TV extends JFrame{
           } else {
             lifetype = "Blank";
             lifeformWeapon = "Not a Lifeform";
+            ammo = "LifeForm doesn't have a Weapon";
             lifeformDirection = "Lifeform is NOT currently selected";
             lifeHealth = "Lifeform is NOT currently selected";
             lifeName = "Lifeform is NOT currently selected";
@@ -350,6 +352,7 @@ class TV extends JFrame{
           //textArea.setText("A button was pressed\n");
           //I did not want to rewrite the code above so I just got your values, this is dumb and should not stay like this
           updateGUI();
+          updateText();
         }
       }
     }
