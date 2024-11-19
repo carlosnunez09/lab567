@@ -41,7 +41,7 @@ public class GUI2 {
     e.addLifeForm(bill, 2, 2);
     e.addLifeForm(tim, 4, 5);
     e.addWeapon(p, 1, 1);
-    e.addWeapon(pis, 3, 2);
+    e.addWeapon(pis, 4, 5);
     e.addWeapon(CG, 1, 5);
     e.addWeapon(pistol, 1, 1);
 
@@ -88,6 +88,16 @@ public class GUI2 {
     var r = new SimpleRemote(invoker, e);
   }
 
+
+  public static String getLifeFormDirection(Environment env, int row, int col) {
+    LifeForm lifeForm = env.getLifeForm(row, col);
+    if (lifeForm != null) {
+      return lifeForm.getCurrentDirection();
+    } else {
+      return "LifeForm not present at the given location";
+    }
+  }
+
 }
 
 interface Command {
@@ -124,7 +134,7 @@ class TV extends JFrame{
   Weapon[] weapon;
   String lifetype;
   String lifeformWeapon;
-  String lifeformDirection;
+  public String lifeformDirection = "null";
   String lifeName;
   String lifeHealth;
   String maxHealth;
@@ -145,7 +155,6 @@ class TV extends JFrame{
     col = this.env.getNumCols();
     row = this.env.getNumRows();
     numberOfButtons = new JButton[row][col];
-
 
 
 
