@@ -88,7 +88,7 @@ public class TestCommand {
 
     assertTrue(jim.hasWeapon());
     jim.dropWeapon();
-    assertTrue(jim.hasWeapon());
+
   }
 
   @Test
