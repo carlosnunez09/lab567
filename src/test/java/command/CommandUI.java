@@ -115,21 +115,6 @@ public class CommandUI {
 
 
 
-//  @Test
-//  public void testdropweaponspaceavaible(){
-//
-//    Environment environment = new Environment(7,7 );
-//    DropCmd dropcmd = new DropCmd(environment);
-//    dropcmd.execute(2,2);
-//    LifeForm human = environment.getCell(2,2).getLifeForm();
-//    assertNull("the human should not have weapon after dropping", human.getWeapon());
-//    Cell targetCell = environment.getCell(2, 3);
-//    assertNotNull("The weapon should be in the target cell (2, 3)", targetCell.getWeapon1());
-//
-//    // Verify that the weapon in the target cell is indeed the Pistol
-//    Pistol pistol = new Pistol();
-//    assertEquals("The weapon in the target cell should be a Pistol", pistol, targetCell.getWeapon1());
-//  }
 
 
 }
