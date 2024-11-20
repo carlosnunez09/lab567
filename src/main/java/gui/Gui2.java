@@ -6,6 +6,7 @@ import command.MoveCmd;
 import environment.Environment;
 import exceptions.EnvironmentException;
 import exceptions.WeaponException;
+import gameplay.SimpleTimer;
 import lifeform.Alien;
 import lifeform.Human;
 import lifeform.LifeForm;
@@ -47,7 +48,7 @@ public class Gui2 {
     Pistol pis = new Pistol();
     Pistol pistol = new Pistol();
     PlasmaCannon p1 = new PlasmaCannon();
-    ChainGun cg = new ChainGun();
+
 
     e.addLifeForm(jeff, 1, 2);
     e.addLifeForm(bill, 2, 2);
@@ -56,7 +57,9 @@ public class Gui2 {
     e.addWeapon(p1, 4, 8);
     e.addWeapon(pis, 4, 5);
     e.addWeapon(pistol, 1, 1);
-    e.addWeapon(cg, 7, 8);
+
+
+
 
 
     bill.pickUpWeapon(p);
