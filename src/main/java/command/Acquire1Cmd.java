@@ -27,9 +27,7 @@ public class Acquire1Cmd implements Command {
       Weapon weapon1 = cell.getWeapon1();
       if (weapon1 != null) {
         if (lifeForm.hasWeapon()) {
-          Weapon currentWeapon = lifeForm.getWeapon();
-          lifeForm.pickUpWeapon(weapon1);
-          cell.addWeapon(currentWeapon);
+          return;
         } else {
           lifeForm.pickUpWeapon(weapon1);
         }
