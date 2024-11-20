@@ -32,7 +32,7 @@ import java.awt.Dimension;
 public class Gui2 {
 
   /**
-   * Creates an Enviroment with provided rows and cols of the Cell class
+   * Creates an Environment with provided rows and cols of the Cell class
    */
 
   public static void main(String[] args) {
