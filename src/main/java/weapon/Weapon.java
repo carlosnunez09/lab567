@@ -5,24 +5,24 @@ import gameplay.TimerObserver;
 
 public interface Weapon extends TimerObserver {
 
-  public int fire(int distance) throws WeaponException;
+  int fire(int distance) throws WeaponException;
 
-  public int getBaseDamage();
+  int getBaseDamage();
 
-  public int getCurrentAmmo();
+  int getCurrentAmmo();
 
-  public int getMaxRange();
+  int getMaxRange();
 
-  public int getNumAttachments();
+  int getNumAttachments();
 
-  public int getRateOfFire();
+  int getRateOfFire();
 
   int getMaxAmmo();
 
-  public int getShotsLeft();
+  int getShotsLeft();
 
-  public void reload();
+  void reload();
 
-  public java.lang.String toString();
+  java.lang.String toString();
 
 }

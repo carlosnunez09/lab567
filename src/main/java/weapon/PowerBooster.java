@@ -16,7 +16,6 @@ public class PowerBooster extends Attachment {
   }
 
 
-
   @Override
   public java.lang.String toString() {
     return base.toString() + " +PowerBooster";

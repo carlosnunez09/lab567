@@ -1,4 +1,5 @@
 package lifeform;
+
 import exceptions.WeaponException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class TestHuman {
     Alien rl = new Alien("Bill", 25);
     Human rf = new Human("Bob", 25, 0);
 
-    rl.attack(rf,0);
+    rl.attack(rf, 0);
     int results = rf.getCurrentLifePoints();
     assertEquals(15, results);
 
@@ -43,10 +44,10 @@ public class TestHuman {
   public void testAttackNoArmor() throws WeaponException {
     Alien bob = new Alien("Bob", 40);
     Human sheryl = new Human("Sheryl", 50, 0);
-    bob.attack(sheryl,0);
-    Assert.assertEquals(40L, (long) sheryl.getCurrentLifePoints());
-    sheryl.attack(bob,0);
-    Assert.assertEquals(35L, (long) bob.getCurrentLifePoints());
+    bob.attack(sheryl, 0);
+    Assert.assertEquals(40L, sheryl.getCurrentLifePoints());
+    sheryl.attack(bob, 0);
+    Assert.assertEquals(35L, bob.getCurrentLifePoints());
 
   }
 

@@ -1,4 +1,5 @@
 package recovery;
 
-public interface RecoveryBehavior { int calculateRecovery(int currentLife,int maxLife);
+public interface RecoveryBehavior {
+  int calculateRecovery(int currentLife, int maxLife);
 }

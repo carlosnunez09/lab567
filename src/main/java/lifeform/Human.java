@@ -1,8 +1,6 @@
 package lifeform;
 
 
-
-
 public class Human extends LifeForm {
   public String humanName;
   private int lifePoints;
@@ -12,9 +10,9 @@ public class Human extends LifeForm {
   /**
    * Create an instance
    *
-   * @param name   the name of the life for
+   * @param name       the name of the life for
    * @param lifepoints the current starting life points of the life form
-   * @param armor armor
+   * @param armor      armor
    */
 
   public Human(String name, int lifepoints, int armor) {

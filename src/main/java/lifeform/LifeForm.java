@@ -1,6 +1,5 @@
 package lifeform;
 
-import environment.Cell;
 import environment.Environment;
 import exceptions.WeaponException;
 import weapon.Weapon;
@@ -10,15 +9,13 @@ import weapon.Weapon;
  * Also provides the functionality related to the life form.
  */
 public abstract class LifeForm {
-  private String myName;
+  private final String myName;
   protected int currentLifePoints;
   protected int maxLifePoints;
-
   protected int attackStrength;
   protected int col = -1;
   protected int row = -1;
   protected Weapon weapon;
-
   protected String currentDirection = "North";
   protected int maxSpeed = 0;              // maxSpeed = movement per round
 
@@ -41,6 +38,7 @@ public abstract class LifeForm {
 
   /**
    * Deal damage to another lifeForm.
+   *
    * @param target Which LifeForm to attack.
    */
   public void attack(LifeForm target, int distance) throws WeaponException {
@@ -57,12 +55,12 @@ public abstract class LifeForm {
     //melee
     if (distance <= 5) {
       target.takeHit(attackStrength);
-      return;
     }
   }
 
   /**
    * If has weapon will remove it.
+   *
    * @return Weapon Lifeform had.
    */
   public Weapon dropWeapon() {
@@ -72,7 +70,7 @@ public abstract class LifeForm {
     return current;
   }
 
-  public String getCurrentDirection(){
+  public String getCurrentDirection() {
     return currentDirection;
   }
 
@@ -89,9 +87,9 @@ public abstract class LifeForm {
   }
 
 
-
   /**
    * Get lifeForms current AttackStrength
+   *
    * @return Int of attack Strength
    */
   public int getAttackStrength() {
@@ -106,7 +104,9 @@ public abstract class LifeForm {
   }
 
 
-  public int getMaxLife() { return maxLifePoints; }
+  public int getMaxLife() {
+    return maxLifePoints;
+  }
 
   /**
    * @return the name of the life form.
@@ -117,6 +117,7 @@ public abstract class LifeForm {
 
   /**
    * If Lifeform currently has weapon.
+   *
    * @return True if has weapon.
    */
   public boolean hasWeapon() {
@@ -126,6 +127,7 @@ public abstract class LifeForm {
   /**
    * Pickup new weapon.
    * Will not pick up if already have weapon.
+   *
    * @param weapon Weapon to pick up.
    * @return True if does not already have weapon.
    */
@@ -139,12 +141,13 @@ public abstract class LifeForm {
   }
 
   // Remove if needed
-  public Weapon getWeapon(){
+  public Weapon getWeapon() {
     return weapon;
   }
 
   /**
    * Decrease LifeForms with incoming damage
+   *
    * @param damage
    */
   public void takeHit(int damage) {
@@ -164,7 +167,7 @@ public abstract class LifeForm {
    */
 
   public void setLocation(int row, int col) {
-    if (row < 0 || col < 0){
+    if (row < 0 || col < 0) {
       this.row = -1;
       this.col = -1;
     } else {
@@ -175,6 +178,7 @@ public abstract class LifeForm {
 
   /**
    * Sets direction of LifeForm
+   *
    * @param newDirection
    */
   public void setDirection(String newDirection) {
@@ -187,6 +191,7 @@ public abstract class LifeForm {
 
   /**
    * Tells the Lifeforms which Cell to move to.
+   *
    * @param env
    */
   public void move(Environment env) {

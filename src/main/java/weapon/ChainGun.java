@@ -20,7 +20,7 @@ public class ChainGun extends GenericWeapon {
 
   @Override
   public int fire(int distance) throws WeaponException {
-    return (int) (((double)distance / getMaxRange()) * super.fire(distance));
+    return (int) (((double) distance / getMaxRange()) * super.fire(distance));
   }
 
 

@@ -3,8 +3,6 @@ package weapon;
 import exceptions.WeaponException;
 import gameplay.SimpleTimer;
 import org.junit.Assert;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -49,8 +47,9 @@ public class TestPlasmaCannon {
     Assert.assertEquals("PlasmaCannon", p.toString());
     int temp = p.fire(30);
     timer.timeChanged();
-    Assert.assertEquals(3L, (long) p.getCurrentAmmo());
+    Assert.assertEquals(3L, p.getCurrentAmmo());
   }
+
   @Test
   public void testPlasmaFire() throws WeaponException {
     PlasmaCannon p = new PlasmaCannon();
@@ -58,12 +57,12 @@ public class TestPlasmaCannon {
     timer.addTimeObserver(p);
     timer.timeChanged();
     Assert.assertEquals("PlasmaCannon", p.toString());
-    Assert.assertEquals(50L, (long) p.fire(30));
+    Assert.assertEquals(50L, p.fire(30));
     timer.timeChanged();
-    Assert.assertEquals(3L, (long)p.getCurrentAmmo());
-    Assert.assertEquals(0L, (long)p.fire(100));
+    Assert.assertEquals(3L, p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.fire(100));
     timer.timeChanged();
-    Assert.assertEquals(2L, (long)p.getCurrentAmmo());
+    Assert.assertEquals(2L, p.getCurrentAmmo());
   }
 
 
@@ -77,15 +76,15 @@ public class TestPlasmaCannon {
       timer.timeChanged();
     }
 
-    Assert.assertEquals(0L, (long)p.getCurrentAmmo());
-    Assert.assertEquals(0L, (long)p.fire(10));
+    Assert.assertEquals(0L, p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.fire(10));
     timer.timeChanged();
-    Assert.assertEquals(0L, (long)p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.getCurrentAmmo());
 
   }
 
   @Test(
-          expected = WeaponException.class
+    expected = WeaponException.class
   )
   public void testNegativeFire() throws WeaponException {
     Pistol p = new Pistol();

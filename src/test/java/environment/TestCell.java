@@ -1,18 +1,14 @@
 package environment;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import lifeform.LifeForm;
 import lifeform.MockLifeForm;
 import org.junit.Test;
 import weapon.MockWeapon;
 
+import static org.junit.Assert.*;
+
 /**
  * The test cases for the Cell class
- *
  */
 
 public class TestCell {
@@ -39,7 +35,7 @@ public class TestCell {
     // The cell is empty so this should work.
     boolean success = cell.addLifeForm(bob);
     assertTrue(success);
-    assertEquals(bob,cell.getLifeForm());
+    assertEquals(bob, cell.getLifeForm());
   }
 
   @Test
@@ -52,7 +48,7 @@ public class TestCell {
 
     boolean success = cell.addLifeForm(fred);
     assertFalse(success);
-    assertEquals(bob,cell.getLifeForm());
+    assertEquals(bob, cell.getLifeForm());
   }
 
 

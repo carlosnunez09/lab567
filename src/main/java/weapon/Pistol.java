@@ -19,9 +19,8 @@ public class Pistol extends GenericWeapon {
 
   @Override
   public int fire(int distance) throws WeaponException {
-    return (int) (super.fire(distance) * ((double)maxRange - distance + 10) / maxRange);
+    return (int) (super.fire(distance) * ((double) maxRange - distance + 10) / maxRange);
   }
-
 
 
   @Override

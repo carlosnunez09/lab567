@@ -5,12 +5,15 @@ import weapon.Weapon;
 
 /**
  * A Cell that can hold a LifeForm.
- *
  */
 public class Cell {
-  private int weaponCount;
   protected Weapon weaponOne;
   protected Weapon weaponTwo;
+  /**
+   * @return the LifeForm in this Cell.
+   */
+  protected LifeForm lifeform = null;
+  private int weaponCount;
 
   /**
    * Setting initial Cell Weapon values.
@@ -21,11 +24,6 @@ public class Cell {
     weaponTwo = null;
     lifeform = null;
   }
-
-  /**
-   * @return the LifeForm in this Cell.
-   */
-  protected LifeForm lifeform = null;
 
   /**
    * @return the LifeForm in this Cell.
@@ -56,6 +54,7 @@ public class Cell {
 
   /**
    * Adds weapon if there are not two already in Cell
+   *
    * @param weapon
    * @return
    */
@@ -74,6 +73,7 @@ public class Cell {
 
   /**
    * Removes weapon from Cell
+   *
    * @param weapon
    * @return
    */

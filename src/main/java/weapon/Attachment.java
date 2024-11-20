@@ -9,6 +9,7 @@ public abstract class Attachment implements Weapon {
 
   /**
    * Initialize Attachment.
+   *
    * @param base Weapon to add attachment too.
    * @throws AttachmentException
    */

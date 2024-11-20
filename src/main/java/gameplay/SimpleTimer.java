@@ -5,12 +5,10 @@ import java.util.ArrayList;
 
 public class SimpleTimer extends Thread implements Timer {
 
-  ArrayList<TimerObserver> obs = new ArrayList<TimerObserver>();
-
+  private final int sleepT;
   public int myTime;
-  private int sleepT;
   public int round;
-
+  ArrayList<TimerObserver> obs = new ArrayList<TimerObserver>();
 
 
   /**
@@ -26,6 +24,7 @@ public class SimpleTimer extends Thread implements Timer {
 
   /**
    * Update the round
+   *
    * @param sleep adds sleep
    */
 
@@ -37,6 +36,7 @@ public class SimpleTimer extends Thread implements Timer {
 
   /**
    * Update the round
+   *
    * @param observer adds the obs
    */
 
@@ -48,6 +48,7 @@ public class SimpleTimer extends Thread implements Timer {
 
   /**
    * Update the round
+   *
    * @param observer removes the obs
    */
 
@@ -57,15 +58,12 @@ public class SimpleTimer extends Thread implements Timer {
 
   /**
    * Update the round
-   *
    */
   public void timeChanged() {
     round += 1;
     for (int i = 0; i < obs.size(); i++) {
       obs.get(i).updateTime(round);
     }
-
-
 
 
   }

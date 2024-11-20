@@ -5,6 +5,8 @@ import gameplay.TimerObserver;
 import recovery.RecoveryBehavior;
 
 public class Alien extends LifeForm implements TimerObserver {
+  public int myTime;
+  public int count;
   /**
    * Create an instance
    *
@@ -15,8 +17,6 @@ public class Alien extends LifeForm implements TimerObserver {
   protected int maxHitP = 10;
   private int recoverRate;
   private RecoveryBehavior rb;
-  public int myTime;
-  public int count;
 
   public Alien(String name, int maxHitPoints) {
     super(name, maxHitPoints, 10);
@@ -50,7 +50,7 @@ public class Alien extends LifeForm implements TimerObserver {
    */
 
   public Alien(String name, int maxHitPoints, RecoveryBehavior behavior, int recoveryRate)
-          throws RecoveryRateException {
+    throws RecoveryRateException {
     super(name, maxHitPoints, 10);
     maxHitP = maxHitPoints;
     recoverRate = recoveryRate;

@@ -9,15 +9,11 @@ import weapon.Weapon;
 
 public class Acquire1Cmd implements Command {
 
-  private Environment environment;
+  private final Environment environment;
 
   public Acquire1Cmd(Environment environment) {
     this.environment = environment;
   }
-
-
-
-
 
 
   @Override
@@ -42,7 +38,6 @@ public class Acquire1Cmd implements Command {
     }
 
   }
-
 
 
 }

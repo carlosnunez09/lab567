@@ -45,8 +45,6 @@ public class TestScope {
   }
 
 
-
-
   @Test
   public void testScopeRange() throws WeaponException, AttachmentException {
     MockWeapon mock = new MockWeapon();

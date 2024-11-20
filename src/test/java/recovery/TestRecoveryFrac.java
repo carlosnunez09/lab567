@@ -1,8 +1,7 @@
 package recovery;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class TestRecoveryFrac {
   //@Test
@@ -19,7 +18,7 @@ public class TestRecoveryFrac {
     RecoveryFractional rl = new RecoveryFractional(2.5);
     int maxLifePts = 20;
     int result = rl.calculateRecovery(18, maxLifePts);
-    Assert.assertEquals((long)maxLifePts, (long)result);
+    Assert.assertEquals(maxLifePts, result);
   }
 
   @Test
@@ -27,7 +26,7 @@ public class TestRecoveryFrac {
     RecoveryFractional rl = new RecoveryFractional(1.5);
     int maxLifePts = 20;
     int result = rl.calculateRecovery(20, maxLifePts);
-    Assert.assertEquals((long)maxLifePts, (long)result);
+    Assert.assertEquals(maxLifePts, result);
   }
 
 
@@ -36,7 +35,7 @@ public class TestRecoveryFrac {
     RecoveryFractional rl = new RecoveryFractional(0.5);
     int maxLifePts = 20;
     int result = rl.calculateRecovery(0, maxLifePts);
-    Assert.assertEquals(0, (long)result);
+    Assert.assertEquals(0, result);
   }
 
 }

@@ -45,7 +45,6 @@ public class TestStabilizer {
   }
 
 
-
   @Test
   public void testStabilizerDmg() throws WeaponException, AttachmentException {
     MockWeapon mock = new MockWeapon();
@@ -67,10 +66,6 @@ public class TestStabilizer {
 
     assertEquals(5, stabilizer.getCurrentAmmo());
   }
-
-
-
-
 
 
 }

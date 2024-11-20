@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 
 /**
  * Tests the functionality provided by the LifeForm class
- *
  */
 
 public class TestLifeForm {
@@ -24,8 +23,6 @@ public class TestLifeForm {
     assertEquals("Bob", entity.getName());
     assertEquals(40, entity.getCurrentLifePoints());
   }
-
-
 
 
   /**
@@ -211,7 +208,7 @@ public class TestLifeForm {
 
 
   @Test
-  public void testRowAndCols(){
+  public void testRowAndCols() {
     LifeForm entity1 = new MockLifeForm("p1", 10, 5);
     Environment e = new Environment(5, 5);
     entity1.setLocation(5, 5);
@@ -219,7 +216,7 @@ public class TestLifeForm {
   }
 
   @Test
-  public void testNegRowAndCols(){
+  public void testNegRowAndCols() {
     LifeForm entity1 = new MockLifeForm("p1", 10, 5);
     Environment e = new Environment(5, 5);
     entity1.setLocation(-10, 5);
@@ -227,8 +224,6 @@ public class TestLifeForm {
     assertEquals(entity1.getRow(), -1);
 
   }
-
-
 
 
 }

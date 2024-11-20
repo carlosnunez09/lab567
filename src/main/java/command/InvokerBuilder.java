@@ -1,13 +1,11 @@
 package command;
 
 import environment.Environment;
-import exceptions.EnvironmentException;
-import exceptions.WeaponException;
 
 public class InvokerBuilder {
 
-  private Invoker invoker;
-  private Environment environment;
+  private final Invoker invoker;
+  private final Environment environment;
 
   public InvokerBuilder(Environment environment) {
     this.environment = environment;

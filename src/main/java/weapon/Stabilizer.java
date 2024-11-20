@@ -21,7 +21,6 @@ public class Stabilizer extends Attachment {
   }
 
 
-
   @Override
   public java.lang.String toString() {
     return base.toString() + " +Stabilizer";

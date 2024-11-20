@@ -1,6 +1,5 @@
 package environment;
 
-import gui.GUI2;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
@@ -14,9 +13,9 @@ public class Environment {
 
   public static Cell[][] cells;
   private static Environment insta;
+  private final int envRows;
+  private final int envCols;
   public List<EnvironmentObserver> gameboards = new ArrayList<>();
-  private int envRows;
-  private int envCols;
 
   /**
    * Creates an Enviroment with provided rows and cols of the Cell class
@@ -196,11 +195,7 @@ public class Environment {
     if (cells[row][col] == null) {
       cells[row][col] = new Cell();
     }
-    if (cells[row][col].addWeapon(weapon)) {
-      return true;
-    } else {
-      return false;
-    }
+    return cells[row][col].addWeapon(weapon);
   }
 
   /**
