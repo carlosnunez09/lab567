@@ -1,15 +1,12 @@
 package recovery;
 
-import java.lang.Math;
-
-public class RecoveryFractional extends Object implements RecoveryBehavior {
+public class RecoveryFractional implements RecoveryBehavior {
   public double fraction;
 
   /**
    * Create an instance
    *
    * @param recoveryFraction the input
-   *
    */
 
   public RecoveryFractional(double recoveryFraction) {
@@ -20,7 +17,7 @@ public class RecoveryFractional extends Object implements RecoveryBehavior {
    * Create an instance
    *
    * @param currentLife the input
-   * @param maxLife max life
+   * @param maxLife     max life
    */
 
   public int calculateRecovery(int currentLife, int maxLife) {
@@ -40,7 +37,6 @@ public class RecoveryFractional extends Object implements RecoveryBehavior {
     } else {
       return temp;
     }
-
 
 
   }

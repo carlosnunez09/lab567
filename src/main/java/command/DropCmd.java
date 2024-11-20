@@ -7,7 +7,7 @@ import weapon.Weapon;
 
 public class DropCmd implements Command {
 
-  private Environment environment;
+  private final Environment environment;
 
   public DropCmd(Environment environment) {
     this.environment = environment;

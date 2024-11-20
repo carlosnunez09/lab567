@@ -1,13 +1,10 @@
 package command;
-import environment.Cell;
+
 import environment.Environment;
 import exceptions.WeaponException;
-import lifeform.Alien;
 import lifeform.Human;
-import lifeform.LifeForm;
 import org.junit.Test;
 import weapon.Pistol;
-import weapon.Weapon;
 
 import static org.junit.Assert.*;
 

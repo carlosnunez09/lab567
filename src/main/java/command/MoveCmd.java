@@ -8,7 +8,7 @@ import environment.Environment;
 import lifeform.LifeForm;
 
 public class MoveCmd implements Command {
-  private Environment environment;
+  private final Environment environment;
 
   public MoveCmd(Environment environment) {
     this.environment = environment;

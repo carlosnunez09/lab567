@@ -1,4 +1,5 @@
 package lifeform;
+
 import exceptions.RecoveryRateException;
 import exceptions.WeaponException;
 import gameplay.SimpleTimer;
@@ -13,19 +14,17 @@ import static org.junit.Assert.assertEquals;
 public class TestAlien {
 
 
-
   @Test
-  public void testAlienInit()
-  {
-    Alien rl= new Alien("Bill", 25);
+  public void testAlienInit() {
+    Alien rl = new Alien("Bill", 25);
     assertEquals("Bill", rl.getName());
   }
+
   @Test
-  public void testAlienLifePoints()
-  {
-    Alien rl= new Alien("Bill", 25);
+  public void testAlienLifePoints() {
+    Alien rl = new Alien("Bill", 25);
     int results = rl.getCurrentLifePoints();
-    assertEquals(25,results);
+    assertEquals(25, results);
   }
 
 
@@ -37,7 +36,7 @@ public class TestAlien {
     int results = rl.getCurrentLifePoints();
     rl.recover();
     results = rl.getCurrentLifePoints();
-    assertEquals(25,results);
+    assertEquals(25, results);
 
   }
 
@@ -48,7 +47,7 @@ public class TestAlien {
 
     rl.attack(rf, 0);
     int results = rf.getCurrentLifePoints();
-    assertEquals(15,results);
+    assertEquals(15, results);
 
   }
 
@@ -56,7 +55,7 @@ public class TestAlien {
   public void testSetRecoveryRate() throws RecoveryRateException {
     RecoveryBehavior linear = new RecoveryLinear(3);
     Alien a = new Alien("AlienBob", 15, linear, 5);
-    Assert.assertEquals(5L, (long)a.getRecoveryRate());
+    Assert.assertEquals(5L, a.getRecoveryRate());
   }
 
   @Test
@@ -74,17 +73,17 @@ public class TestAlien {
     timer.addTimeObserver(a);
     timer.timeChanged();
     a.takeHit(6);
-    Assert.assertEquals(10L, (long)a.getCurrentLifePoints());
+    Assert.assertEquals(10L, a.getCurrentLifePoints());
     timer.timeChanged();
-    Assert.assertEquals(13L, (long)a.getCurrentLifePoints());
+    Assert.assertEquals(13L, a.getCurrentLifePoints());
     timer.timeChanged();
-    Assert.assertEquals(13L, (long)a.getCurrentLifePoints());
+    Assert.assertEquals(13L, a.getCurrentLifePoints());
     timer.timeChanged();
-    Assert.assertEquals(16L, (long)a.getCurrentLifePoints());
+    Assert.assertEquals(16L, a.getCurrentLifePoints());
     a.takeHit(20);
-    Assert.assertEquals(0L, (long)a.getCurrentLifePoints());
+    Assert.assertEquals(0L, a.getCurrentLifePoints());
     timer.timeChanged();
-    Assert.assertEquals(0L, (long)a.getCurrentLifePoints());
+    Assert.assertEquals(0L, a.getCurrentLifePoints());
   }
 
 

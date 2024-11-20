@@ -1,10 +1,7 @@
 package weapon;
 
-import com.sun.net.httpserver.Filter;
 import exceptions.WeaponException;
 import gameplay.SimpleTimer;
-import org.junit.Assert;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,8 +34,9 @@ public class TestChainGun {
     Assert.assertEquals("ChainGun", p.toString());
     int temp = p.fire(30);
     timer.timeChanged();
-    Assert.assertEquals(39L, (long) p.getCurrentAmmo());
+    Assert.assertEquals(39L, p.getCurrentAmmo());
   }
+
   @Test
   public void testChainFire() throws WeaponException {
     ChainGun p = new ChainGun();
@@ -46,12 +44,12 @@ public class TestChainGun {
     timer.addTimeObserver(p);
     timer.timeChanged();
     Assert.assertEquals("ChainGun", p.toString());
-    Assert.assertEquals(7L, (long) p.fire(30));
+    Assert.assertEquals(7L, p.fire(30));
     timer.timeChanged();
-    Assert.assertEquals(39L, (long)p.getCurrentAmmo());
-    Assert.assertEquals(0L, (long)p.fire(100));
+    Assert.assertEquals(39L, p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.fire(100));
     timer.timeChanged();
-    Assert.assertEquals(38L, (long)p.getCurrentAmmo());
+    Assert.assertEquals(38L, p.getCurrentAmmo());
   }
 
 
@@ -65,15 +63,15 @@ public class TestChainGun {
       timer.timeChanged();
     }
 
-    Assert.assertEquals(0L, (long)p.getCurrentAmmo());
-    Assert.assertEquals(0L, (long)p.fire(10));
+    Assert.assertEquals(0L, p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.fire(10));
     timer.timeChanged();
-    Assert.assertEquals(0L, (long)p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.getCurrentAmmo());
 
   }
 
   @Test(
-          expected = WeaponException.class
+    expected = WeaponException.class
   )
   public void testNegativeFire() throws WeaponException {
     ChainGun p = new ChainGun();

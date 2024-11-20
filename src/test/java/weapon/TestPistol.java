@@ -3,8 +3,6 @@ package weapon;
 import exceptions.WeaponException;
 import gameplay.SimpleTimer;
 import org.junit.Assert;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -34,10 +32,11 @@ public class TestPistol {
     timer.addTimeObserver(p);
     timer.timeChanged();
     Assert.assertEquals("Pistol", p.toString());
-    Assert.assertEquals(6L, (long) p.fire(30));
+    Assert.assertEquals(6L, p.fire(30));
     timer.timeChanged();
-    Assert.assertEquals(9L, (long) p.getCurrentAmmo());
+    Assert.assertEquals(9L, p.getCurrentAmmo());
   }
+
   @Test
   public void testPistolFire() throws WeaponException {
     Pistol p = new Pistol();
@@ -45,12 +44,12 @@ public class TestPistol {
     timer.addTimeObserver(p);
     timer.timeChanged();
     Assert.assertEquals("Pistol", p.toString());
-    Assert.assertEquals(6L, (long) p.fire(30));
+    Assert.assertEquals(6L, p.fire(30));
     timer.timeChanged();
-    Assert.assertEquals(9L, (long)p.getCurrentAmmo());
-    Assert.assertEquals(0L, (long)p.fire(60));
+    Assert.assertEquals(9L, p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.fire(60));
     timer.timeChanged();
-    Assert.assertEquals(8L, (long)p.getCurrentAmmo());
+    Assert.assertEquals(8L, p.getCurrentAmmo());
   }
 
 
@@ -64,15 +63,15 @@ public class TestPistol {
       timer.timeChanged();
     }
 
-    Assert.assertEquals(0L, (long)p.getCurrentAmmo());
-    Assert.assertEquals(0L, (long)p.fire(10));
+    Assert.assertEquals(0L, p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.fire(10));
     timer.timeChanged();
-    Assert.assertEquals(0L, (long)p.getCurrentAmmo());
+    Assert.assertEquals(0L, p.getCurrentAmmo());
 
   }
 
   @Test(
-          expected = WeaponException.class
+    expected = WeaponException.class
   )
   public void testNegativeFire() throws WeaponException {
     Pistol p = new Pistol();

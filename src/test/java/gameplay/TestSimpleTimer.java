@@ -5,7 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
-
 public class TestSimpleTimer {
 
 
@@ -51,7 +50,7 @@ public class TestSimpleTimer {
 
     t.addTimeObserver(mto);
 
-    assertEquals(1,t.getNumObservers());
+    assertEquals(1, t.getNumObservers());
   }
 
   /**
@@ -73,7 +72,6 @@ public class TestSimpleTimer {
   }
 
 
-
   /**
    * Remove observer from simpleTimer
    */
@@ -86,7 +84,7 @@ public class TestSimpleTimer {
 
     t.removeTimeObserver(mto);
 
-    assertEquals(0,t.getNumObservers());
+    assertEquals(0, t.getNumObservers());
   }
 
   /**
@@ -104,7 +102,7 @@ public class TestSimpleTimer {
 
     t.timeChanged();
 
-    assertEquals(2,t.getRound());
+    assertEquals(2, t.getRound());
     assertEquals(2, mto.myTime);
   }
 
@@ -115,12 +113,12 @@ public class TestSimpleTimer {
    */
   @Test
   public void testSimpleTimerAsThread() throws
-          InterruptedException{
+    InterruptedException {
     SimpleTimer st = new SimpleTimer(1000);
     st.start();
     Thread.sleep(250); // So we are 1/4th a second different
-    for (int x=0;x<5;x++){
-      assertEquals(x,st.getRound()); //assumes round starts at 0
+    for (int x = 0; x < 5; x++) {
+      assertEquals(x, st.getRound()); //assumes round starts at 0
       Thread.sleep(1000); // wait for the next time change
     }
   }

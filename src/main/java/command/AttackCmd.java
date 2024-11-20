@@ -9,7 +9,7 @@ import weapon.Weapon;
 
 public class AttackCmd implements Command {
 
-  private Environment environment;
+  private final Environment environment;
 
   public AttackCmd(Environment environment) {
     this.environment = environment;
@@ -102,7 +102,7 @@ public class AttackCmd implements Command {
 
             target.takeHit(damage);// Target takes damage
             System.out.println("Attacked " + target.getName() + " at (" +
-                    targetRow + ", " + targetCol + ") with " + damage + " damage.");
+              targetRow + ", " + targetCol + ") with " + damage + " damage.");
 
 
             return;  // Stop once a target is successfully attacked
@@ -121,7 +121,7 @@ public class AttackCmd implements Command {
   // Helper method to check if the cell is valid
   private boolean isValidCell(int row, int col) {
     boolean valid = row >= 0 && col >= 0 && row < environment.getNumRows() &&
-            col < environment.getNumCols();
+      col < environment.getNumCols();
     System.out.println("Cell (" + row + ", " + col + ") valid: " + valid);
     return valid;
   }

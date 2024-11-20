@@ -1,13 +1,12 @@
 package recovery;
 
-public class RecoveryLinear extends Object implements RecoveryBehavior {
+public class RecoveryLinear implements RecoveryBehavior {
   public int recovery;
 
   /**
    * Create an instance
    *
    * @param recoveryAmount the input
-   *
    */
 
   public RecoveryLinear(int recoveryAmount) {
@@ -19,7 +18,7 @@ public class RecoveryLinear extends Object implements RecoveryBehavior {
    * Create an instance
    *
    * @param currentLife the input
-   * @param maxLife max Life
+   * @param maxLife     max Life
    */
 
   public int calculateRecovery(int currentLife, int maxLife) {

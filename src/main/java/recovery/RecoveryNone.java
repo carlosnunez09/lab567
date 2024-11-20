@@ -1,6 +1,6 @@
 package recovery;
 
-public class RecoveryNone extends Object implements RecoveryBehavior {
+public class RecoveryNone implements RecoveryBehavior {
   public RecoveryNone() {
 
   }

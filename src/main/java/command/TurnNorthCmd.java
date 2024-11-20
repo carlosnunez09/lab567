@@ -4,7 +4,7 @@ package command;
 import environment.Environment;
 
 public class TurnNorthCmd implements Command {
-  private Environment environment;
+  private final Environment environment;
 
   public TurnNorthCmd(Environment environment) {
     this.environment = environment;

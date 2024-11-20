@@ -8,8 +8,9 @@ import weapon.Weapon;
 public class Acquire2Cmd implements Command {
 
 
-  private Environment environment;
-  public Acquire2Cmd(Environment environment){
+  private final Environment environment;
+
+  public Acquire2Cmd(Environment environment) {
     this.environment = environment;
   }
 
