@@ -228,6 +228,15 @@ public class TestLifeForm {
 
   }
 
+  @Test
+  public void testDirection(){
+    LifeForm entity1 = new MockLifeForm("p1", 10, 5);
+    assertEquals(entity1.getCurrentDirection(), "North");
+
+  }
+
+
+
 
 
 

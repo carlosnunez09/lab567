@@ -1,7 +1,10 @@
 package lifeform;
+import exceptions.RecoveryRateException;
 import exceptions.WeaponException;
 import org.junit.Assert;
 import org.junit.Test;
+import recovery.RecoveryBehavior;
+import recovery.RecoveryLinear;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,6 +14,13 @@ public class TestHuman {
   public void testHumanInit() {
     Human rl = new Human("Bill", 25, 5);
     assertEquals("Bill", rl.getName());
+  }
+
+  @Test
+  public void testHumanSpeed() throws RecoveryRateException {
+    RecoveryBehavior linear = new RecoveryLinear(3);
+    Human a = new Human("AlienBob", 15, 5);
+    Assert.assertEquals(3, (long)a.getMaxSpeed());
   }
 
   @Test

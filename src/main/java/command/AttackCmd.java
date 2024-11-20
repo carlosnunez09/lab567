@@ -3,7 +3,7 @@ package command;
 import environment.Cell;
 import environment.Environment;
 import exceptions.WeaponException;
-import gui.GUI2;
+import gui.Gui2;
 import lifeform.LifeForm;
 import weapon.Weapon;
 
@@ -49,7 +49,7 @@ public class AttackCmd implements Command {
       Weapon weapon = attacker.getWeapon();
       System.out.println(attacker.getName() + " has a weapon and is attacking!");
       int weaponMaxRange = weapon.getMaxRange();
-      String facingDirection = GUI2.getLifeFormDirection(environment, row, col);
+      String facingDirection = Gui2.getLifeFormDirection(environment, row, col);
 
       // Print weapon stats for debugging
       System.out.println("Weapon max range: " + weaponMaxRange);

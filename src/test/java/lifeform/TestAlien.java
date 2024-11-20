@@ -60,6 +60,13 @@ public class TestAlien {
   }
 
   @Test
+  public void testSpeed() throws RecoveryRateException {
+    RecoveryBehavior linear = new RecoveryLinear(3);
+    Alien a = new Alien("AlienBob", 15, linear, 5);
+    Assert.assertEquals(2, (long)a.getMaxSpeed());
+  }
+
+  @Test
   public void testAlienCombatRecovery() throws RecoveryRateException {
     RecoveryBehavior linear = new RecoveryLinear(3);
     Alien a = new Alien("AlienBob", 16, linear, 2);
