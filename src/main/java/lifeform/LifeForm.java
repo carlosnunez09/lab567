@@ -74,11 +74,15 @@ public abstract class LifeForm {
     return currentDirection;
   }
 
-  public String getLifetype(LifeForm L) {
-    if (L != null) {
-      if (L.getClass().getName() == "lifeform.Human") {
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
+   */
+
+  public String getLifetype(LifeForm l) {
+    if (l != null) {
+      if (l.getClass().getName() == "lifeform.Human") {
         return "Human";
-      } else if (L.getClass().getName() == "lifeform.Alien") {
+      } else if (l.getClass().getName() == "lifeform.Alien") {
         return "Alien";
       }
     }
@@ -182,10 +186,13 @@ public abstract class LifeForm {
    * @param newDirection
    */
   public void setDirection(String newDirection) {
-    if ("North".equals(newDirection) || "East".equals(newDirection) || "South".equals(newDirection) || "West".equals(newDirection)) {
+    if ("North".equals(newDirection)
+            || "East".equals(newDirection)
+            || "South".equals(newDirection) || "West".equals(newDirection)) {
       currentDirection = newDirection;
     } else {
-      currentDirection = "North";   // You can change the default direction wherever you'd like to, up to you guys. :)
+      currentDirection = "North";   // You can change the default
+      // direction wherever you'd like to, up to you guys. :)
     }
   }
 
@@ -212,6 +219,8 @@ public abstract class LifeForm {
         break;
       case "West":
         desCol -= maxSpeed;
+        break;
+      default:
         break;
     }
 

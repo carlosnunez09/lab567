@@ -14,39 +14,46 @@ import weapon.Pistol;
 import weapon.PlasmaCannon;
 import weapon.Weapon;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Font;
+import java.awt.Dimension;
 
 
-interface Command {
-  void execute();
-}
+public class Gui2 {
 
-public class GUI2 {
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
+   */
+
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment(15, 15);
     e.clearBoard();
 
-    Alien jeff = new Alien("Jeff", 7);
+    Alien jeff = new Alien("Jeff", 100);
     Human bill = new Human("Bill", 10, 5);
     Human tim = new Human("Tim", 15, 5);
 
-    bill.setDirection("East");
-
     PlasmaCannon p = new PlasmaCannon();
     Pistol pis = new Pistol();
-    ChainGun CG = new ChainGun();
+    ChainGun c = new ChainGun();
     Pistol pistol = new Pistol();
-
 
     e.addLifeForm(jeff, 1, 2);
     e.addLifeForm(bill, 2, 2);
     e.addLifeForm(tim, 4, 5);
     e.addWeapon(p, 1, 1);
     e.addWeapon(pis, 4, 5);
-    e.addWeapon(CG, 1, 5);
+    e.addWeapon(c, 1, 5);
     e.addWeapon(pistol, 1, 1);
 
 
@@ -56,41 +63,14 @@ public class GUI2 {
     bill.setLocation(2, 2);
     tim.setLocation(4, 5);
 
-
-    //System.out.println(e.getLifeForm(1, 2).getClass().getName());
-
-
-    //System.out.println();
-    //System.out.println(e.getLifeForm(2, 2) instanceof Human);
-
-    //ImageIcon imageIcon = new ImageIcon("src/main/java/gui/Pic/Pistol.png");
-
-    /*String currentPath = System.getProperty("user.dir");
-    System.out.println("Current working directory: " + currentPath);*/
-    /*
-    int status = imageIcon.getImageLoadStatus();
-
-    switch (status) {
-      case MediaTracker.LOADING:
-        System.out.println("Image is still loading...");
-        break;
-      case MediaTracker.ABORTED:
-        System.out.println("Image loading aborted.");
-        break;
-      case MediaTracker.ERRORED:
-        System.out.println("Error loading image.");
-        break;
-      case MediaTracker.COMPLETE:
-        System.out.println("Image loaded successfully.");
-        break;
-    }
-    */
-    //invoker prams
     InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
     Invoker invoker = builder.loadCommands();
     var r = new SimpleRemote(invoker, e);
   }
 
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
+   */
 
   public static String getLifeFormDirection(Environment env, int row, int col) {
     LifeForm lifeForm = env.getLifeForm(row, col);
@@ -100,232 +80,158 @@ public class GUI2 {
       return "LifeForm not present at the given location";
     }
   }
-
 }
+  class Grid extends JFrame {
+    final int width = 800;
+    final int height = 600;
+    public String lifeformDirection = "null";
+    JLabel label;
+    boolean off = true;
+    boolean up = true;
+    int col;
+    int row;
+    Environment env;
+    //ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
+    //ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
+    JButton[][] numberOfButtons;
+    ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
+            BufferedImage.TYPE_3BYTE_BGR));
+    ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.jpg");
+    ImageIcon plasma = new ImageIcon("src/main/java/gui/PlasmaCannon.jpg");
+    ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.jpg");
+    JTextArea remoteDisplay;
+    JTextArea textArea;
+    LifeForm tempLifeform;
+    Weapon[] weapon;
+    String lifetype;
+    String lifeformWeapon;
+    String lifeName;
+    String lifeHealth;
+    String maxHealth;
+    String ammo;
+    String maxAmmo;
+    MoveCmd move;
+    JPanel panel;
 
-class TV extends JFrame {
-  final int width = 800;
-  final int height = 600;
-  public String lifeformDirection = "null";
-  JLabel label;
-  boolean off = true;
-  boolean up = true;
-  int col;
-  int row;
-  Environment env;
-  //ImageIcon human = new ImageIcon("src/main/java/gui/Human.jpg");
-  //ImageIcon alien = new ImageIcon("src/main/java/gui/Alien.jpg");
-  JButton[][] numberOfButtons;
-  ImageIcon offImage = new ImageIcon(new BufferedImage(355, 200,
-    BufferedImage.TYPE_3BYTE_BGR));
-  ImageIcon pistol = new ImageIcon("src/main/java/gui/Pistol.jpg");
-  ImageIcon plasma = new ImageIcon("src/main/java/gui/PlasmaCannon.jpg");
-  ImageIcon chain = new ImageIcon("src/main/java/gui/ChainGun.jpg");
-  JTextArea remoteDisplay;
-  JTextArea textArea;
-  LifeForm tempLifeform;
-  Weapon[] weapon;
-  String lifetype;
-  String lifeformWeapon;
-  String lifeName;
-  String lifeHealth;
-  String maxHealth;
-  String ammo;
-  String maxAmmo;
-  MoveCmd move;
-  JPanel panel;
-
-  int lifeformRow;
-  int lifeformCol;
-
-
-  public TV(Environment env) {
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(width, height);
-    setLayout(new BorderLayout());
-    this.env = env;
-    col = this.env.getNumCols();
-    row = this.env.getNumRows();
-    numberOfButtons = new JButton[row][col];
+    int lifeformRow;
+    int lifeformCol;
 
 
-    panel = new JPanel();
-    panel.setBounds(0, 0, (int) (width * 0.7), height);
-    panel.setLayout(new GridLayout(row, col));
-    panel.setBackground(Color.GRAY);
-    //panel.setBounds(0, 0, 250, 250);
+    public Grid(Environment env) {
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setSize(width, height);
+      setLayout(new BorderLayout());
+      this.env = env;
+      col = this.env.getNumCols();
+      row = this.env.getNumRows();
+      numberOfButtons = new JButton[row][col];
 
 
-    textArea = new JTextArea();
-    textArea.setBounds((int) (width * 0.7), 0, (int) (width * 0.3), height);
-    textArea.setBackground(Color.GRAY);
-    textArea.setEditable(false);
-    Font newTextFieldFont = new Font(textArea.getFont().getName(), textArea.getFont().getStyle(), 16);
-    textArea.setFont(newTextFieldFont);
-
-    //textArea.setPreferredSize(new Dimension(200, 800));
-
-    var sideBar = new JPanel();
-
-    createGrid();
-
-    add(textArea, BorderLayout.CENTER);
-    add(panel, BorderLayout.WEST);
-
-    //add(sideBar, BorderLayout.WEST);
+      panel = new JPanel();
+      panel.setBounds(0, 0, (int) (width * 0.7), height);
+      panel.setLayout(new GridLayout(row, col));
+      panel.setBackground(Color.GRAY);
+      //panel.setBounds(0, 0, 250, 250);
 
 
-    //label = new JLabel(offImage);
+      textArea = new JTextArea();
+      textArea.setBounds((int) (width * 0.7), 0, (int) (width * 0.3), height);
+      textArea.setBackground(Color.GRAY);
+      textArea.setEditable(false);
+      Font newTextFieldFont = new Font(textArea.getFont().getName(),
+              textArea.getFont().getStyle(), 16);
+      textArea.setFont(newTextFieldFont);
 
-    //panel.add(label);
+      //textArea.setPreferredSize(new Dimension(200, 800));
 
-    //pack();
-    this.setLocation(50, 50);
-    setVisible(true);
-  }
+      var sideBar = new JPanel();
+
+      createGrid();
+
+      add(textArea, BorderLayout.CENTER);
+      add(panel, BorderLayout.WEST);
+
+      //add(sideBar, BorderLayout.WEST);
 
 
-  public void createGrid() {
-    //numberOfButtons = new JButton[row][col];
-    for (int i = 0; i < row; i++) {
-      for (int j = 0; j < col; j++) {
-        numberOfButtons[i][j] = new JButton();
-        numberOfButtons[i][j].setPreferredSize(new Dimension((int) (width * 0.7) / row, height / col));
-        //numberOfButtons[i][j].setFocusable(false);
-        numberOfButtons[i][j].addActionListener(this::actionPerformed);
-        if (env.getWeapons(i, j) == null) {
-          numberOfButtons[i][j].setBackground(Color.WHITE);
-        } else if (env.getWeapons(i, j)[0] instanceof Pistol) {
-          numberOfButtons[i][j].setIcon(pistol);
-        } else if (env.getWeapons(i, j)[0] instanceof PlasmaCannon) {
-          numberOfButtons[i][j].setIcon(plasma);
-        } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
-          numberOfButtons[i][j].setIcon(chain);
-        } else if (env.getWeapons(i, j)[1] instanceof Pistol) {
-          numberOfButtons[i][j].setIcon(pistol);
-        } else if (env.getWeapons(i, j)[1] instanceof PlasmaCannon) {
-          numberOfButtons[i][j].setIcon(plasma);
-        } else if (env.getWeapons(i, j)[1] instanceof ChainGun) {
-          numberOfButtons[i][j].setIcon(chain);
-        }
+      //label = new JLabel(offImage);
 
-        if (env.getLifeForm(i, j) == null) {
-          numberOfButtons[i][j].setBackground(Color.WHITE);
-        } else if (env.getLifeForm(i, j).getCurrentLifePoints() == 0) {
-          env.removeLifeForm(i, j);
-          numberOfButtons[i][j].setBackground(Color.WHITE);
-        } else {
-          numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
+      //panel.add(label);
 
-        }
-        panel.add(numberOfButtons[i][j]);
-      }
+      //pack();
+      this.setLocation(50, 50);
+      setVisible(true);
     }
-  }
-
-  public void removePanel() {
-    remove(panel);
-    panel = new JPanel();
-    panel.setBounds(0, 0, (int) (width * 0.7), height);
-    panel.setLayout(new GridLayout(row, col));
-    panel.setBackground(Color.GRAY);
-    add(panel, BorderLayout.WEST);
-
-  }
 
 
-  public void updateGUI() {
-    removePanel();
-    createGrid();
-  }
-
-  public ImageIcon getIcon(LifeForm l) {
-    ImageIcon icon = new ImageIcon("src/main/java/gui/Pic/" + l.getLifetype(l) + l.getCurrentDirection() + ".jpg");
-    return icon;
-
-  }
-
-  public void updateIcon(Environment e, int r, int c) {
-    if (r != lifeformRow || c != lifeformCol) {
-      System.out.println("Icon been changed");
-      JButton button = numberOfButtons[lifeformRow][lifeformCol];
-      JButton button2 = numberOfButtons[r][c];
-      button2.setIcon(getIcon(e.getLifeForm(r, c)));
-      button.setIcon(null);
-      button.setBackground(Color.white);
-    }
-  }
-
-  public void updateText() {
-    for (int i = 0; i < tempLifeform.getRow() + 1; i++) {
-      for (int j = 0; j < tempLifeform.getCol() + 1; j++) {
-        if (env.getLifeForm(i, j) != null) {
-          lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
-          lifeHealth = String.valueOf(env.getLifeForm(i, j).getCurrentLifePoints());
-          maxHealth = String.valueOf(env.getLifeForm(i, j).getMaxLife());
-          lifeName = env.getLifeForm(i, j).getName();
-
-          lifeformRow = i;
-          lifeformCol = j;
-
-          if (env.getLifeForm(i, j).hasWeapon()) {
-            lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
-            ammo = String.valueOf(env.getLifeForm(i, j).getWeapon().getCurrentAmmo());
-            maxAmmo = String.valueOf(env.getLifeForm(i, j).getWeapon().getMaxAmmo());
-          } else {
-            lifeformWeapon = "No Weapons Equipped";
-            ammo = "LifeForm DON'T currently has a weapon";
+    public void createGrid() {
+      //numberOfButtons = new JButton[row][col];
+      for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+          numberOfButtons[i][j] = new JButton();
+          numberOfButtons[i][j].setPreferredSize(new Dimension((int) (width * 0.7) / row,
+                  height / col));
+          //numberOfButtons[i][j].setFocusable(false);
+          numberOfButtons[i][j].addActionListener(this::actionPerformed);
+          if (env.getWeapons(i, j) == null) {
+            numberOfButtons[i][j].setBackground(Color.WHITE);
+          } else if (env.getWeapons(i, j)[0] instanceof Pistol) {
+            numberOfButtons[i][j].setIcon(pistol);
+          } else if (env.getWeapons(i, j)[0] instanceof PlasmaCannon) {
+            numberOfButtons[i][j].setIcon(plasma);
+          } else if (env.getWeapons(i, j)[0] instanceof ChainGun) {
+            numberOfButtons[i][j].setIcon(chain);
+          } else if (env.getWeapons(i, j)[1] instanceof Pistol) {
+            numberOfButtons[i][j].setIcon(pistol);
+          } else if (env.getWeapons(i, j)[1] instanceof PlasmaCannon) {
+            numberOfButtons[i][j].setIcon(plasma);
+          } else if (env.getWeapons(i, j)[1] instanceof ChainGun) {
+            numberOfButtons[i][j].setIcon(chain);
           }
 
-          lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
-        } else {
-          lifetype = "Blank";
-          lifeformWeapon = "Not a Lifeform";
-          ammo = "LifeForm doesn't have a Weapon";
-          lifeformDirection = "Lifeform is NOT currently selected";
-          lifeHealth = "Lifeform is NOT currently selected";
-          lifeName = "Lifeform is NOT currently selected";
-        }
+          if (env.getLifeForm(i, j) == null) {
+            numberOfButtons[i][j].setBackground(Color.WHITE);
+          } else if (env.getLifeForm(i, j).getCurrentLifePoints() == 0) {
+            env.removeLifeForm(i, j);
+            numberOfButtons[i][j].setBackground(Color.WHITE);
+          } else {
+            numberOfButtons[i][j].setIcon(getIcon(env.getLifeForm(i, j)));
 
-        if (env.getWeapons(i, j) != null) {
-          weapon = env.getWeapons(i, j);
-          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j + "\n\n" +
-            "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth + "\n\n" +
-            "LifeForm Name is:\n" + lifeName + " \n\n" +
-            "LifeForm Type is:\n" + lifetype + " \n\n" +
-            "LifeForm Weapon:\n" + lifeformWeapon +
-            "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
-            "\n\nFirst Weapon in Cell is \n" + weapon[0] +
-            "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
-            "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
-        } else {
-          textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j + "\n\n" +
-            "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth + "\n\n" +
-            "LifeForm Name is:\n" + lifeName + " \n\n" +
-            "LifeForm Type is:\n" + lifetype + " \n\n" +
-            "LifeForm Weapon:\n" + lifeformWeapon +
-            "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
-            "\n\nFirst Weapon in Cell is \n" + "None" +
-            "\n" + "\nSecond Weapon in Cell is \n" + "None" +
-            "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+          }
+          panel.add(numberOfButtons[i][j]);
         }
       }
     }
 
-  }
+    public void removePanel() {
+      remove(panel);
+      panel = new JPanel();
+      panel.setBounds(0, 0, (int) (width * 0.7), height);
+      panel.setLayout(new GridLayout(row, col));
+      panel.setBackground(Color.GRAY);
+      add(panel, BorderLayout.WEST);
+
+    }
 
 
-  public void actionPerformed(ActionEvent e) {
-    for (int i = 0; i < row; i++) {
-      for (int j = 0; j < col; j++) {
-        if (e.getSource() == numberOfButtons[i][j]) {
-          //numberOfButtons[i][j].setBackground(Color.YELLOW);
-          //createGrid();
-          //updateGrid(i, j);
+    public void updateGui() {
+      removePanel();
+      createGrid();
+    }
 
+    public ImageIcon getIcon(LifeForm l) {
+      ImageIcon icon = new ImageIcon("src/main/java/gui/Pic/"
+              + l.getLifetype(l)
+              + l.getCurrentDirection()
+              + ".jpg");
+      return icon;
 
+    }
+
+    public void updateText() {
+      for (int i = 0; i < tempLifeform.getRow() + 1; i++) {
+        for (int j = 0; j < tempLifeform.getCol() + 1; j++) {
           if (env.getLifeForm(i, j) != null) {
-            tempLifeform = env.getLifeForm(i, j);
             lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
             lifeHealth = String.valueOf(env.getLifeForm(i, j).getCurrentLifePoints());
             maxHealth = String.valueOf(env.getLifeForm(i, j).getMaxLife());
@@ -347,7 +253,7 @@ class TV extends JFrame {
           } else {
             lifetype = "Blank";
             lifeformWeapon = "Not a Lifeform";
-            ammo = "LifeForm is NOT currently selected";
+            ammo = "LifeForm doesn't have a Weapon";
             lifeformDirection = "Lifeform is NOT currently selected";
             lifeHealth = "Lifeform is NOT currently selected";
             lifeName = "Lifeform is NOT currently selected";
@@ -355,36 +261,190 @@ class TV extends JFrame {
 
           if (env.getWeapons(i, j) != null) {
             weapon = env.getWeapons(i, j);
-            textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j + "\n\n" +
-              "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth + "\n\n" +
-              "LifeForm Name is:\n" + lifeName + " \n\n" +
-              "LifeForm Type is:\n" + lifetype + " \n\n" +
-              "LifeForm Weapon:\n" + lifeformWeapon +
-              "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
-              "\n\nFirst Weapon in Cell is \n" + weapon[0] +
-              "\n" + "\nSecond Weapon in Cell is \n" + weapon[1] +
-              "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+            textArea.setText("The Current Cell is \n"
+                    + "Row: "
+                    + i
+                    + "\tCol: "
+                    + j
+                    + "\n\n"
+                    + "LifeForm Health is at:\n"
+                    + lifeHealth
+                    + "\\"
+                    + maxHealth
+                    + "\n\n"
+                    + "LifeForm Name is:\n"
+                    + lifeName
+                    + " \n\n"
+                    + "LifeForm Type is:\n"
+                    + lifetype
+                    + " \n\n"
+                    + "LifeForm Weapon:\n"
+                    + lifeformWeapon
+                    + "\n\nAmmo in LifeForm Weapon:\n"
+                    + ammo
+                    + "\\"
+                    + maxAmmo
+                    + "\n\nFirst Weapon in Cell is \n"
+                    + weapon[0]
+                    + "\n"
+                    + "\nSecond Weapon in Cell is \n"
+                    + weapon[1]
+                    + "\n"
+                    + "\nLifeForm is facing:\n"
+                    + lifeformDirection);
           } else {
-            textArea.setText("The Current Cell is \n" + "Row: " + i + "\tCol: " + j + "\n\n" +
-              "LifeForm Health is at:\n" + lifeHealth + "\\" + maxHealth + "\n\n" +
-              "LifeForm Name is:\n" + lifeName + " \n\n" +
-              "LifeForm Type is:\n" + lifetype + " \n\n" +
-              "LifeForm Weapon:\n" + lifeformWeapon +
-              "\n\nAmmo in LifeForm Weapon:\n" + ammo + "\\" + maxAmmo +
-              "\n\nFirst Weapon in Cell is \n" + "None" +
-              "\n" + "\nSecond Weapon in Cell is \n" + "None" +
-              "\n" + "\nLifeForm is facing:\n" + lifeformDirection);
+            textArea.setText("The Current Cell is \n"
+                    + "Row: "
+                    + i
+                    + "\tCol: "
+                    + j
+                    + "\n\n"
+                    + "LifeForm Health is at:\n"
+                    + lifeHealth
+                    + "\\"
+                    + maxHealth
+                    + "\n\n"
+                    + "LifeForm Name is:\n"
+                    + lifeName
+                    + " \n\n"
+                    + "LifeForm Type is:\n"
+                    + lifetype
+                    + " \n\n"
+                    + "LifeForm Weapon:\n"
+                    + lifeformWeapon
+                    + "\n\nAmmo in LifeForm Weapon:\n"
+                    + ammo
+                    + "\\"
+                    + maxAmmo
+                    + "\n\nFirst Weapon in Cell is \n"
+                    + "None"
+                    + "\n"
+                    + "\nSecond Weapon in Cell is \n"
+                    + "None"
+                    + "\n"
+                    + "\nLifeForm is facing:\n"
+                    + lifeformDirection);
           }
-          updateGUI();
+        }
+      }
+
+    }
+
+
+    public void actionPerformed(ActionEvent e) {
+      for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+          if (e.getSource() == numberOfButtons[i][j]) {
+            //numberOfButtons[i][j].setBackground(Color.YELLOW);
+            //createGrid();
+            //updateGrid(i, j);
+
+
+            if (env.getLifeForm(i, j) != null) {
+              tempLifeform = env.getLifeForm(i, j);
+              lifetype = env.getLifeForm(i, j).getLifetype(env.getLifeForm(i, j));
+              lifeHealth = String.valueOf(env.getLifeForm(i, j).getCurrentLifePoints());
+              maxHealth = String.valueOf(env.getLifeForm(i, j).getMaxLife());
+              lifeName = env.getLifeForm(i, j).getName();
+
+              lifeformRow = i;
+              lifeformCol = j;
+
+              if (env.getLifeForm(i, j).hasWeapon()) {
+                lifeformWeapon = env.getLifeForm(i, j).getWeapon().toString();
+                ammo = String.valueOf(env.getLifeForm(i, j).getWeapon().getCurrentAmmo());
+                maxAmmo = String.valueOf(env.getLifeForm(i, j).getWeapon().getMaxAmmo());
+              } else {
+                lifeformWeapon = "No Weapons Equipped";
+                ammo = "LifeForm DON'T currently has a weapon";
+              }
+
+              lifeformDirection = env.getLifeForm(i, j).getCurrentDirection();
+            } else {
+              lifetype = "Blank";
+              lifeformWeapon = "Not a Lifeform";
+              ammo = "LifeForm is NOT currently selected";
+              lifeformDirection = "Lifeform is NOT currently selected";
+              lifeHealth = "Lifeform is NOT currently selected";
+              lifeName = "Lifeform is NOT currently selected";
+            }
+
+            if (env.getWeapons(i, j) != null) {
+              weapon = env.getWeapons(i, j);
+              textArea.setText("The Current Cell is \n"
+                      + "Row: "
+                      + i
+                      + "\tCol: "
+                      + j
+                      + "\n\n"
+                      + "LifeForm Health is at:\n"
+                      + lifeHealth
+                      + "\\"
+                      + maxHealth
+                      + "\n\n"
+                      + "LifeForm Name is:\n"
+                      + lifeName
+                      + " \n\n"
+                      + "LifeForm Type is:\n"
+                      + lifetype
+                      + " \n\n"
+                      + "LifeForm Weapon:\n"
+                      + lifeformWeapon
+                      + "\n\nAmmo in LifeForm Weapon:\n"
+                      + ammo
+                      + "\\"
+                      + maxAmmo
+                      + "\n\nFirst Weapon in Cell is \n"
+                      + weapon[0]
+                      + "\n"
+                      + "\nSecond Weapon in Cell is \n"
+                      + weapon[1]
+                      + "\n"
+                      + "\nLifeForm is facing:\n"
+                      + lifeformDirection);
+            } else {
+              textArea.setText("The Current Cell is \n"
+                      + "Row: "
+                      + i
+                      + "\tCol: "
+                      + j
+                      + "\n\n"
+                      + "LifeForm Health is at:\n"
+                      + lifeHealth
+                      + "\\"
+                      + maxHealth
+                      + "\n\n"
+                      + "LifeForm Name is:\n"
+                      + lifeName
+                      + " \n\n"
+                      + "LifeForm Type is:\n"
+                      + lifetype
+                      + " \n\n"
+                      + "LifeForm Weapon:\n"
+                      + lifeformWeapon
+                      + "\n\nAmmo in LifeForm Weapon:\n"
+                      + ammo
+                      + "\\"
+                      + maxAmmo
+                      + "\n\nFirst Weapon in Cell is \n"
+                      + "None"
+                      + "\n"
+                      + "\nSecond Weapon in Cell is \n"
+                      + "None"
+                      + "\n"
+                      + "\nLifeForm is facing:\n"
+                      + lifeformDirection);
+            }
+            updateGui();
+          }
         }
       }
     }
+
+
   }
 
-
-}
-
-class SimpleRemote extends JFrame {
+  class SimpleRemote extends JFrame {
   private final Invoker invoker;  // Make it a private field
   //Command c;
   JTextArea text;
@@ -392,12 +452,12 @@ class SimpleRemote extends JFrame {
   JPanel top;
   JPanel bottom;
   JPanel panel;
-  TV tv;
+  Grid tv;
   Environment env;
 
 
   public SimpleRemote(Invoker invoker, Environment e) {
-    tv = new TV(e);
+    tv = new Grid(e);
     env = tv.env;
     this.invoker = invoker;
     setLayout(new BorderLayout());
@@ -434,20 +494,20 @@ class SimpleRemote extends JFrame {
     top.add(getWeap1, BorderLayout.WEST);
 
 
-    JButton North = new JButton("North");
+    JButton north = new JButton("North");
     //North.setSize(5, 5);
     //North.setBounds(100, 300, 100, 5);
-    top.add(North, BorderLayout.CENTER);
+    top.add(north, BorderLayout.CENTER);
 
     JButton getWeap2 = new JButton("Get Weapon 2");
     //North.setSize(5, 5);
     //getWeap2.setBounds(100, 300, 100, 5);
     top.add(getWeap2, BorderLayout.EAST);
 
-    JButton Drop = new JButton("Drop");
+    JButton drop = new JButton("Drop");
     //South.setSize(10, 10);
     //South.setBounds(100, 400, 100, 5);
-    panel.add(Drop, BorderLayout.WEST);
+    panel.add(drop, BorderLayout.WEST);
 
     JButton reload = new JButton("Reload");
     //South.setSize(10, 10);
@@ -456,10 +516,10 @@ class SimpleRemote extends JFrame {
 
     bottom.add(panel, BorderLayout.WEST);
 
-    JButton South = new JButton("South");
+    JButton south = new JButton("South");
     //South.setSize(10, 10);
-    South.setBounds(100, 400, 100, 5);
-    bottom.add(South, BorderLayout.CENTER);
+    south.setBounds(100, 400, 100, 5);
+    bottom.add(south, BorderLayout.CENTER);
 
     JButton attack = new JButton("Attack");
     //attack.setSize(50, 50);
@@ -474,13 +534,13 @@ class SimpleRemote extends JFrame {
     down.addActionListener(a -> pressButton("west", tv.lifeformRow, tv.lifeformCol));
     move.addActionListener(a -> pressButton("move", tv.lifeformRow, tv.lifeformCol));
     up.addActionListener(a -> pressButton("east", tv.lifeformRow, tv.lifeformCol));
-    North.addActionListener(a -> pressButton("north", tv.lifeformRow, tv.lifeformCol));
-    South.addActionListener(a -> pressButton("south", tv.lifeformRow, tv.lifeformCol));
+    north.addActionListener(a -> pressButton("north", tv.lifeformRow, tv.lifeformCol));
+    south.addActionListener(a -> pressButton("south", tv.lifeformRow, tv.lifeformCol));
     attack.addActionListener(a -> pressButton("attack", tv.lifeformRow, tv.lifeformCol));
     getWeap1.addActionListener(a -> pressButton("get1", tv.lifeformRow, tv.lifeformCol));
     getWeap2.addActionListener(a -> pressButton("get2", tv.lifeformRow, tv.lifeformCol));
     reload.addActionListener(a -> pressButton("reload", tv.lifeformRow, tv.lifeformCol));
-    Drop.addActionListener(a -> pressButton("drop", tv.lifeformRow, tv.lifeformCol));
+    drop.addActionListener(a -> pressButton("drop", tv.lifeformRow, tv.lifeformCol));
 
 
     setSize(500, 200);
@@ -545,7 +605,7 @@ class SimpleRemote extends JFrame {
         case "move":
           //invoker.getMoveCmd().execute(row, col);
           updateFrame();
-          //tv.updateGUI();
+          //tv.updateGui();
           break;
         case "reload":
           invoker.getReloadCmd().execute(row, col);
@@ -557,7 +617,6 @@ class SimpleRemote extends JFrame {
       e.printStackTrace();
     }
     tv.updateText();
-    tv.updateGUI();
+    tv.updateGui();
   }
-
 }

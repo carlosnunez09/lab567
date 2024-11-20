@@ -17,7 +17,8 @@ public class Scope extends Attachment {
       return (base.fire(base.getMaxRange()) + 5);
     }
 
-    return (int) ((1 + ((double) (getMaxRange() - distance) / getMaxRange())) * base.fire(distance));
+    return (int) ((1 + ((double) (getMaxRange() - distance)
+            / getMaxRange())) * base.fire(distance));
   }
 
   @Override

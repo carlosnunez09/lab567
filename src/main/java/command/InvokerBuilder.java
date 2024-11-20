@@ -12,6 +12,10 @@ public class InvokerBuilder {
     invoker = new Invoker();
   }
 
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
+   */
+
   public Invoker loadCommands() {
     Invoker invoker = new Invoker();
 

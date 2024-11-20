@@ -1,6 +1,5 @@
 package command;
 
-
 import environment.Environment;
 
 public class TurnSouthCmd implements Command {

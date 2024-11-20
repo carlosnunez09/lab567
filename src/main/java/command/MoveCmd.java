@@ -21,9 +21,11 @@ public class MoveCmd implements Command {
       environment.getLifeForm(row, col).move(environment);
       environment.notifyObservers(life);
       if (life.getWeapon() != null) {
-        life.getWeapon().updateTime(1); // clue how it works,but it works, prob different implementation  for the future
+        life.getWeapon().updateTime(1); // clue how it works,
+        // but it works, prob different implementation  for the future
       }
-      //System.out.println("from command: Moved" + " at row: " + row + " col: " + col); // testing to be removed
+      //System.out.println("from command: Moved" + " at row: "
+      // + row + " col: " + col); // testing to be removed
     }
   }
 }

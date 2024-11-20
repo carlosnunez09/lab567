@@ -13,6 +13,10 @@ public class ReloadCmd implements Command {
     this.environment = environment;
   }
 
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
+   */
+
   public void execute(int row, int col) {
 
     Cell cell = environment.getCell(row, col);

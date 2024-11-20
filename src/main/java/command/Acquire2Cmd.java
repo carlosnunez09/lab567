@@ -15,11 +15,9 @@ public class Acquire2Cmd implements Command {
   }
 
 
-  /*
-
-  sup
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
    */
-
 
   public void execute(int row, int col) {
 

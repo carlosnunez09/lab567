@@ -18,6 +18,10 @@ public class Alien extends LifeForm implements TimerObserver {
   private int recoverRate;
   private RecoveryBehavior rb;
 
+  /**
+   * Creates an Enviroment with provided rows and cols of the Cell class
+   */
+
   public Alien(String name, int maxHitPoints) {
     super(name, maxHitPoints, 10);
     maxHitP = maxHitPoints;
@@ -50,7 +54,7 @@ public class Alien extends LifeForm implements TimerObserver {
    */
 
   public Alien(String name, int maxHitPoints, RecoveryBehavior behavior, int recoveryRate)
-    throws RecoveryRateException {
+          throws RecoveryRateException {
     super(name, maxHitPoints, 10);
     maxHitP = maxHitPoints;
     recoverRate = recoveryRate;
