@@ -46,11 +46,13 @@ public class Gui2 {
     PlasmaCannon p = new PlasmaCannon();
     Pistol pis = new Pistol();
     Pistol pistol = new Pistol();
+    PlasmaCannon p1 = new PlasmaCannon();
 
     e.addLifeForm(jeff, 1, 2);
     e.addLifeForm(bill, 2, 2);
     e.addLifeForm(tim, 4, 5);
     e.addWeapon(p, 1, 5);
+    e.addWeapon(p1, 4, 8);
     e.addWeapon(pis, 4, 5);
     e.addWeapon(pistol, 1, 1);
 
