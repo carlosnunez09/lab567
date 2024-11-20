@@ -15,7 +15,10 @@ public class AttackCmd implements Command {
     this.environment = environment;
   }
 
+  /*
   // Helper method to get the direction the LifeForm is facing
+   */
+
   public static String getLifeFormDirection(Environment env, int row, int col) {
     LifeForm lifeForm = env.getLifeForm(row, col);
     if (lifeForm != null) {
@@ -76,7 +79,8 @@ public class AttackCmd implements Command {
   }
 
   // Helper method to handle attacking until a target is found in the specified direction
-  private void attackUntilTarget(int row, int col, int rowDelta, int colDelta, Weapon weapon, int maxRange) {
+  private void attackUntilTarget(int row, int col,
+                                 int rowDelta, int colDelta, Weapon weapon, int maxRange) {
     for (int i = 1; i <= maxRange; i++) {
       int targetRow = row + i * rowDelta;   // Calculate the target row
       int targetCol = col + i * colDelta;   // Calculate the target column
@@ -97,7 +101,8 @@ public class AttackCmd implements Command {
 
 
             target.takeHit(damage);// Target takes damage
-            System.out.println("Attacked " + target.getName() + " at (" + targetRow + ", " + targetCol + ") with " + damage + " damage.");
+            System.out.println("Attacked " + target.getName() + " at (" +
+                    targetRow + ", " + targetCol + ") with " + damage + " damage.");
 
 
             return;  // Stop once a target is successfully attacked
@@ -115,7 +120,8 @@ public class AttackCmd implements Command {
 
   // Helper method to check if the cell is valid
   private boolean isValidCell(int row, int col) {
-    boolean valid = row >= 0 && col >= 0 && row < environment.getNumRows() && col < environment.getNumCols();
+    boolean valid = row >= 0 && col >= 0 && row < environment.getNumRows() &&
+            col < environment.getNumCols();
     System.out.println("Cell (" + row + ", " + col + ") valid: " + valid);
     return valid;
   }

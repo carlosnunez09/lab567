@@ -8,32 +8,40 @@ import weapon.Weapon;
 public class Acquire2Cmd implements Command {
 
 
-    private Environment environment;
-    public Acquire2Cmd(Environment environment){ this.environment = environment; }
+  private Environment environment;
+  public Acquire2Cmd(Environment environment){
+    this.environment = environment;
+  }
 
 
-    public void execute(int row, int col){
+  /*
+
+  sup
+   */
 
 
-      Cell cell = environment.getCell(row, col);
-      LifeForm lifeForm = cell.getLifeForm();
+  public void execute(int row, int col) {
 
-      if (lifeForm != null) {
-        Weapon weapon2 = cell.getWeapon2();
-        if (weapon2 != null) {
-          if (lifeForm.hasWeapon()) {
-            Weapon currentWeapon = lifeForm.getWeapon();
-            lifeForm.pickUpWeapon(weapon2);
-            cell.addWeapon(currentWeapon);
-          } else {
-            lifeForm.pickUpWeapon(weapon2);
-          }
-          cell.removeWeapon(weapon2);
+
+    Cell cell = environment.getCell(row, col);
+    LifeForm lifeForm = cell.getLifeForm();
+
+    if (lifeForm != null) {
+      Weapon weapon2 = cell.getWeapon2();
+      if (weapon2 != null) {
+        if (lifeForm.hasWeapon()) {
+          Weapon currentWeapon = lifeForm.getWeapon();
+          lifeForm.pickUpWeapon(weapon2);
+          cell.addWeapon(currentWeapon);
+        } else {
+          lifeForm.pickUpWeapon(weapon2);
         }
+        cell.removeWeapon(weapon2);
       }
-
-
     }
+
+
+  }
 
 
 }

@@ -11,7 +11,9 @@ public class Acquire1Cmd implements Command {
 
   private Environment environment;
 
-  public Acquire1Cmd(Environment environment) { this.environment = environment;}
+  public Acquire1Cmd(Environment environment) {
+    this.environment = environment;
+  }
 
 
 
@@ -20,11 +22,6 @@ public class Acquire1Cmd implements Command {
 
   @Override
   public void execute(int row, int col) throws WeaponException, EnvironmentException {
-//      if (environment.getLifeForm(row, col) != null) {
-//
-//      if (environment.getWeapons()) {
-//          environment.addWeapon();
-//      }
 
 
     Cell cell = environment.getCell(row, col);
