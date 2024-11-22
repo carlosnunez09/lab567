@@ -4,6 +4,7 @@ import command.Invoker;
 import command.InvokerBuilder;
 import command.MoveCmd;
 import environment.Environment;
+import environment.EnvironmentObserver;
 import exceptions.EnvironmentException;
 import exceptions.WeaponException;
 import gameplay.SimpleTimer;
@@ -30,7 +31,7 @@ import java.awt.Font;
 import java.awt.Dimension;
 
 
-public class Gui2 {
+public class Gui2 implements EnvironmentObserver {
 
   /**
    * Creates an Environment with provided rows and cols of the Cell class
@@ -65,7 +66,7 @@ public class Gui2 {
     e.addWeapon(pistol, 1, 1);
     e.addWeapon(c1, 14, 14);
     e.addWeapon(c2, 1, 5);
-    e.addWeapon(p2, 10, 10);
+    e.addWeapon(p2, 4, 5);
 
 
 
@@ -93,6 +94,11 @@ public class Gui2 {
     } else {
       return "LifeForm not present at the given location";
     }
+  }
+
+  @Override
+  public void update(int row, int col) {
+
   }
 }
 

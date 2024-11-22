@@ -34,6 +34,8 @@ public class Environment {
     }*/
   }
 
+
+
   /**
    * Singleton for this class
    */
@@ -62,6 +64,10 @@ public class Environment {
     } else {
       return false;
     }
+  }
+
+  public void addObserver(EnvironmentObserver e) {
+    gameboards.add(e);
   }
 
   /**
