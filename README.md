@@ -49,7 +49,7 @@ Using the following table:
 |-----------------------------------|-----------|------------|---------------------------------------------------|
 | Simulator                        | Terrence  | 10/23/24   |                                                   |
 | HasWeaponState & DeadState       | Mason     | 10/23/24   |                                                   |
-| NoWeaponState & OutOfAmmoState   |           | 10/30/24   |                                                   |
+| NoWeaponState & OutOfAmmoState   | John      | 10/30/24   |                                                   |
 | AIContext & Updates to Lifeform  |           | 10/30/24   |                                                   |
 
 
