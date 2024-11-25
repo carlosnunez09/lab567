@@ -30,13 +30,27 @@ We will ask them if they need help. If they are not doing work on purpose, we wi
 
 Using the following table
 
-| Task                           | Assignee | Deadline | Progress (date)                       |
-|--------------------------------|--------|----------|---------------------------------------|
-| Game'UI'                       | Terrence | 10/23/24 |  |
-| Commands                       | John   | 10/23/24 |    |
-| Invoker'Builder' & Invoker'UI' | Carlos | 10/30/24  | Finished invoker and implemented it with invoker UI |
-| Turn'&'Movement'               | Mason  | 10/30/24  | Finish Turn & Movement ()     |
+**How will you track who is responsible for which tasks and the work progress?**
 
+Using the following table:
+
+### **Lab 6**
+
+| Task                              | Assignee  | Deadline   | Progress (date)                                    |
+|-----------------------------------|-----------|------------|---------------------------------------------------|
+| Game UI                          | Terrence  | 10/23/24   |                                                   |
+| Commands                         | John      | 10/23/24   |                                                   |
+| Invoker Builder & Invoker UI     | Carlos    | 10/30/24   | Finished invoker and implemented it with invoker UI |
+| Turn & Movement                  | Mason     | 10/30/24   | Finish Turn & Movement ()                         |
+
+### **Lab 7**
+
+| Task                              | Assignee  | Deadline   | Progress (date)                                   |
+|-----------------------------------|-----------|------------|---------------------------------------------------|
+| Simulator                        | Terrence  | 10/23/24   |                                                   |
+| HasWeaponState & DeadState       |           | 10/23/24   |                                                   |
+| NoWeaponState & OutOfAmmoState   |           | 10/30/24   |                                                   |
+| AIContext & Updates to Lifeform  |           | 10/30/24   |                                                   |
 
 
 # Team Meeting Log
