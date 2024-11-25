@@ -228,4 +228,5 @@ public class Environment {
   public boolean checkLegalPlay(int row, int col) {
     return this.getNumCols() > col && col >= 0 && this.getNumRows() > row && row >= 0;
   }
+
 }

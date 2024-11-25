@@ -96,6 +96,14 @@ public class Gui2 implements EnvironmentObserver {
     }
   }
 
+  public void addAlien(Alien a) {
+
+  }
+
+  /**
+   * @param row
+   * @param col
+   */
   @Override
   public void update(int row, int col) {
 

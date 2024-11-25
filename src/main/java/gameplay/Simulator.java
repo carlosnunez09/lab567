@@ -3,6 +3,7 @@ package gameplay;
 import environment.Environment;
 import exceptions.RecoveryRateException;
 import gui.Gui2;
+import lifeform.LifeForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Simulator implements TimerObserver{
   private SimpleTimer timer;
   public List<Human> listHuman;
   public List<Alien> listAlien;
+  public List<LifeForm> listLifeForm;
 
   public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) {
     this.env = env;
@@ -19,11 +21,24 @@ public class Simulator implements TimerObserver{
 
     listHuman = new RandList<>(new RandHuman(), numHumans).choose();
     listAlien = new RandList<>(new RandAlien(), numAliens).choose();
+    listLifeForm.addAll(listHuman);
+    listLifeForm.addAll(listAlien);
+
+
 
   }
   @Override
   public void updateTime(int time) {
-
+    int row = 0;
+    int col = 0;
+    for (int i = 0; i < listLifeForm.size(); i++) {
+      env.addLifeForm((lifeform.LifeForm) listLifeForm.get(i), row, col);
+      row += 3;
+      if (row > env.getNumRows()){
+        row = 0;
+        col += 1;
+      }
+    }
   }
 
   public static void main(String[] args)
@@ -31,15 +46,14 @@ public class Simulator implements TimerObserver{
     try {
       Gui2 gui = new Gui2();
       env.addObserver(gui);
-//simulator starts here for AI vs AI play
+      //simulator starts here for AI vs AI play
       SimpleTimer timer = new SimpleTimer(1000);
-//15 humans
-//10 Aliens
+
       Simulator sim = new Simulator(env, timer, 15, 10);
-//start the timer
+      //start the timer
       timer.start();
-    } catch (RecoveryRateException e) {
-      e.printStackTrace();
+    } catch (RecoveryRateException env) {
+      env.printStackTrace();
     }
 
   }
