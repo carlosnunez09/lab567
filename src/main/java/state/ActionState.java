@@ -1,6 +1,9 @@
 package state;
 
 import environment.Environment;
+import exceptions.AttachmentException;
+import exceptions.EnvironmentException;
+import exceptions.WeaponException;
 import lifeform.LifeForm;
 
 public abstract class ActionState extends {
@@ -18,7 +21,7 @@ public abstract class ActionState extends {
 
   }
 
-  abstract void executeAction(){
+  public void executeAction() throws WeaponException, EnvironmentException, AttachmentException {
 
   }
 
