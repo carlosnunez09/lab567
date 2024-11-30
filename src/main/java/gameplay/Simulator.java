@@ -24,11 +24,6 @@ public class Simulator implements TimerObserver {
     listLifeForm.addAll(listHuman);
     listLifeForm.addAll(listAlien);
 
-
-  }
-
-  @Override
-  public void updateTime(int time) {
     int row = 0;
     int col = 0;
     for (int i = 0; i < listLifeForm.size(); i++) {
@@ -39,6 +34,12 @@ public class Simulator implements TimerObserver {
         col += 1;
       }
     }
+
+
+  }
+
+  @Override
+  public void updateTime(int time) {
   }
 
   public static void main(String[] args) {

@@ -236,4 +236,8 @@ public abstract class LifeForm {
   public int getMaxSpeed() {
     return maxSpeed;
   }
+
+  public void revive(){
+    currentLifePoints = maxLifePoints;
+  }
 }

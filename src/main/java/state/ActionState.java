@@ -6,7 +6,7 @@ import exceptions.EnvironmentException;
 import exceptions.WeaponException;
 import lifeform.LifeForm;
 
-public abstract class ActionState extends {
+public abstract class ActionState {
 
   protected AIContext context;
   protected Environment e;
