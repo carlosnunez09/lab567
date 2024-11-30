@@ -1,7 +1,5 @@
 package state;
 
-import exceptions.AttachmentException;
-import exceptions.EnvironmentException;
 import exceptions.WeaponException;
 
 public class OutOfAmmoState extends ActionState{
@@ -11,6 +9,10 @@ public class OutOfAmmoState extends ActionState{
 
   @Override
   public void executeAction() throws WeaponException{
-
+    if (context.getCurrentState() != context.dead){
+      if (lifeform.hasWeapon()){
+        lifeform.getWeapon().reload();
+      }
+    }
   }
 }
