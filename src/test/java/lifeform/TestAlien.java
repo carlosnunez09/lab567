@@ -15,6 +15,37 @@ public class TestAlien {
 
 
   @Test
+  public void testLifeFormMaxLifePoints() {
+    LifeForm alien = new Alien("Zorg", 100);
+    assertEquals(100, alien.getMaxLife());
+
+    LifeForm human = new Human("John", 50, 10);
+    assertEquals(50, human.getMaxLife());
+  }
+
+  @Test
+  public void testLifeFormRevive() {
+    LifeForm alien = new Alien("Zorg", 100);
+    alien.takeHit(50);
+    assertEquals(50, alien.getCurrentLifePoints());
+
+    alien.revive();
+    assertEquals(100, alien.getCurrentLifePoints());
+  }
+
+  @Test
+  public void testAlienRecoveryNew() throws RecoveryRateException {
+    RecoveryBehavior rb = (current, max) -> Math.min(max, current + 10);
+    Alien alien = new Alien("Zorg", 100, rb, 1);
+
+    alien.takeHit(50);
+    alien.updateTime(1);
+    assertEquals(60, alien.getCurrentLifePoints());
+  }
+
+
+
+  @Test
   public void testAlienInit() {
     Alien rl = new Alien("Bill", 25);
     assertEquals("Bill", rl.getName());
