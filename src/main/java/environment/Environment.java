@@ -218,6 +218,11 @@ public class Environment {
     return cells[row][col];
   }
 
+  public int move(LifeForm lifeform){
+    //lifeform.move();4
+    return 0;
+  }
+
   /**
    * If the cell is in the environment and is also open, return true.
    *
