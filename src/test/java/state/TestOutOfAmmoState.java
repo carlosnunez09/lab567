@@ -9,7 +9,7 @@ import weapon.Weapon;
 
 import static org.junit.Assert.assertTrue;
 
-public class OutOfAmmoState {
+public class TestOutOfAmmoState {
 
 
 

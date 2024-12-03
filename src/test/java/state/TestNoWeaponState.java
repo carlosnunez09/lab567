@@ -11,7 +11,7 @@ import weapon.Weapon;
 
 import static org.junit.Assert.*;
 
-public class NoWeaponState {
+public class TestNoWeaponState {
 
   @Test
   public void testWeaponInCell() {
