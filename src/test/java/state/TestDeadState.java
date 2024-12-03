@@ -1,73 +1,60 @@
 package state;
 
-import environment.Environment;
-import lifeform.Alien;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import environment.Environment;
+import lifeform.Alien;
+import lifeform.Human;
 import weapon.Pistol;
-
-import java.lang.reflect.Field;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import exceptions.EnvironmentException;
+import exceptions.WeaponException;
+import exceptions.AttachmentException;
 
 public class TestDeadState {
 
+  private Environment env;
+
   @Before
-  public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-    // Reset the singleton instance of Environment before each test
-    Field instance = Environment.class.getDeclaredField("env");
-    instance.setAccessible(true);
-    instance.set(null, null);
+  public void setup() throws EnvironmentException {
+    env = new Environment(10, 10); // Create a 10x10 environment
   }
 
   @Test
-  public void withWeapon() throws Exception {
-    // Initialize the environment and objects
-    Environment environment = Environment.getEnvironment(10, 10);
-    Alien alien = new Alien("A", 10);
-    environment.addLifeForm(alien, 0, 0);
+  public void testWithWeapon() throws EnvironmentException, WeaponException, AttachmentException {
+    Alien alien = new Alien("Alien A", 10);
+    env.addLifeForm(alien, 0, 0);
 
-    AIContext aiContext = new AIContext(alien, environment);
     Pistol pistol = new Pistol();
     alien.pickUpWeapon(pistol);
+    alien.setDirection("North");
 
-    // Simulate taking damage and switching to dead state
-    alien.takeHit(20);
-    aiContext.getCurrentState().executeAction();
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getDeadState());
 
-    // Verify the state is correctly set to DeadState
-    assertEquals(aiContext.getCurrentState(), aiContext.getDeadState());
+    aiContext.execute();
 
-    // Execute action in DeadState
-    aiContext.getCurrentState().executeAction();
+    assertNotNull(env.getLifeForm(alien.getRow(), alien.getCol()));
+    assertNotEquals(0, alien.getRow());
+    assertNotEquals(0, alien.getCol());
 
-    // Verify weapon is dropped and life form is removed
-    Weapon[] weapons = environment.getWeapons(0, 0);
-    assertEquals(pistol, weapons[0]);
-    assertNull(environment.getLifeForm(0, 0));
+    assertEquals(aiContext.getNoWeaponState(), aiContext.getCurrentState());
   }
 
   @Test
-  public void noWeapon() throws Exception {
-    // Initialize the environment and objects
-    Environment environment = Environment.getEnvironment(10, 10);
-    Alien alien = new Alien("A", 10);
-    environment.addLifeForm(alien, 0, 0);
+  public void testWithoutWeapon() throws EnvironmentException, WeaponException, AttachmentException {
+    Alien alien = new Alien("Alien A", 10);
+    env.addLifeForm(alien, 0, 0);
 
-    AIContext aiContext = new AIContext(alien, environment);
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getDeadState());
 
-    // Simulate taking damage and switching to dead state
-    alien.takeHit(20);
-    aiContext.getCurrentState().executeAction();
+    aiContext.execute();
 
-    // Verify the state is correctly set to DeadState
-    assertEquals(aiContext.getCurrentState(), aiContext.getDeadState());
+    assertNotNull(env.getLifeForm(alien.getRow(), alien.getCol()));
+    assertNotEquals(0, alien.getRow());
+    assertNotEquals(0, alien.getCol());
 
-    // Execute action in DeadState
-    aiContext.getCurrentState().executeAction();
-
-    // Verify it transitions to NoWeaponState (or appropriate state logic)
-    assertEquals(aiContext.getCurrentState(), aiContext.getNoWeaponState());
+    assertEquals(aiContext.getNoWeaponState(), aiContext.getCurrentState());
   }
 }

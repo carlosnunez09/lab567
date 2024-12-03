@@ -7,7 +7,6 @@ import exceptions.WeaponException;
 import gameplay.Random;
 import lifeform.LifeForm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HasWeaponState extends ActionState {
@@ -40,65 +39,55 @@ public class HasWeaponState extends ActionState {
       ai.setCurrentState(ai.getOutOfAmmoState());
       return;
     }
+
     LifeForm target = null;
-    if (lifeform.getCurrentDirection() == "North") {
-      int count = lifeform.getRow() + 1;
-      while (count <= lifeform.getRow() + lifeform.getWeapon().getMaxRange()) {
-        if (count > 0 || count < e.getNumRows()){
+    String direction = lifeForm.getCurrentDirection();
+
+    if (direction.equals("North")) {
+      int count = lifeForm.getRow() + 1;
+      while (count <= lifeForm.getRow() + lifeForm.getWeapon().getMaxRange()) {
+        if (count < 0 || count >= ai.getEnvironment().getNumRows()) break;
+        LifeForm potentialTarget = ai.getEnvironment().getLifeForm(count, lifeForm.getCol());
+        if (potentialTarget != null && !potentialTarget.getClass().equals(lifeForm.getClass())) {
+          target = potentialTarget;
           break;
         }
-        if (e.getLifeForm(count, lifeform.getCol()) != null
-                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
-          target = ai.getEnvironment().getLifeForm(count, lifeform.getCol());
-          count += 1;
-        } else if (target != null){
-          count++;
-        }
+        count++;
       }
-    } else if (lifeform.getCurrentDirection() == "South") {
-      int count = lifeform.getRow() - 1;
-      while (count >= lifeform.getRow() - lifeform.getWeapon().getMaxRange()) {
-        if (count > 0 || count < e.getNumRows()){
+    } else if (direction.equals("South")) {
+      int count = lifeForm.getRow() - 1;
+      while (count >= lifeForm.getRow() - lifeForm.getWeapon().getMaxRange()) {
+        if (count < 0 || count >= ai.getEnvironment().getNumRows()) break;
+        LifeForm potentialTarget = ai.getEnvironment().getLifeForm(count, lifeForm.getCol());
+        if (potentialTarget != null && !potentialTarget.getClass().equals(lifeForm.getClass())) {
+          target = potentialTarget;
           break;
         }
-        if (e.getLifeForm(count, lifeform.getCol()) != null
-                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
-          target = ai.getEnvironment().getLifeForm(count, lifeform.getCol());
-          count -= 1;
-        } else if (target != null){
-          count--;
-        }
+        count--;
       }
-    } else if (lifeform.getCurrentDirection() == "East") {
-      int count = lifeform.getCol() + 1;
-      while (count <= lifeform.getCol() + lifeform.getWeapon().getMaxRange()) {
-        if (count > 0 || count < e.getNumCols()){
+    } else if (direction.equals("East")) {
+      int count = lifeForm.getCol() + 1;
+      while (count <= lifeForm.getCol() + lifeForm.getWeapon().getMaxRange()) {
+        if (count < 0 || count >= ai.getEnvironment().getNumCols()) break;
+        LifeForm potentialTarget = ai.getEnvironment().getLifeForm(lifeForm.getRow(), count);
+        if (potentialTarget != null && !potentialTarget.getClass().equals(lifeForm.getClass())) {
+          target = potentialTarget;
           break;
         }
-        if (e.getLifeForm(lifeForm.getRow(), count) != null
-                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
-          target = ai.getEnvironment().getLifeForm(lifeform.getRow(), count);
-          count += 1;
-        } else if (target != null){
-          count++;
-        }
+        count++;
       }
-    } else if (lifeform.getCurrentDirection() == "West") {
-      int count = lifeform.getCol() - 1;
-      while (count >= lifeform.getCol() - lifeform.getWeapon().getMaxRange()) {
-        if (count > 0 || count < e.getNumCols()){
+    } else if (direction.equals("West")) {
+      int count = lifeForm.getCol() - 1;
+      while (count >= lifeForm.getCol() - lifeForm.getWeapon().getMaxRange()) {
+        if (count < 0 || count >= ai.getEnvironment().getNumCols()) break;
+        LifeForm potentialTarget = ai.getEnvironment().getLifeForm(lifeForm.getRow(), count);
+        if (potentialTarget != null && !potentialTarget.getClass().equals(lifeForm.getClass())) {
+          target = potentialTarget;
           break;
         }
-        if (e.getLifeForm(lifeForm.getRow(), count) != null
-                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
-          target = ai.getEnvironment().getLifeForm(lifeform.getRow(), count);
-          count -= 1;
-        } else if (target != null){
-          count--;
-        }
+        count--;
       }
     }
-
 
     if (target != null) {
       // Fire at the target if within range and not the same class
@@ -117,33 +106,34 @@ public class HasWeaponState extends ActionState {
   }
 }
 
+// Utility Classes for Randomization
 class RandInt implements Random<Integer> {
-  //[lo, hi)
-  private int lo;
-  private int hi;
+  // lo, hi
+  private final int lo;
+  private final int hi;
 
-  public RandInt(int l, int h) {
-    lo = l;
-    hi = h;
+  public RandInt(int lo, int hi) {
+    this.lo = lo;
+    this.hi = hi;
   }
 
+  @Override
   public Integer choose() {
     return new java.util.Random().nextInt(hi - lo) + lo;
   }
 }
 
-//Two directions: 1) random A to random B, 2) random A to List<A>
-
 class RandBool implements Random<Boolean> {
+  @Override
   public Boolean choose() {
-    return new RandInt(0, 2).choose() == 0 ? true : false;
+    return new RandInt(0, 2).choose() == 0;
   }
 }
 
-//Note: not efficient to take a list, List<Supplier<A>> is better
 class RandDirection implements Random<String> {
-  List<String> choices = List.of("North", "South", "East", "West");
+  private final List<String> choices = List.of("North", "South", "East", "West");
 
+  @Override
   public String choose() {
     return choices.get(new RandInt(0, choices.size()).choose());
   }
