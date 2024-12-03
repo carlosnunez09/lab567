@@ -1,5 +1,8 @@
 package gameplay;
 
+import command.Invoker;
+import command.InvokerBuilder;
+import command.MoveCmd;
 import environment.Environment;
 import gui.Gui2;
 import lifeform.Alien;
@@ -18,7 +21,8 @@ public class Simulator implements TimerObserver {
   private SimpleTimer timer;
   private List<Human> listHuman;
   private List<Alien> listAlien;
-  private ArrayList<LifeForm> listLifeForm;
+  private ArrayList<LifeForm> listLifeForm = new ArrayList<>();
+  private Gui2.Grid t;
 
   public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) {
     // Initialize lists
@@ -26,29 +30,64 @@ public class Simulator implements TimerObserver {
     System.out.println(listHuman.get(1));
     env.addLifeForm(listHuman.get(1), 2, 2);
     listAlien = new RandList<>(new RandAlien(), numAliens).choose();
+    listLifeForm.addAll(listAlien);
+    listLifeForm.addAll(listHuman);
 
     // Place LifeForms in the environment
     int row = 0;
     int col = 0;
-    for (int i = 0; i < listHuman.size(); i++) {
-      //env.addLifeForm(listHuman.get(i), row, col);
+    for (int i = 0; i < listLifeForm.size(); i++) {
+      env.addLifeForm(listLifeForm.get(i), row, col);
       row += 3;
       if (row >= env.getNumRows()) { // Fixed bounds
         row = 0;
-        col += 1;
+        col += 2;
       }
     }
 
     this.timer = timer;
+    t =  new Gui2.Grid(env);
   }
 
   @Override
   public void updateTime(int time) {
-    // Timer update logic can be implemented here
+    // Loop through all LifeForms and simulate their behavior
+    for (lifeform.LifeForm lf : listLifeForm) {
+      if (lf instanceof Alien) {
+        // Example: Recovery behavior for Aliens
+        System.out.printf("Alien %s at time %d recovering...\n", lf.getName(), time);
+        // Apply recovery logic here if defined
+      } else if (lf instanceof Human) {
+        // Example: Humans might perform a specific action
+        System.out.printf("Human %s at time %d taking action...\n", lf.getName(), time);
+      }
+
+    }
+    // Update GUI if applicable
+    t.updateGui();
+
+    // Optional: Add logic to move LifeForms around randomly
+    for (lifeform.LifeForm lf : listLifeForm) {
+      int newRow = lf.getRow();
+      int newCol = lf.getCol();
+      MoveCmd move = new MoveCmd(env);
+      move.execute(newRow, newCol); // Hypothetical move method
+      env.notifyObservers(lf);
+    }
   }
 
+
   public static void main(String[] args) {
-    Gui2 gui = new Gui2();
+    Gui2 gui = new Gui2() {
+      /**
+       * @param row
+       * @param col
+       */
+      @Override
+      public void update(int row, int col) {
+
+      }
+    };
     env.addObserver(gui);
 
     // Simulator starts for AI vs AI play
