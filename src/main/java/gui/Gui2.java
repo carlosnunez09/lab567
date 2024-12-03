@@ -92,7 +92,7 @@ public abstract class Gui2 implements EnvironmentObserver {
   }
 
 
-  public static class Grid extends JFrame {
+  public static class Grid extends JFrame implements EnvironmentObserver {
     final int width = 800;
     final int height = 600;
     public String lifeformDirection = "null";
@@ -453,6 +453,14 @@ public abstract class Gui2 implements EnvironmentObserver {
     }
 
 
+    /**
+     * @param row
+     * @param col
+     */
+    @Override
+    public void update(int row, int col) {
+
+    }
   }
 
   public static class SimpleRemote extends JFrame {

@@ -1,8 +1,13 @@
 package state;
 
+import exceptions.AttachmentException;
+import exceptions.EnvironmentException;
+import exceptions.WeaponException;
 import gameplay.TimerObserver;
 import lifeform.LifeForm;
 import environment.Environment;
+
+import javax.swing.*;
 
 public class AIContext implements TimerObserver {
   Environment env;
@@ -19,8 +24,8 @@ public class AIContext implements TimerObserver {
   this.lifeform = lifeform;
   }
 
-  public void execute(){
-
+  public void execute() throws AttachmentException, WeaponException, EnvironmentException {
+    current.executeAction();
   }
 
   public ActionState getCurrentState(){
