@@ -453,13 +453,16 @@ public abstract class Gui2 implements EnvironmentObserver {
     }
 
 
+
     /**
      * @param row
      * @param col
+     * @param lifeform
+     * @param weapon1
+     * @param weapon2
      */
     @Override
-    public void update(int row, int col) {
-
+    public void update(int row, int col, LifeForm lifeform, Weapon weapon1, Weapon weapon2) {
     }
   }
 

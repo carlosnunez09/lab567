@@ -57,7 +57,7 @@ public class Simulator implements TimerObserver {
     for (lifeform.LifeForm lf : listLifeForm) {
       int newRow = lf.getRow();
       int newCol = lf.getCol();
-      System.out.println(lf.getName());
+      lf.setDirection("South");
       MoveCmd move = new MoveCmd(env);
       move.execute(newRow, newCol); // Hypothetical move method
       env.notifyObservers(lf);
