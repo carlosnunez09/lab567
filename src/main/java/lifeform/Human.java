@@ -28,6 +28,9 @@ public class Human extends LifeForm {
     return this.humanArmor;
   }
 
+  public int getMaxLifePoints() { return this.lifePoints;
+  }
+
   /**
    * Create an instance
    *
@@ -63,6 +66,5 @@ public class Human extends LifeForm {
 
 
   }
-
 
 }

@@ -14,7 +14,7 @@ public class AIContext implements TimerObserver {
   LifeForm lifeform;
   ActionState current;
 
-  DeadState dead = new DeadState(this);
+  public DeadState dead = new DeadState(this);
   HasWeaponState weaponState = new HasWeaponState(this);
   NoWeaponState noWeapState = new NoWeaponState(this);
   OutOfAmmoState noAmmoState = new OutOfAmmoState(this);
@@ -51,6 +51,8 @@ public class AIContext implements TimerObserver {
   public OutOfAmmoState getOutOfAmmoState(){
     return noAmmoState;
   }
+
+  public DeadState getDeadState() { return dead;}
 
   public void setCurrentState(ActionState state){
     current = state;

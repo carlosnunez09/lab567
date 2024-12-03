@@ -75,10 +75,14 @@ public class Environment {
    */
 
   public LifeForm getLifeForm(int row, int col) {
-    if (cells[row][col] == null) {
-      return null;
+    if (row >= 0 && row < envRows && col >= 0 && col < envCols) {
+      if (cells[row][col] == null) {
+        return null;
+      } else {
+        return cells[row][col].getLifeForm();
+      }
     } else {
-      return cells[row][col].getLifeForm();
+      return null;
     }
   }
 

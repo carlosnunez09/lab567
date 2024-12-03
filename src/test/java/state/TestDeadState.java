@@ -5,6 +5,7 @@ import lifeform.Alien;
 import org.junit.Before;
 import org.junit.Test;
 import weapon.Pistol;
+import weapon.Weapon;
 
 import java.lang.reflect.Field;
 

@@ -22,12 +22,12 @@ public class DeadState extends ActionState {
     ai.getEnvironment().removeLifeForm(ai.getLifeForm().getRow(), ai.getLifeForm().getCol());
     ai.getLifeForm().revive();
     Random rand = new Random();
-    boolean isAdded = true;
-    while(!isAdded) {
+    boolean isAdded = false; // changed to false
+    while (!isAdded) {
       isAdded = ai.getEnvironment().addLifeForm(
-              ai.getLifeForm(),
-              rand.nextInt(e.getNumRows() - 1),
-              rand.nextInt( e.getNumCols() - 1)
+        ai.getLifeForm(),
+        rand.nextInt(ai.getEnvironment().getNumRows() - 1),
+        rand.nextInt(ai.getEnvironment().getNumCols() - 1)
       );
     }
     ai.setCurrentState(ai.getNoWeaponState());

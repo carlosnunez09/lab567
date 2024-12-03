@@ -1,125 +1,139 @@
 package state;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import java.lang.reflect.Field;
+
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
 import environment.Environment;
 import exceptions.AttachmentException;
 import exceptions.EnvironmentException;
-import exceptions.RecoveryRateException;
 import exceptions.WeaponException;
-import gameplay.SimpleTimer;
-import gameplay.Simulator;
 import lifeform.Alien;
 import lifeform.Human;
 import weapon.Pistol;
 
 public class TestHasWeaponState {
 
-  // Reset the singleton Environment before each test
+  private Environment env;
+
   @Before
-  public void resetSingleton() throws Exception {
-    Field instance = Environment.class.getDeclaredField("env");
-    instance.setAccessible(true);
-    instance.set(null, null);
+  public void setup() throws EnvironmentException {
+    env = new Environment(10, 10); // Create a 10x10 environment
   }
 
   @Test
-  public void testAlienDiesAndRecovers() throws AttachmentException, RecoveryRateException {
-    SimpleTimer timer = new SimpleTimer(1000);
-    Environment env = Environment.getEnvironment(2, 2);
-    Simulator sim = new Simulator(env, timer, 0, 0);
-
-    Alien alien = new Alien("Alien A", 10);
-    timer.addTimeObserver(sim);
-    AIContext aiContext = new AIContext(alien, env);
-    sim.ais.add(aiContext);
-
-    alien.takeHit(50); // Alien dies
-    assertEquals(0, alien.getCurrentLifePoints());
-    assertEquals(aiContext.getNoWeaponState(), aiContext.getCurrentState());
-
-    timer.timeChanged(); // Time progresses
-    assertEquals(aiContext.getDeadState(), aiContext.getCurrentState());
-
-    timer.timeChanged(); // Alien recovers
-    assertEquals(alien.getCurrentLifePoints(), alien.getMaxLifePoints());
-    assertEquals(aiContext.getNoWeaponState(), aiContext.getCurrentState());
-  }
-
-  @Test
-  public void testNoTargetInRange() throws AttachmentException, RecoveryRateException, EnvironmentException, WeaponException {
-    Environment env = Environment.getEnvironment(2, 2);
+  public void testNoTarget() throws EnvironmentException, WeaponException, AttachmentException {
     Alien alien = new Alien("Alien A", 10);
     env.addLifeForm(alien, 0, 0);
 
-    AIContext aiContext = new AIContext(alien, env);
     Pistol pistol = new Pistol();
     alien.pickUpWeapon(pistol);
+    alien.setDirection("North");
+
+    AIContext aiContext = new AIContext(alien, env);
     aiContext.setCurrentState(aiContext.getHasWeaponState());
+    aiContext.execute();
 
-    assertNull(env.getTarget(0, 0)); // No target
+    assertNull(env.getLifeForm(1, 0));
   }
 
   @Test
-  public void testTargetOutOfRange() throws Exception {
-    Environment env = Environment.getEnvironment(10, 10);
+  public void testTargetOfSameType() throws EnvironmentException, WeaponException, AttachmentException {
+    // Alien cannot shoot another alien
     Alien alien = new Alien("Alien A", 10);
     env.addLifeForm(alien, 0, 0);
 
-    AIContext aiContext = new AIContext(alien, env);
-    Pistol pistol = new Pistol();
-    alien.pickUpWeapon(pistol);
-
-    Human target = new Human("Human B", 50);
-    env.addLifeForm(target, 10, 0); // Far away target
-
-    alien.setDirection(Dir.South);
-    HasWeaponState hasWeaponState = new HasWeaponState(aiContext);
-    hasWeaponState.executeAction();
-
-    assertEquals(target.getMaxLifePoints(), target.getCurrentLifePoints()); // Target should not be hit
-  }
-
-  @Test
-  public void testAlienDiesBeforeAction() throws Exception {
-    Environment env = Environment.getEnvironment(10, 10);
-    Alien alien = new Alien("Alien A", 10);
-    env.addLifeForm(alien, 0, 0);
-
-    AIContext aiContext = new AIContext(alien, env);
-    Pistol pistol = new Pistol();
-    alien.pickUpWeapon(pistol);
-
-    alien.takeHit(20); // Alien dies
-    Human target = new Human("Human B", 50);
-    env.addLifeForm(target, 10, 0);
-
-    alien.setDirection(Dir.South);
-    HasWeaponState hasWeaponState = new HasWeaponState(aiContext);
-    hasWeaponState.executeAction();
-
-    assertEquals(aiContext.getDeadState(), aiContext.getCurrentState()); // Alien should be in DeadState
-  }
-
-  @Test
-  public void testTargetIsSameType() throws Exception {
-    Environment env = Environment.getEnvironment(10, 10);
-    Alien alien = new Alien("Alien A", 10);
-    env.addLifeForm(alien, 0, 0);
-
-    AIContext aiContext = new AIContext(alien, env);
-    Pistol pistol = new Pistol();
-    alien.pickUpWeapon(pistol);
-
-    Alien target = new Alien("Alien B", 10); // Same type target
+    Alien target = new Alien("Alien B", 20);
     env.addLifeForm(target, 1, 0);
 
-    alien.setDirection(Dir.South);
-    aiContext.setCurrentState(aiContext.getHasWeaponState());
-    aiContext.getCurrentState().executeAction();
+    Pistol pistol = new Pistol();
+    alien.pickUpWeapon(pistol);
+    alien.setDirection("North");
 
-    assertEquals(target.getMaxLifePoints(), target.getCurrentLifePoints()); // Target should not be attacked
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getHasWeaponState());
+    aiContext.execute();
+
+    // nothing should be hit
+    assertEquals(target.getMaxLifePoints(), target.getCurrentLifePoints());
+  }
+
+  @Test
+  public void testTargetOfDifferentType() throws EnvironmentException, WeaponException, AttachmentException {
+    Alien alien = new Alien("Alien A", 10);
+    env.addLifeForm(alien, 0, 0);
+
+    Human target = new Human("Human B", 50, 5);
+    env.addLifeForm(target, 1, 0);
+
+    Pistol pistol = new Pistol();
+    alien.pickUpWeapon(pistol);
+    alien.setDirection("North");
+
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getHasWeaponState());
+    aiContext.execute();
+
+    //target should be hit
+    assertTrue(target.getCurrentLifePoints() < target.getMaxLifePoints());
+  }
+
+  @Test
+  public void testValidTargetWithOneShotLeft() throws EnvironmentException, WeaponException, AttachmentException {
+    // alien with 1 ammo left shoots a human
+    Alien alien = new Alien("Alien A", 10);
+    env.addLifeForm(alien, 0, 0);
+
+    Human target = new Human("Human B", 50, 5);
+    env.addLifeForm(target, 1, 0);
+
+    Pistol pistol = new Pistol();
+    alien.pickUpWeapon(pistol);
+    pistol.fire(pistol.getMaxAmmo() - 1); // leave 1 ammo
+    alien.setDirection("North");
+
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getHasWeaponState());
+    aiContext.execute();
+
+    // targget should be hit and alien should transition to OutOfAmmoState
+    assertTrue(target.getCurrentLifePoints() < target.getMaxLifePoints());
+    assertEquals(aiContext.getOutOfAmmoState(), aiContext.getCurrentState());
+  }
+
+  @Test
+  public void testTargetOutOfRange() throws EnvironmentException, WeaponException, AttachmentException {
+    // alien's weapon is out of range for the target
+    Alien alien = new Alien("Alien A", 10);
+    env.addLifeForm(alien, 0, 0);
+
+    Human target = new Human("Human B", 50, 5);
+    env.addLifeForm(target, 5, 0);
+
+    Pistol pistol = new Pistol();
+    alien.pickUpWeapon(pistol);
+    alien.setDirection("North");
+
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getHasWeaponState());
+    aiContext.execute();
+
+    // target should not be hit
+    assertEquals(target.getMaxLifePoints(), target.getCurrentLifePoints());
+  }
+
+  @Test
+  public void testLifeFormIsDead() throws EnvironmentException, WeaponException, AttachmentException {
+    // alien is dead
+    Alien alien = new Alien("Alien A", 10);
+    alien.takeHit(10); // set life points to 0
+    env.addLifeForm(alien, 0, 0);
+
+    AIContext aiContext = new AIContext(alien, env);
+    aiContext.setCurrentState(aiContext.getHasWeaponState());
+    aiContext.execute();
+
+    // state should transition to DeadState
+    assertEquals(aiContext.dead, aiContext.getCurrentState());
   }
 }
