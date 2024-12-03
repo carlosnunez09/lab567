@@ -74,6 +74,9 @@ public class TestHasWeaponState {
     aiContext.setCurrentState(aiContext.getHasWeaponState());
     aiContext.execute();
 
+    System.out.println("Target Current Life: " + target.getCurrentLifePoints());
+    System.out.println("Target Max Life: " + target.getMaxLifePoints());
+
     //target should be hit
     assertTrue(target.getCurrentLifePoints() < target.getMaxLifePoints());
   }
@@ -95,6 +98,9 @@ public class TestHasWeaponState {
     AIContext aiContext = new AIContext(alien, env);
     aiContext.setCurrentState(aiContext.getHasWeaponState());
     aiContext.execute();
+
+    System.out.println("Target Current Life: " + target.getCurrentLifePoints());
+    System.out.println("Target Max Life: " + target.getMaxLifePoints());
 
     // targget should be hit and alien should transition to OutOfAmmoState
     assertTrue(target.getCurrentLifePoints() < target.getMaxLifePoints());
