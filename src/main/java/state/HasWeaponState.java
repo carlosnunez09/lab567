@@ -40,12 +40,67 @@ public class HasWeaponState extends ActionState {
       ai.setCurrentState(ai.getOutOfAmmoState());
       return;
     }
+    LifeForm target = null;
+    if (lifeform.getCurrentDirection() == "North") {
+      int count = lifeform.getRow() + 1;
+      while (count <= lifeform.getRow() + lifeform.getWeapon().getMaxRange()) {
+        if (count > 0 || count < e.getNumRows()){
+          break;
+        }
+        if (e.getLifeForm(count, lifeform.getCol()) != null
+                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
+          target = ai.getEnvironment().getLifeForm(count, lifeform.getCol());
+          count += 1;
+        } else if (target != null){
+          count++;
+        }
+      }
+    } else if (lifeform.getCurrentDirection() == "South") {
+      int count = lifeform.getRow() - 1;
+      while (count >= lifeform.getRow() - lifeform.getWeapon().getMaxRange()) {
+        if (count > 0 || count < e.getNumRows()){
+          break;
+        }
+        if (e.getLifeForm(count, lifeform.getCol()) != null
+                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
+          target = ai.getEnvironment().getLifeForm(count, lifeform.getCol());
+          count -= 1;
+        } else if (target != null){
+          count--;
+        }
+      }
+    } else if (lifeform.getCurrentDirection() == "East") {
+      int count = lifeform.getCol() + 1;
+      while (count <= lifeform.getCol() + lifeform.getWeapon().getMaxRange()) {
+        if (count > 0 || count < e.getNumCols()){
+          break;
+        }
+        if (e.getLifeForm(lifeForm.getRow(), count) != null
+                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
+          target = ai.getEnvironment().getLifeForm(lifeform.getRow(), count);
+          count += 1;
+        } else if (target != null){
+          count++;
+        }
+      }
+    } else if (lifeform.getCurrentDirection() == "West") {
+      int count = lifeform.getCol() - 1;
+      while (count >= lifeform.getCol() - lifeform.getWeapon().getMaxRange()) {
+        if (count > 0 || count < e.getNumCols()){
+          break;
+        }
+        if (e.getLifeForm(lifeForm.getRow(), count) != null
+                && e.getLifeForm(count, lifeform.getCol()).getClass() != lifeForm.getClass()) {
+          target = ai.getEnvironment().getLifeForm(lifeform.getRow(), count);
+          count -= 1;
+        } else if (target != null){
+          count--;
+        }
+      }
+    }
 
-    LifeForm target = ai.getEnvironment().getTarget(lifeForm.getRow(), lifeForm.getCol());
 
-    if (target != null
-      && ai.getEnvironment().getDistance(lifeForm, target) < lifeForm.getWeapon().getMaxRange()
-      && target.getClass() != lifeForm.getClass()) {
+    if (target != null) {
       // Fire at the target if within range and not the same class
       AttackCmd fireCommand = new AttackCmd(ai.getEnvironment());
       fireCommand.execute(lifeForm.getRow(), lifeForm.getCol());

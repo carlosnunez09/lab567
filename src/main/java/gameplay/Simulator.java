@@ -1,200 +1,153 @@
 package gameplay;
 
 import environment.Environment;
-import exceptions.RecoveryRateException;
 import gui.Gui2;
+import lifeform.Alien;
+import lifeform.Human;
 import lifeform.LifeForm;
+import recovery.RecoveryBehavior;
+import recovery.RecoveryFractional;
+import recovery.RecoveryLinear;
+import recovery.RecoveryNone;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Simulator implements TimerObserver {
-  private static Environment env;
+  private static Environment env = Environment.getEnvironment(20, 20);
   private SimpleTimer timer;
-  public List<Human> listHuman;
-  public List<Alien> listAlien;
-  public List<LifeForm> listLifeForm;
+  private List<Human> listHuman;
+  private List<Alien> listAlien;
+  private ArrayList<LifeForm> listLifeForm;
 
   public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) {
-    this.env = env;
-    this.timer = timer;
-
+    // Initialize lists
     listHuman = new RandList<>(new RandHuman(), numHumans).choose();
+    System.out.println(listHuman.get(1));
+    env.addLifeForm(listHuman.get(1), 2, 2);
     listAlien = new RandList<>(new RandAlien(), numAliens).choose();
-    listLifeForm.addAll(listHuman);
-    listLifeForm.addAll(listAlien);
 
+    // Place LifeForms in the environment
     int row = 0;
     int col = 0;
-    for (int i = 0; i < listLifeForm.size(); i++) {
-      env.addLifeForm((lifeform.LifeForm) listLifeForm.get(i), row, col);
+    for (int i = 0; i < listHuman.size(); i++) {
+      //env.addLifeForm(listHuman.get(i), row, col);
       row += 3;
-      if (row > env.getNumRows()) {
+      if (row >= env.getNumRows()) { // Fixed bounds
         row = 0;
         col += 1;
       }
     }
 
-
+    this.timer = timer;
   }
 
   @Override
   public void updateTime(int time) {
+    // Timer update logic can be implemented here
   }
 
   public static void main(String[] args) {
     Gui2 gui = new Gui2();
     env.addObserver(gui);
-    //simulator starts here for AI vs AI play
+
+    // Simulator starts for AI vs AI play
     SimpleTimer timer = new SimpleTimer(1000);
-
     Simulator sim = new Simulator(env, timer, 15, 10);
-    //start the timer
-    timer.start();
 
+    // Start the timer
+    timer.start();
+  }
+
+  // Random Generator Interfaces and Implementations
+  interface Random<T> {
+    T choose();
   }
 
   class RandInt implements Random<Integer> {
-    //[lo, hi)
     private int lo;
     private int hi;
 
-    public RandInt(int l, int h) {
-      lo = l;
-      hi = h;
+    public RandInt(int lo, int hi) {
+      this.lo = lo;
+      this.hi = hi;
     }
 
+    @Override
     public Integer choose() {
       return new java.util.Random().nextInt(hi - lo) + lo;
     }
   }
 
-//Two directions: 1) random A to random B, 2) random A to List<A>
-
   class RandBool implements Random<Boolean> {
+    @Override
     public Boolean choose() {
-      return new RandInt(0, 2).choose() == 0 ? true : false;
+      return new RandInt(0, 2).choose() == 0;
     }
   }
 
   class RandList<A> implements Random<List<A>> {
-    private Random<A> ra;
-    private int n;
+    private Random<A> randomGenerator;
+    private int size;
 
-    public RandList(Random<A> r, int m) {
-      ra = r;
-      n = m;
+    public RandList(Random<A> randomGenerator, int size) {
+      this.randomGenerator = randomGenerator;
+      this.size = size;
     }
 
+    @Override
     public List<A> choose() {
-      List<A> ans = new ArrayList<A>();
-      for (int i = 0; i < n; i++) ans.add(ra.choose());
-      return ans;
+      List<A> result = new ArrayList<>();
+      for (int i = 0; i < size; i++) {
+        result.add(randomGenerator.choose());
+      }
+      return result;
     }
   }
 
-  //Note: not efficient to take a list, List<Supplier<A>> is better
   class FromList<A> implements Random<A> {
-    List<A> choices;
+    private List<A> choices;
 
-    public FromList(List<A> l) {
-      choices = l;
+    public FromList(List<A> choices) {
+      this.choices = choices;
     }
 
+    @Override
     public A choose() {
       return choices.get(new RandInt(0, choices.size()).choose());
     }
   }
 
-  interface LifeForm {
-  }
 
-  class Alien implements LifeForm {
-    String name;
-    int points;
-    Recovery rb;
-
-    public Alien(String n, int p, Recovery r) {
-      name = n;
-      points = p;
-      rb = r;
-    }
-
-    public String toString() {
-      return String.format("Alien: %s LF: %d RB: %s\n", name, points, rb);
-    }
-  }
-
-  class Human implements LifeForm {
-    String name;
-    int points;
-    int armor;
-
-    public Human(String n, int p, int a) {
-      name = n;
-      points = p;
-      armor = a;
-    }
-
-    public String toString() {
-      return String.format("Human: %s LF: %d Armor: %d\n", name, points, armor);
-    }
-  }
-
-  interface Recovery {
-  }
-
-  class Linear implements Recovery {
-    public String toString() {
-      return "Linear Recovery";
-    }
-  }
-
-  class Fractional implements Recovery {
-    public String toString() {
-      return "Fractional Recovery";
-    }
-  }
-
-  class NoRecovery implements Recovery {
-    public String toString() {
-      return "No Recovery";
-    }
-  }
-
+  // Random Generators for LifeForms
   class RandHuman implements Random<Human> {
-    List<String> nameChoices = List.of("Alice", "Bob", "Chad", "Denise");
+    private List<String> names = List.of("Alice", "Bob", "Chad", "Denise");
 
+    @Override
     public Human choose() {
-      return new Human(new FromList<>(nameChoices).choose(),
+      return new Human(new FromList<>(names).choose(),
               new RandInt(30, 50).choose(),
               new RandInt(0, 10).choose());
     }
   }
 
-  class RandRecovery implements Random<Recovery> {
-    List<Recovery> choices = List.of(new NoRecovery(), new Linear(), new Fractional());
+  class RandAlien implements Random<lifeform.Alien> {
+    private List<String> names = List.of("E.T.", "Xenomorph", "Zoiberg", "Roger");
 
-    public Recovery choose() {
-      return new FromList<Recovery>(choices).choose();
-    }
-  }
-
-  class RandAlien implements Random<Alien> {
-    List<String> nameChoices = List.of("E.T.", "Xenomorph", "Zoiberg", "Roger");
-
+    @Override
     public Alien choose() {
-      return new Alien(new FromList<>(nameChoices).choose(),
-              new RandInt(30, 50).choose(),
-              new RandRecovery().choose());
+      return new Alien(new FromList<>(names).choose(),
+              (Integer) new RandInt(30, 50).choose(),
+              (RecoveryBehavior) new RandRecovery().choose());
     }
   }
 
-  class RandLifeForm implements Random<LifeForm> {
-    public LifeForm choose() {
-      return new RandBool().choose() ?
-              new RandAlien().choose() : new RandHuman().choose();
+  class RandRecovery implements Random<recovery.RecoveryBehavior> {
+    private List<RecoveryBehavior> recoveries = List.of(new RecoveryNone(), new RecoveryLinear(2), new RecoveryFractional(2));
+
+    @Override
+    public RecoveryBehavior choose() {
+      return new FromList<>(recoveries).choose();
     }
   }
 }
-
