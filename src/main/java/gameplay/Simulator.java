@@ -29,6 +29,7 @@ public class Simulator implements TimerObserver {
   private List<Alien> listAlien;
   private ArrayList<LifeForm> listLifeForm = new ArrayList<>();
   public ArrayList<AIContext> ais = new ArrayList<AIContext>();
+  public ArrayList<Weapon> weapons = new ArrayList<Weapon>();
   private static Gui2.Grid t;
 
   public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) throws AttachmentException, WeaponException, EnvironmentException {
@@ -38,13 +39,15 @@ public class Simulator implements TimerObserver {
     listLifeForm.addAll(listAlien);
     listLifeForm.addAll(listHuman);
 
+    addWeapons(numAliens + numHumans);
+
     // Place LifeForms in the environment
     int row = 0;
     int col = 0;
     for (int i = 0; i < listLifeForm.size(); i++) {
       env.addLifeForm(listLifeForm.get(i), row, col);
       listLifeForm.get(i).setLocation(row, col);
-      //listLifeForm.get(i).setDirection(String.valueOf(new RandDirection()));
+      listLifeForm.get(i).setDirection(new RandDirection().choose());
       AIContext ai = new AIContext(listLifeForm.get(i), env);
       //System.out.println(ai.getLifeForm());
       ais.add(ai);
@@ -71,8 +74,11 @@ public class Simulator implements TimerObserver {
     while (true) {
       ais.forEach(a -> {
         a.updateTime(1);
+        if (a.getCurrentState() == a.getDeadState()){
+          ais.remove(a);
+        }
       });
-      updateTime(1);
+      //updateTime(1);
     }
   }
 
@@ -152,7 +158,7 @@ public class Simulator implements TimerObserver {
     }
   }
 
-  class FromList<A> implements Random<A> {
+  public class FromList<A> implements Random<A> {
     private List<A> choices;
 
     public FromList(List<A> choices) {
@@ -195,6 +201,40 @@ public class Simulator implements TimerObserver {
     @Override
     public RecoveryBehavior choose() {
       return new FromList<>(recoveries).choose();
+    }
+  }
+
+
+  private void addWeapons(int totLifeForms) throws AttachmentException {
+    for (int i = 0; i < totLifeForms; i++) {
+      boolean isAdded = false;
+      Weapon w = new RandWeapon().choose();
+      weapons.add(w);
+      while (!isAdded) {
+        isAdded = env.addWeapon(w, new RandInt(0, env.getNumRows() - 1).choose(), new RandInt(0, env.getNumCols() - 1).choose());
+      }
+    }
+  }
+
+  public class RandWeapon implements Random<Weapon> {
+    List<Weapon> choices = List.of(new ChainGun(), new Pistol(), new PlasmaCannon());
+    Weapon weapon = new FromList<Weapon>(choices).choose();
+    List<Attachment> attachments = List.of(new Scope(weapon), new Stabilizer(weapon), new PowerBooster(weapon));
+    public RandWeapon() throws AttachmentException {
+    }
+    @Override
+    public Weapon choose() {
+      for (int i = 0; i < new RandInt(0, 3).choose(); i++) {
+        weapon = new FromList<Attachment>(attachments).choose();
+        if (i == 0) {
+          try {
+            attachments = List.of(new Scope(weapon), new Stabilizer(weapon), new PowerBooster(weapon));
+          } catch (AttachmentException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }
+      return weapon;
     }
   }
 }
