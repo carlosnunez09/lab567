@@ -7,7 +7,6 @@ import environment.Environment;
 import environment.EnvironmentObserver;
 import exceptions.EnvironmentException;
 import exceptions.WeaponException;
-import gameplay.SimpleTimer;
 import lifeform.Alien;
 import lifeform.Human;
 import lifeform.LifeForm;
@@ -73,9 +72,9 @@ public abstract class Gui2 implements EnvironmentObserver {
     bill.setLocation(2, 2);
     tim.setLocation(4, 5);
 
-    //InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
-    //Invoker invoker = builder.loadCommands();
-    ///var r = new SimpleRemote(invoker, e);
+    InvokerBuilder builder = new InvokerBuilder(e);  // Pass the environment
+    Invoker invoker = builder.loadCommands();
+    var r = new SimpleRemote(invoker, e);
   }
 
   /**
@@ -457,12 +456,10 @@ public abstract class Gui2 implements EnvironmentObserver {
     /**
      * @param row
      * @param col
-     * @param lifeform
-     * @param weapon1
-     * @param weapon2
      */
     @Override
-    public void update(int row, int col, LifeForm lifeform, Weapon weapon1, Weapon weapon2) {
+    public void update(int row, int col) {
+      //updateGui();
     }
   }
 

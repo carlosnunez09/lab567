@@ -16,15 +16,16 @@ public class NoWeaponState extends ActionState{
 
   public void executeAction() throws WeaponException, EnvironmentException {
     if (context.getCurrentState() != context.dead){
-      if (e.getWeapons(lifeform.getRow(), lifeform.getCol()) != null){
+      if (ai.getEnvironment().getWeapons(ai.getLifeForm().getRow(), ai.getLifeForm().getCol())[0] != null){
         Acquire1Cmd weap1 = new Acquire1Cmd(context.getEnvironment());
-        weap1.execute(lifeform.getRow(), lifeform.getCol());
+        weap1.execute(ai.getLifeForm().getRow(), ai.getLifeForm().getCol());
         context.setCurrentState(context.getHasWeaponState());
       }
       else {
-        MoveCmd move = new MoveCmd(context.getEnvironment());
-        move.execute(lifeform.getRow(), lifeform.getCol());
+        MoveCmd move = new MoveCmd(ai.getEnvironment());
+        move.execute(ai.getLifeForm().getRow(), ai.getLifeForm().getCol());
       }
     }
+    ai.getEnvironment().notifyObservers(ai.getLifeForm());
   }
 }

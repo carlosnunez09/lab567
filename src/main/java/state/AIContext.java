@@ -20,7 +20,7 @@ public class AIContext implements TimerObserver {
   OutOfAmmoState noAmmoState = new OutOfAmmoState(this);
 
   public AIContext(LifeForm lifeform, Environment e) {
-  env = e;
+  this.env = e;
   this.lifeform = lifeform;
   this.current = noWeapState;
   }
@@ -65,6 +65,14 @@ public class AIContext implements TimerObserver {
    */
   @Override
   public void updateTime(int time) {
-
+    try {
+      current.executeAction();
+    } catch (AttachmentException e) {
+      throw new RuntimeException(e);
+    } catch (WeaponException e) {
+      throw new RuntimeException(e);
+    } catch (EnvironmentException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

@@ -20,9 +20,9 @@ public class OutOfAmmoState extends ActionState {
       ai.setCurrentState(ai.getDeadState());
     } else {
       ReloadCmd reloadCom = new ReloadCmd(ai.getEnvironment());
-      reloadCom.execute(ai.getLifeForm().getRow(), ai.getLifeForm().getCol());
+      reloadCom.execute(ai.getLifeForm().getRow() + 1, ai.getLifeForm().getCol() + 1);
       ai.setCurrentState(ai.getHasWeaponState());
     }
-    e.notifyObservers(ai.getLifeForm());
+    ai.getEnvironment().notifyObservers(ai.getLifeForm());
   }
 }

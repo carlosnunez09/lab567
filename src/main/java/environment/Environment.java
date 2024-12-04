@@ -214,7 +214,7 @@ public class Environment {
    * @param lifeForm
    */
   public void notifyObservers(LifeForm lifeForm) {
-    gameboards.forEach(gameboard -> gameboard.update(lifeForm.getRow(), lifeForm.getCol(), lifeForm, lifeForm.getWeapon(), lifeForm.getWeapon()));
+    gameboards.forEach(gameboard -> gameboard.update(lifeForm.getRow(), lifeForm.getCol()));
     //gameboards.forEach(gameboard -> gameboard.update(, GUI2.getscCol()));
   }
 

@@ -34,7 +34,6 @@ public class Simulator implements TimerObserver {
   public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) throws AttachmentException, WeaponException, EnvironmentException {
     // Initialize lists
     listHuman = new RandList<>(new RandHuman(), numHumans).choose();
-    env.addLifeForm(listHuman.get(1), 2, 2);
     listAlien = new RandList<>(new RandAlien(), numAliens).choose();
     listLifeForm.addAll(listAlien);
     listLifeForm.addAll(listHuman);
@@ -44,8 +43,10 @@ public class Simulator implements TimerObserver {
     int col = 0;
     for (int i = 0; i < listLifeForm.size(); i++) {
       env.addLifeForm(listLifeForm.get(i), row, col);
-      listLifeForm.get(i).setDirection(String.valueOf(new RandDirection()));
+      listLifeForm.get(i).setLocation(row, col);
+      //listLifeForm.get(i).setDirection(String.valueOf(new RandDirection()));
       AIContext ai = new AIContext(listLifeForm.get(i), env);
+      //System.out.println(ai.getLifeForm());
       ais.add(ai);
       row += 4;
       if (row >= env.getNumRows()) { // Fixed bounds
@@ -54,10 +55,9 @@ public class Simulator implements TimerObserver {
       }
     }
 
-    for (int i = 0; i < ais.size(); i++) {
-       ActionState s = ais.get(i).getCurrentState();
-       s.executeAction();
-    }
+
+
+
 
 
 
@@ -67,20 +67,29 @@ public class Simulator implements TimerObserver {
 
     this.timer = timer;
     t =  new Gui2.Grid(env);
+
+    while (true) {
+      ais.forEach(a -> {
+        a.updateTime(1);
+      });
+      updateTime(1);
+    }
   }
 
   @Override
   public void updateTime(int time) {
-
+    //t.updateGui();
   }
 
 
   public static void main(String[] args) throws AttachmentException, WeaponException, EnvironmentException {
-    env.addObserver(t);
+
 
     // Simulator starts for AI vs AI play
     SimpleTimer timer = new SimpleTimer(1000);
     Simulator sim = new Simulator(env, timer, 15, 10);
+
+    env.addObserver(t);
 
     // Start the timer
     timer.start();
