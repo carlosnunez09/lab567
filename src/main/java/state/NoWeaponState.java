@@ -6,9 +6,12 @@ import exceptions.EnvironmentException;
 import exceptions.WeaponException;
 
 public class NoWeaponState extends ActionState{
-  ActionState nextState;
+  AIContext ai;
+
   public NoWeaponState(AIContext context) {
+
     super(context);
+    ai = context;
   }
 
   public void executeAction() throws WeaponException, EnvironmentException {

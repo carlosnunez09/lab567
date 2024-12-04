@@ -14,7 +14,7 @@ public class AIContext implements TimerObserver {
   LifeForm lifeform;
   ActionState current;
 
-  public DeadState dead = new DeadState(this);
+  DeadState dead = new DeadState(this);
   HasWeaponState weaponState = new HasWeaponState(this);
   NoWeaponState noWeapState = new NoWeaponState(this);
   OutOfAmmoState noAmmoState = new OutOfAmmoState(this);
@@ -22,6 +22,7 @@ public class AIContext implements TimerObserver {
   public AIContext(LifeForm lifeform, Environment e) {
   env = e;
   this.lifeform = lifeform;
+  this.current = noWeapState;
   }
 
   public void execute() throws AttachmentException, WeaponException, EnvironmentException {

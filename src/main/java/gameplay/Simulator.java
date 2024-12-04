@@ -4,6 +4,9 @@ import command.Invoker;
 import command.InvokerBuilder;
 import command.MoveCmd;
 import environment.Environment;
+import exceptions.AttachmentException;
+import exceptions.EnvironmentException;
+import exceptions.WeaponException;
 import gui.Gui2;
 import lifeform.Alien;
 import lifeform.Human;
@@ -12,6 +15,9 @@ import recovery.RecoveryBehavior;
 import recovery.RecoveryFractional;
 import recovery.RecoveryLinear;
 import recovery.RecoveryNone;
+import state.AIContext;
+import state.ActionState;
+import weapon.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +28,10 @@ public class Simulator implements TimerObserver {
   private List<Human> listHuman;
   private List<Alien> listAlien;
   private ArrayList<LifeForm> listLifeForm = new ArrayList<>();
+  public ArrayList<AIContext> ais = new ArrayList<AIContext>();
   private static Gui2.Grid t;
 
-  public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) {
+  public Simulator(Environment env, SimpleTimer timer, int numHumans, int numAliens) throws AttachmentException, WeaponException, EnvironmentException {
     // Initialize lists
     listHuman = new RandList<>(new RandHuman(), numHumans).choose();
     env.addLifeForm(listHuman.get(1), 2, 2);
@@ -37,6 +44,9 @@ public class Simulator implements TimerObserver {
     int col = 0;
     for (int i = 0; i < listLifeForm.size(); i++) {
       env.addLifeForm(listLifeForm.get(i), row, col);
+      listLifeForm.get(i).setDirection(String.valueOf(new RandDirection()));
+      AIContext ai = new AIContext(listLifeForm.get(i), env);
+      ais.add(ai);
       row += 4;
       if (row >= env.getNumRows()) { // Fixed bounds
         row = 0;
@@ -44,28 +54,28 @@ public class Simulator implements TimerObserver {
       }
     }
 
+    for (int i = 0; i < ais.size(); i++) {
+       ActionState s = ais.get(i).getCurrentState();
+       s.executeAction();
+    }
+
+
+
+
+
+
+
     this.timer = timer;
     t =  new Gui2.Grid(env);
   }
 
   @Override
   public void updateTime(int time) {
-    // Update GUI if applicable
-    t.updateGui();
 
-    // Testing logic to move LifeForms around randomly
-    for (lifeform.LifeForm lf : listLifeForm) {
-      int newRow = lf.getRow();
-      int newCol = lf.getCol();
-      lf.setDirection("South");
-      MoveCmd move = new MoveCmd(env);
-      move.execute(newRow, newCol); // Hypothetical move method
-      env.notifyObservers(lf);
-    }
   }
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws AttachmentException, WeaponException, EnvironmentException {
     env.addObserver(t);
 
     // Simulator starts for AI vs AI play
@@ -81,6 +91,16 @@ public class Simulator implements TimerObserver {
   interface Random<T> {
     T choose();
   }
+
+  public class RandDirection implements Random<String>{
+    List<String> directions = List.of("North", "South", "West", "East");
+    @Override
+    public String choose() {
+      return new FromList<String>(directions).choose();
+    }
+
+  }
+
 
   class RandInt implements Random<Integer> {
     private int lo;
