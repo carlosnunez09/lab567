@@ -20,6 +20,7 @@ import state.ActionState;
 import weapon.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Simulator implements TimerObserver {
@@ -72,14 +73,17 @@ public class Simulator implements TimerObserver {
     t =  new Gui2.Grid(env);
 
     while (true) {
-      ais.forEach(a -> {
+      Iterator<AIContext> iterator = ais.iterator();
+      while (iterator.hasNext()) {
+        AIContext a = iterator.next();
         a.updateTime(1);
-        if (a.getCurrentState() == a.getDeadState()){
-          ais.remove(a);
+        if (a.getCurrentState() == a.getDeadState()) {
+          iterator.remove(); // Safe removal during iteration
         }
-      });
+      }
       //updateTime(1);
     }
+
   }
 
   @Override
